@@ -6,7 +6,7 @@ skillz = gFunc.LoadFile('common\\skillz.lua');
 local sets = {
     Idle = {
         Neck = 'Parade Gorget',
-        Hands = 'Valor Gauntlets',
+        Hands = 'Blood Fng. Gnt.',
         Legs = 'Crimson Cuisses',
         Feet = 'Valor Leggings',
     },
@@ -24,7 +24,7 @@ local sets = {
         Body = 'Valor Surcoat',
         Hands = 'Valor Gauntlets',
         Ring1 = 'Toreador\'s Ring',
-        -- Ring2 = 'Jelly ring',
+        Ring2 = 'Jelly ring',
         Back = 'Valor Cape',
         Waist = 'Swift Belt',
         Legs = 'Homam Cosciales',
@@ -35,9 +35,9 @@ local sets = {
         -- Neck = 'Peacock Amulet',
         -- Ear1 = 'Brutal Earring',
         -- Ear2 = 'Ethereal Earring',
-        Body = 'Haubergeon',
+        Body = 'Scorpion Harness',
         Hands = 'Dusk Gloves',
-        Ring1 = 'Rajas Ring',
+        Ring1 = 'Toreador\'s Ring',
         Ring2 = 'Toreador\'s Ring',
         Back = 'Amemet Mantle +1',
         Waist = 'Swift Belt',
@@ -355,6 +355,10 @@ profile.HandleWeaponskill = function() -- WEAPONSKILL
 
         local currentlyEquipped = gData.GetEquipment();
         local mainWep = skillz.wep_table[currentlyEquipped.Main.Resource.Skill]; -- this will return the string value in wep table
+        -- replace rajas with 2nd flame for GS ws
+        if (mainWep == 'GreatSword') then
+            gFunc.Equip('Ring1', 'Flame Ring')
+        end
         -- print('Main wep')
         -- print(mainWep)
 

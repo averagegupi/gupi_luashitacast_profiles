@@ -6,7 +6,7 @@ local sets = {
     Idle = {
         Neck = 'Parade Gorget',
         Body = 'Vampire Cloak',
-        Hands = 'Chs. Gauntlets +1',
+        Hands = 'Blood Fng. Gnt.',
         -- Ring1 = 'Electrum Ring',
         -- Ring2 = 'Fasting Ring',
         -- Back ='Gigant Mantle',
@@ -114,7 +114,7 @@ local sets = {
         Ear1 = 'Cunning Earring',
         Ear2 = 'Abyssal Earring',
         Body = 'Ryl.Sqr. Robe',
-        Hands = 'Abyss Gauntlets',
+        Hands = 'Blood Fng. Gnt.',
         Ring1 = 'Diamond Ring',
         Ring2 = 'Diamond Ring',
         Back = 'Abyss Cape',
@@ -149,7 +149,7 @@ local sets = {
         Ear1 = 'Drone Earring',
         Ear2 = 'Drone Earring',
         Body = 'Chaos Cuirass',
-        Hands = 'Irn.Msk. Gauntlets',
+        Hands = 'Blood Fng. Gnt.',
         Ring1 = 'Coral Ring',
         Ring2 = 'Coral Ring',
         Back = 'Amemet Mantle +1',
@@ -345,6 +345,10 @@ profile.HandleWeaponskill = function()
 
         local currentlyEquipped = gData.GetEquipment();
         local mainWep = skillz.wep_table[currentlyEquipped.Main.Resource.Skill]; -- this will return the string value in wep table
+        -- replace rajas with 2nd flame for GS ws
+        if (mainWep == 'GreatSword') then
+            gfunc.Equip('Ring1', 'Flame Ring')
+        end
         -- print('Main wep')
         -- print(mainWep)
 

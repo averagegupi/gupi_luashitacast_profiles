@@ -1,7 +1,7 @@
 local profile = {};
 gcinclude = gFunc.LoadFile('common\\gcinclude.lua');
 skillz = gFunc.LoadFile('common\\skillz.lua');
-local ElementalStaffTable = { -- important
+local ElementalStaffTable = { 
     ['Fire'] = 'Fire Staff',
     ['Earth'] = 'Earth Staff',
     ['Water'] = 'Water Staff',
@@ -19,12 +19,16 @@ local sets = {
     },
     Resting = {},
     Silence = {
-        Main = 'Mamushito',
+        Main = 'Senjuinrikio',
         Sub = 'Garuda\'s Dagger',
     },
     Fudo = {
         Main = 'Senjuinrikio',
         Sub = 'Fudo',
+    },
+    Stun = {
+        Main = 'Senjuinrikio',
+        Sub = 'Stun Kukri',
     },
     Town = {
         Body = 'Ducal aketon',
@@ -37,10 +41,10 @@ local sets = {
         Ear2 = 'Stealth Earring',
         Body = 'Ninja Chainmail',
         Hands = 'Dusk Gloves',
-        Ring1 = 'Rajas Ring',
+        Ring1 = 'Toreador\'s Ring',
         Ring2 = 'Toreador\'s Ring',
         Back = 'Amemet Mantle +1',
-        Waist = 'Koga Sarashi',
+        Waist = 'Swift Belt',
         Legs = 'Koga Hakama',
         Feet = 'Fuma Sune-Ate',
     },
@@ -131,6 +135,7 @@ local sets = {
         Body = 'Scorpion Harness',
         Hands = 'Rasetsu Tekko',
         Back = 'Nomad\'s Mantle',
+        Waist = 'Koga Sarashi',
         Feet = 'Rasetsu Sune-Ate',
         -- Ring2 = 'Bomb Queen Ring',
         Ring2 = 'Toreador\'s Ring',
@@ -144,7 +149,7 @@ local sets = {
         Feet = 'Nin. Kyahan +1',
     },
     ['cap60'] = {
-        -- Main = 'Yoto',
+        -- Main = 'Zushio',
         -- Sub = 'Anju',
         -- Range = 'Deluxe Carbine',
         -- Ammo = 'Bullet',
@@ -155,7 +160,7 @@ local sets = {
         Body = 'Scorpion Harness',
         Hands = 'Ninja Tekko',
         Ring1 = 'Rajas Ring',
-        Ring2 = 'Bomb Queen Ring',
+        Ring2 = 'Jaeger Ring',
         Back = 'Nomad\'s Mantle',
         Waist = 'Swift Belt',
         Legs = 'Nokizaru Hakama',
@@ -176,6 +181,23 @@ local sets = {
         Back = 'Nomad\'s Mantle',
         Waist = 'Ryl.Kgt. Belt',
         Legs = 'Ninja Hakama',
+        Feet = 'Bounding Boots',
+    },
+    ['cap50'] = {
+        Main = 'Zushio',
+        Sub = 'Anju',
+        Ammo = 'Happy Egg',
+        Head = 'Walkure mask',
+        Neck = 'Peacock Amulet',
+        Ear1 = 'Drone Earring',
+        Ear2 = 'Drone Earring',
+        Body = 'Brigandine armor',
+        Hands = 'Wonder Mitts',
+        Ring1 = 'Rajas Ring',
+        Ring2 = 'Jaeger Ring',
+        Back = 'Nomad\'s Mantle',
+        Waist = 'Swift Belt',
+        Legs = 'Nokizaru Hakama',
         Feet = 'Bounding Boots',
     },
 };
@@ -231,14 +253,20 @@ profile.HandleDefault = function()
         if (game.Time < 6.00) or (game.Time > 18.00) then
             gFunc.EquipSet(sets.Night_TP);
         end
-        if (gcdisplay.GetToggle('silence') == true) then
-            gFunc.EquipSet(sets.Silence)
-        end
-        if (gcdisplay.GetToggle('fudo') == true) then
-            gFunc.EquipSet(sets.Fudo)
-        end
+            if (gcdisplay.GetToggle('silence') == true) then
+                gFunc.EquipSet(sets.Silence)
+
+            elseif (gcdisplay.GetToggle('fudo') == true) then
+                gFunc.EquipSet(sets.Fudo)
+
+            elseif (gcdisplay.GetToggle('stun') == true) then
+                gFunc.EquipSet(sets.Stun)
+            end
         if (gcdisplay.GetToggle('cap60') == true) then
             gFunc.EquipSet(sets.cap60)
+        end
+        if (gcdisplay.GetToggle('cap50') == true) then
+            gFunc.EquipSet(sets.cap50)
         end
         if (yonin > 0) then --YONIN ACTIVE = TANK SET
             gFunc.EquipSet(sets.Yonin);

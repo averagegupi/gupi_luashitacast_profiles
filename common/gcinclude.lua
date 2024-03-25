@@ -34,7 +34,7 @@ in each individual job lua file. Unless you know what you're doing then it is be
 ]]
 gcdisplay = gFunc.LoadFile('common\\gcdisplay.lua');
 
-gcinclude.AliasList = T{'gcmessages','wsdistance','setcycle','dt','th','kite','meleeset','gcdrain','gcaspir','nukeset','burst','weapon','elecycle','helix','weather','death','fight','sir','tankset','proc','cj','pupmode','tpgun','cormsg','forcestring','siphon','warpring','telering','rrset','craftset','zeniset','fishset', 'Solo', 'dw', 'whoami','dd', 'silence','fudo','nuke','cap60'};
+gcinclude.AliasList = T{'gcmessages','wsdistance','setcycle','dt','th','kite','meleeset','gcdrain','gcaspir','nukeset','burst','weapon','elecycle','helix','weather','death','fight','sir','tankset','proc','cj','pupmode','tpgun','cormsg','forcestring','siphon','warpring','telering','rrset','craftset','zeniset','fishset', 'Solo', 'dw', 'whoami','dd', 'silence','fudo','nuke','cap60','cap50', 'stun'};
 gcinclude.Towns = T{'Tavnazian Safehold','Al Zahbi','Aht Urhgan Whitegate','Nashmau','Southern San d\'Oria [S]','Bastok Markets [S]','Windurst Waters [S]','San d\'Oria-Jeuno Airship','Bastok-Jeuno Airship','Windurst-Jeuno Airship','Kazham-Jeuno Airship','Southern San d\'Oria','Northern San d\'Oria','Port San d\'Oria','Chateau d\'Oraguille','Bastok Mines','Bastok Markets','Port Bastok','Metalworks','Windurst Waters','Windurst Walls','Port Windurst','Windurst Woods','Heavens Tower','Ru\'Lude Gardens','Upper Jeuno','Lower Jeuno','Port Jeuno','Rabao','Selbina','Mhaura','Kazham','Norg','Mog Garden','Celennia Memorial Library','Western Adoulin','Eastern Adoulin'};
 -- gcinclude.Win_Towns=T{'Windurst Waters [S]','Windurst Waters','Windurst Walls','Port Windurst','Windurst Woods','Heavens Tower'};
 -- gcinclude.San_Towns=T{'Southern San d\'Oria [S]','Southern San d\'Oria','Northern San d\'Oria','Port San d\'Oria','Chateau d\'Oraguille'};
@@ -115,7 +115,9 @@ function gcinclude.SetVariables()
 	if (player.MainJob == 'NIN') then
 		gcdisplay.CreateToggle('silence', false);
 		gcdisplay.CreateToggle('fudo', false);
+		gcdisplay.CreateToggle('stun', false);
 		gcdisplay.CreateToggle('cap60', false);
+		gcdisplay.CreateToggle('cap50', false);
 		gcdisplay.CreateToggle('nuke', false);
 	end
 	if (player.MainJob == 'DRK') then
@@ -280,10 +282,20 @@ function gcinclude.HandleCommands(args)
 		toggle = 'fudo';
 		status = gcdisplay.GetToggle('fudo');
 		end
+		if (args[1] == 'stun') then
+		gcdisplay.AdvanceToggle('stun');
+		toggle = 'stun';
+		status = gcdisplay.GetToggle('stun');
+		end
 		if (args[1] == 'cap60') then
 		gcdisplay.AdvanceToggle('cap60');
 		toggle = 'cap60';
 		status = gcdisplay.GetToggle('cap60');
+		end
+		if (args[1] == 'cap50') then
+		gcdisplay.AdvanceToggle('cap50');
+		toggle = 'cap50';
+		status = gcdisplay.GetToggle('cap50');
 		end
 		if (args[1] == 'nuke') then
 		gcdisplay.AdvanceToggle('nuke');
