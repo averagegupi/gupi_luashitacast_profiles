@@ -34,7 +34,7 @@ in each individual job lua file. Unless you know what you're doing then it is be
 ]]
 gcdisplay = gFunc.LoadFile('common\\gcdisplay.lua');
 
-gcinclude.AliasList = T{'gcmessages','wsdistance','setcycle','dt','th','kite','meleeset','gcdrain','gcaspir','nukeset','burst','weapon','elecycle','helix','weather','death','fight','sir','tankset','proc','cj','pupmode','tpgun','cormsg','forcestring','siphon','warpring','telering','rrset','craftset','zeniset','fishset', 'Solo', 'dw', 'whoami','dd', 'silence','fudo','nuke','cap60','cap50', 'stun'};
+gcinclude.AliasList = T{'gcmessages','wsdistance','setcycle','dt','th','kite','meleeset','gcdrain','gcaspir','nukeset','burst','weapon','elecycle','helix','weather','death','fight','sir','tankset','proc','cj','pupmode','tpgun','cormsg','forcestring','siphon','warpring','telering','rrset','craftset','zeniset','fishset', 'Solo', 'dw', 'whoami','dd', 'silence','fudo','nuke','cap60','cap50', 'stun','tank'};
 gcinclude.Towns = T{'Tavnazian Safehold','Al Zahbi','Aht Urhgan Whitegate','Nashmau','Southern San d\'Oria [S]','Bastok Markets [S]','Windurst Waters [S]','San d\'Oria-Jeuno Airship','Bastok-Jeuno Airship','Windurst-Jeuno Airship','Kazham-Jeuno Airship','Southern San d\'Oria','Northern San d\'Oria','Port San d\'Oria','Chateau d\'Oraguille','Bastok Mines','Bastok Markets','Port Bastok','Metalworks','Windurst Waters','Windurst Walls','Port Windurst','Windurst Woods','Heavens Tower','Ru\'Lude Gardens','Upper Jeuno','Lower Jeuno','Port Jeuno','Rabao','Selbina','Mhaura','Kazham','Norg','Mog Garden','Celennia Memorial Library','Western Adoulin','Eastern Adoulin'};
 -- gcinclude.Win_Towns=T{'Windurst Waters [S]','Windurst Waters','Windurst Walls','Port Windurst','Windurst Woods','Heavens Tower'};
 -- gcinclude.San_Towns=T{'Southern San d\'Oria [S]','Southern San d\'Oria','Northern San d\'Oria','Port San d\'Oria','Chateau d\'Oraguille'};
@@ -127,6 +127,7 @@ function gcinclude.SetVariables()
 	end
 	if (player.MainJob == 'PLD') then
 		gcdisplay.CreateToggle('dd', false);
+		gcdisplay.CreateToggle('tank', false);
 	end
 	if (player.MainJob == 'PUP') then
 		gcdisplay.CreateCycle('PupMode', {[1] = 'Tank', [2] = 'Melee', [3] = 'Ranger', [4] = 'Mage'});
@@ -325,6 +326,11 @@ function gcinclude.HandleCommands(args)
 			gcdisplay.AdvanceToggle('dd');
 			toggle = 'dd';
 			status = gcdisplay.GetToggle('dd');
+		end
+		if (args[1] == 'tank') then
+			gcdisplay.AdvanceToggle('tank');
+			toggle = 'tank';
+			status = gcdisplay.GetToggle('tank');
 		end
 	end
 	if (player.MainJob == 'PUP') then

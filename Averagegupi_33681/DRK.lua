@@ -53,9 +53,9 @@ local sets = {
         Ear2 = 'Abyssal Earring',
         Body = 'Haubergeon',
         Hands = 'Dusk Gloves',
-        Ring1 = 'Rajas Ring',
+        Ring1 = 'Toreador\'s Ring',
         Ring2 = 'Toreador\'s Ring',
-        Back = 'Amemet Mantle +1',
+        Back = 'Abyss Cape',
         Waist = 'Swift Belt',
         Legs = 'Homam Cosciales',
         Feet = 'Dusk Ledelsens',
@@ -347,7 +347,7 @@ profile.HandleWeaponskill = function()
         local mainWep = skillz.wep_table[currentlyEquipped.Main.Resource.Skill]; -- this will return the string value in wep table
         -- replace rajas with 2nd flame for GS ws
         if (mainWep == 'GreatSword') then
-            gfunc.Equip('Ring1', 'Flame Ring')
+            gFunc.Equip('Ring1', 'Flame Ring')
         end
         -- print('Main wep')
         -- print(mainWep)

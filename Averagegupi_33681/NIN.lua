@@ -39,7 +39,7 @@ local sets = {
         Neck = 'Peacock Amulet',
         Ear1 = 'Brutal Earring',
         Ear2 = 'Stealth Earring',
-        Body = 'Ninja Chainmail',
+        Body = 'Haubergeon',
         Hands = 'Dusk Gloves',
         Ring1 = 'Toreador\'s Ring',
         Ring2 = 'Toreador\'s Ring',
@@ -66,6 +66,7 @@ local sets = {
         Neck = 'Prudence Torque',
         Ear1 = 'Abyssal Earring',
         Ear2 = 'Moldavite Earring',
+        Body = 'Blue Cotehardie',
         Hands = 'Koga Tekko',
         Ring1 = 'Diamond Ring',
         Ring2 = 'Diamond Ring',
@@ -78,6 +79,7 @@ local sets = {
         Neck = 'Prudence Torque',
         Ear1 = 'Abyssal Earring',
         Ear2 = 'Stealth Earring',
+        Body = 'Blue Cotehardie',
         Hands = 'Koga Tekko',
         Ring1 = 'Diamond Ring',
         Ring2 = 'Diamond Ring',
@@ -134,9 +136,10 @@ local sets = {
         Ear2 = 'Ethereal Earring',
         Body = 'Scorpion Harness',
         Hands = 'Rasetsu Tekko',
-        Back = 'Nomad\'s Mantle',
+        Back = 'Gigant Mantle',
         Waist = 'Koga Sarashi',
         Feet = 'Rasetsu Sune-Ate',
+        Ring1 = 'Toreador\'s Ring',
         -- Ring2 = 'Bomb Queen Ring',
         Ring2 = 'Toreador\'s Ring',
     },
@@ -239,6 +242,11 @@ profile.HandleDefault = function()
     if (game.Time < 7.00) or (game.Time > 17.00) then
         gFunc.EquipSet(sets.Movement);
     end
+    if (player.SubJob == 'RDM' and player.MP < 41) then
+        gFunc.Equip('body', 'Blue Cotehardie')
+    end
+    -- print(player.MP)
+    -- print(player.SubJob);
 
     if (player.Status == 'Engaged') then
         gFunc.EquipSet(sets.Tp_Default);

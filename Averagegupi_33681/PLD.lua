@@ -73,6 +73,9 @@ local sets = {
         Ear1 = 'Hospitaler Earring',
 
     },
+    maxHpPrecast = {
+
+    },
     Enhancing = {},
     Enfeebling = {
 
@@ -173,6 +176,40 @@ local sets = {
         Neck = 'Peacock Amulet',
         Ear1 = 'Brutal Earring',
         Ear2 = 'Ethereal Earring',
+    },
+    ['hpDown'] = {
+        -- Main = 'Carnage Sword',
+        -- Sub = 'Joyeuse',
+        Ammo = 'Phtm. Tathlum',
+        Head = 'Reraise Hairpin',
+        Neck = 'Willpower Torque',
+        Ear1 = 'Brutal Earring',
+        Ear2 = 'Loquac. Earring',
+        Body = 'Haubergeon',
+        Hands = 'Dusk Gloves',
+        Ring1 = 'Ether Ring',
+        Ring2 = 'Fasting Ring',
+        Back = 'Amemet Mantle +1',
+        Waist = 'Friar\'s Rope',
+        Legs = 'Ryl.Kgt. Breeches',
+        Feet = 'Bounding Boots',
+    },
+    ['hpUp'] = {
+        -- Main = 'Carnage Sword',
+        -- Sub = 'Joyeuse',
+        Ammo = 'Fenrir\'s Stone',
+        Head = 'Homam Zucchetto',
+        Neck = 'Shield Torque',
+        Ear1 = 'Hospitaler Earring',
+        Ear2 = 'Ethereal Earring',
+        Body = 'Wonder Kaftan',
+        Hands = 'Alkyoneus\'s Brc.',
+        Ring1 = 'Bomb Queen Ring',
+        Ring2 = 'Bomb Ring',
+        Back = 'Gigant Mantle',
+        Waist = 'Swift Belt',
+        Legs = 'Homam Cosciales',
+        Feet = 'Dusk Ledelsens',
     },
 };
 profile.Sets = sets;
@@ -299,7 +336,12 @@ end
 profile.HandlePrecast = function() -- PRECAST
     local spell = gData.GetAction();
 
-    gFunc.EquipSet(sets.Precast);
+    -- tank flag check for cure bomb
+    if (gcdisplay.GetToggle('tank') == true and spell.Skill == 'Healing Magic') then -- checking tank flag and that I'm casting healing for curebomb handling
+        gFunc.EquipSet(sets.hpDown) -- dropping HP in precast, to bomb in midcast
+    else
+        gFunc.EquipSet(sets.Precast);
+    end
 
     gcinclude.CheckCancels();
 end
@@ -310,10 +352,14 @@ profile.HandleMidcast = function() -- MIDCAST
     if (spell.Skill == 'Enhancing Magic') then
         gFunc.EquipSet(sets.Enhancing);
     elseif (spell.Skill == 'Healing Magic') then
-        gFunc.EquipSet(sets.Cure);
+        if (gcdisplay.GetToggle('tank') == true) then
+            gFunc.EquipSet(sets.hpUp) -- cranking HP up for enmity
+        else
+            gFunc.EquipSet(sets.Cure);
+        end
     -- elseif (spell.Skill == 'Elemental Magic') then
     --     gFunc.EquipSet(sets.Nuke);
-    -- TODO: probably useless for PLD, but build this table out for NIN tanking
+    -- TODO: probably useless for PLD, but build this table out for /RDM tanking??
     elseif (spell.Skill == 'Enfeebling Magic') then
         gFunc.EquipSet(sets.Enmity);
     elseif (spell.Skill == 'Dark Magic') then
