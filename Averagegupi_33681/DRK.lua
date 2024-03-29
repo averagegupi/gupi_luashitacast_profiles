@@ -10,7 +10,7 @@ local sets = {
         -- Ring1 = 'Electrum Ring',
         -- Ring2 = 'Fasting Ring',
         -- Back ='Gigant Mantle',
-        Feet = 'Chs. Sollerets +1',
+        Feet = 'Homam Gambieras',
     },
     Resting = {
         Neck ='Checkered Scarf',
@@ -58,7 +58,7 @@ local sets = {
         Back = 'Abyss Cape',
         Waist = 'Swift Belt',
         Legs = 'Homam Cosciales',
-        Feet = 'Dusk Ledelsens',
+        Feet = 'Homam Gambieras',
     },
     Tp_DW = {
         Head = 'Homam Zucchetto',
@@ -72,7 +72,7 @@ local sets = {
         Back = 'Abyss Cape',
         Waist = 'Swift Belt',
         Legs = 'Homam Cosciales',
-        Feet = 'Dusk Ledelsens',
+        Feet = 'Homam Gambieras',
     },
     Precast = {
         Head = 'Homam Zucchetto',
@@ -81,7 +81,7 @@ local sets = {
         Hands = 'Dusk Gloves',
         Waist = 'Swift Belt',
         Legs = 'Homam Cosciales',
-        Feet = 'Dusk Ledelsens',
+        Feet = 'Homam Gambieras',
         Back = 'Abyss Cape',
     },
     Cure = {
@@ -155,7 +155,7 @@ local sets = {
         Back = 'Amemet Mantle +1',
         Waist = 'Ryl.Kgt. Belt',
         Legs = 'Tracker\'s Kecks',
-        Feet = 'Irn.Msk. Sabatons',
+        Feet = 'Homam Gambieras',
     },
     Ws_Default = { -- blanket WS
         Head = 'Chs. Burgeonet +1',

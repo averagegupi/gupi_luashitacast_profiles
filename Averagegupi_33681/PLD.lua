@@ -8,7 +8,7 @@ local sets = {
         Neck = 'Parade Gorget',
         Hands = 'Blood Fng. Gnt.',
         Legs = 'Crimson Cuisses',
-        Feet = 'Valor Leggings',
+        Feet = 'Homam Gambieras',
     },
     Resting = {
         
@@ -42,7 +42,7 @@ local sets = {
         Back = 'Amemet Mantle +1',
         Waist = 'Swift Belt',
         Legs = 'Homam Cosciales',
-        Feet = 'Dusk Ledelsens',
+        Feet = 'Homam Gambieras',
     },
     noShield = {
         Feet = 'Valor Leggings',
@@ -67,7 +67,7 @@ local sets = {
         Hands = 'Dusk Gloves',
         Legs = 'Homam Cosciales',
         Waist = 'Swift Belt',
-        Feet = 'Dusk Ledelsens',
+        Feet = 'Homam Gambieras',
     },
     Cure = {
         Ear1 = 'Hospitaler Earring',
@@ -209,7 +209,7 @@ local sets = {
         Back = 'Gigant Mantle',
         Waist = 'Swift Belt',
         Legs = 'Homam Cosciales',
-        Feet = 'Dusk Ledelsens',
+        Feet = 'Homam Gambieras',
     },
 };
 profile.Sets = sets;
