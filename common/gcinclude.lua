@@ -34,7 +34,7 @@ in each individual job lua file. Unless you know what you're doing then it is be
 ]]
 gcdisplay = gFunc.LoadFile('common\\gcdisplay.lua');
 
-gcinclude.AliasList = T{'gcmessages','wsdistance','setcycle','dt','th','kite','meleeset','gcdrain','gcaspir','nukeset','burst','weapon','elecycle','helix','weather','death','fight','sir','tankset','proc','cj','pupmode','tpgun','cormsg','forcestring','siphon','warpring','telering','rrset','craftset','zeniset','fishset', 'Solo', 'dw', 'whoami','dd', 'silence','fudo','nuke','cap60','cap50', 'stun','tank'};
+gcinclude.AliasList = T{'gcmessages','wsdistance','setcycle','dt','th','kite','meleeset','gcdrain','gcaspir','nukeset','burst','weapon','elecycle','helix','weather','death','fight','sir','tankset','proc','cj','pupmode','tpgun','cormsg','forcestring','siphon','warpring','telering','rrset','craftset','zeniset','fishset', 'Solo', 'dw', 'zerg','whoami','dd', 'silence','fudo','nuke','cap60','cap50', 'stun','tank'};
 gcinclude.Towns = T{'Tavnazian Safehold','Al Zahbi','Aht Urhgan Whitegate','Nashmau','Southern San d\'Oria [S]','Bastok Markets [S]','Windurst Waters [S]','San d\'Oria-Jeuno Airship','Bastok-Jeuno Airship','Windurst-Jeuno Airship','Kazham-Jeuno Airship','Southern San d\'Oria','Northern San d\'Oria','Port San d\'Oria','Chateau d\'Oraguille','Bastok Mines','Bastok Markets','Port Bastok','Metalworks','Windurst Waters','Windurst Walls','Port Windurst','Windurst Woods','Heavens Tower','Ru\'Lude Gardens','Upper Jeuno','Lower Jeuno','Port Jeuno','Rabao','Selbina','Mhaura','Kazham','Norg','Mog Garden','Celennia Memorial Library','Western Adoulin','Eastern Adoulin'};
 -- gcinclude.Win_Towns=T{'Windurst Waters [S]','Windurst Waters','Windurst Walls','Port Windurst','Windurst Woods','Heavens Tower'};
 -- gcinclude.San_Towns=T{'Southern San d\'Oria [S]','Southern San d\'Oria','Northern San d\'Oria','Port San d\'Oria','Chateau d\'Oraguille'};
@@ -124,6 +124,7 @@ function gcinclude.SetVariables()
 		gcdisplay.CreateToggle('Solo', false);
 		gcdisplay.CreateToggle('dw', false);
 		gcdisplay.CreateToggle('whoami', false);
+		gcdisplay.CreateToggle('zerg', false);
 	end
 	if (player.MainJob == 'PLD') then
 		gcdisplay.CreateToggle('dd', false);
@@ -319,6 +320,11 @@ function gcinclude.HandleCommands(args)
 			gcdisplay.AdvanceToggle('whoami');
 			toggle = 'whoami';
 			status = gcdisplay.GetToggle('whoami');
+		end
+		if (args[1] == 'zerg') then
+			gcdisplay.AdvanceToggle('zerg');
+			toggle = 'zerg';
+			status = gcdisplay.GetToggle('zerg');
 		end
 	end
 	if (player.MainJob == 'PLD') then

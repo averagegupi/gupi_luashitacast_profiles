@@ -22,13 +22,13 @@ local sets = {
         Ear1 = 'Brutal Earring',
         Ear2 = 'Ethereal Earring',
         Body = 'Valor Surcoat',
-        Hands = 'Valor Gauntlets',
+        Hands = 'Dusk Gloves',
         Ring1 = 'Toreador\'s Ring',
-        Ring2 = 'Jelly ring',
+        Ring2 = 'Toreador\'s Ring',
         Back = 'Valor Cape',
         Waist = 'Swift Belt',
         Legs = 'Homam Cosciales',
-        Feet = 'Gallant Leggings',
+        Feet = 'Homam Gambieras',
     },
     dd = {
         Head = 'Homam Zucchetto',
@@ -45,7 +45,7 @@ local sets = {
         Feet = 'Homam Gambieras',
     },
     noShield = {
-        Feet = 'Valor Leggings',
+        Feet = 'Homam Gambieras',
         
     },
     Enmity = { -- TODO: LOAD UP THAT PLATE
@@ -125,7 +125,7 @@ local sets = {
         Ring2 = 'Flame Ring',
         Back = 'Amemet Mantle +1',
         Waist = 'Warwolf Belt',
-        Legs = 'Ryl.Kgt. Breeches',
+        Legs = 'Wonder Braccae',
         Feet = 'Wonder Clomps'
     },
     -- Ws_SpiritTaker = {

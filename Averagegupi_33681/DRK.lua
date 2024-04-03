@@ -30,7 +30,7 @@ local sets = {
         Back = 'Amemet Mantle +1',
         Waist = 'Swift Belt',
         Legs = 'Homam Cosciales',
-        Feet = 'Chs. Sollerets +1',
+        Feet = 'Homam Gambieras',
     },
     whoami = {
         Head = 'Homam Zucchetto',
@@ -121,7 +121,8 @@ local sets = {
         Waist = 'Swift Belt',
         Legs = 'Abyss Flanchard',
     },
-    Absorb = { --TODO
+    Absorb = {
+        Head = 'Black Sallet',
         Hands = 'Black Gadlings',
         Legs = 'Black Cuisses',
         Feet = 'Black Sollerets',
@@ -185,7 +186,23 @@ local sets = {
         Feet = 'Abyss Sollerets',
     },
     Souleater = {
-        Head = 'Chs. Burgeonet +1',
+        Head = 'Gloom Breastplate',
+        Back = 'Abyss Cape', -- losing body acc, need it here
+    },
+    ['zerg'] = {
+        Ammo = 'Fenrir\'s Stone',
+        Head = 'Homam Zucchetto',
+        Neck = 'Peacock Amulet',
+        Ear1 = 'Brutal Earring',
+        Ear2 = 'Ethereal Earring',
+        Body = 'Abyss Cuirass',
+        Hands = 'Dusk Gloves',
+        Ring1 = 'Toreador\'s Ring',
+        Ring2 = 'Toreador\'s Ring',
+        Back = 'Gigant Mantle',
+        Waist = 'Swift Belt',
+        Legs = 'Homam Cosciales',
+        Feet = 'Homam Gambieras',
     },
 };
 profile.Sets = sets;
@@ -214,6 +231,7 @@ end
 profile.HandleDefault = function() --AUTO HANDLER?
     local spikes = gData.GetBuffCount('Dread Spikes');
     if spikes ~= 0 then gFunc.EquipSet(sets.Spikes) end
+    local souleater = gData.GetBuffCount('Souleater');
     local currentlyEquipped = gData.GetEquipment();
     local mainWep
 
@@ -232,30 +250,46 @@ profile.HandleDefault = function() --AUTO HANDLER?
     
     local player = gData.GetPlayer(); --PLAYER STATUS CHECK
     if (player.Status == 'Engaged') then
-        gFunc.EquipSet(sets.Tp_Default)
-            if(currentlyEquipped.Range == nil) then -- check for range to not be present (aka xbow,bow,boomerang)
-                -- print('first check passed');
-                if(currentlyEquipped.Ammo.Resource.Skill == 0) then
-                    gFunc.Equip('Ammo', 'Bomb Core')
-                end
-            end
-            if (gcdisplay.GetToggle('Solo') == true) then
-                gFunc.EquipSet(sets.Solo)
-                if (player.HPP <= 84) or (player.MPP >= 95) then
-                    gFunc.Equip('Neck', 'Evasion Torque')
-                end
-            elseif (player.SubJob == 'NIN' and gcdisplay.GetToggle('dw')) then
-                gFunc.EquipSet(sets.Tp_DW)
-            elseif (player.SubJob == 'PLD' and gcdisplay.GetToggle('whoami')) then
-                gFunc.EquipSet(sets.whoami)
-            end
-
-        elseif (player.Status == 'Resting') then
-            gFunc.EquipSet(sets.Resting);
-
-        elseif (player.IsMoving == true) then
-            gFunc.EquipSet(sets.Movement);
+        if(souleater == 1) then
+            gFunc.EquipSet(sets.Souleater)
+            gFunc.disable('body') -- diable swaps to body if SE is on, since Gloom needs to stay on
+        else
+            gFunc.enable('body')
         end
+        
+        gFunc.EquipSet(sets.Tp_Default)
+
+
+        if(currentlyEquipped.Range == nil) then -- check for range to not be present (aka xbow,bow,boomerang)
+            -- print('first check passed');
+            if(currentlyEquipped.Ammo.Resource.Skill == 0) then
+                gFunc.Equip('Ammo', 'Bomb Core')
+            end
+        end
+
+        if (gcdisplay.GetToggle('Solo') == true) then
+            gFunc.EquipSet(sets.Solo)
+            if (player.HPP <= 84) or (player.MPP >= 95) then
+                gFunc.Equip('Neck', 'Evasion Torque')
+            end
+
+        elseif (player.SubJob == 'NIN' and gcdisplay.GetToggle('dw')) then
+            gFunc.EquipSet(sets.Tp_DW)
+
+        elseif (player.SubJob == 'PLD' and gcdisplay.GetToggle('whoami')) then
+            gFunc.EquipSet(sets.whoami)
+        end
+
+        if(gcdisplay.GetToggle('zerg')) then
+            gFunc.EquipSet(sets.zerg)
+        end
+
+    elseif (player.Status == 'Resting') then
+        gFunc.EquipSet(sets.Resting);
+
+    elseif (player.IsMoving == true) then
+        gFunc.EquipSet(sets.Movement);
+    end
 
     gcinclude.CheckDefault();
 end
