@@ -5,6 +5,7 @@ skillz = gFunc.LoadFile('common\\skillz.lua');
 
 local sets = {
     Idle = {
+        Body = 'Royal Cloak',
         Neck = 'Parade Gorget',
         Hands = 'Blood Fng. Gnt.',
         Legs = 'Crimson Cuisses',
@@ -25,7 +26,7 @@ local sets = {
         Hands = 'Dusk Gloves',
         Ring1 = 'Toreador\'s Ring',
         Ring2 = 'Toreador\'s Ring',
-        Back = 'Valor Cape',
+        Back = 'Boxer\'s Mantle',
         Waist = 'Swift Belt',
         Legs = 'Homam Cosciales',
         Feet = 'Homam Gambieras',
@@ -39,7 +40,7 @@ local sets = {
         Hands = 'Dusk Gloves',
         Ring1 = 'Toreador\'s Ring',
         Ring2 = 'Toreador\'s Ring',
-        Back = 'Amemet Mantle +1',
+        Back = 'Boxer\'s Mantle',
         Waist = 'Swift Belt',
         Legs = 'Homam Cosciales',
         Feet = 'Homam Gambieras',
@@ -60,6 +61,11 @@ local sets = {
     Tp_DW = {
 
     },
+    mdt = {
+        Ear1 = 'Coral Earring',
+        Ring1 = 'Coral Ring',
+        Ring2 = 'Merman\'s Ring',
+    },
     Precast = {
         Head = 'Homam Zucchetto',
         Neck = 'Willpower Torque',
@@ -76,7 +82,11 @@ local sets = {
     maxHpPrecast = {
 
     },
-    Enhancing = {},
+    Enhancing = { -- TODO: for sj RDM bar/enspell/phalanx
+        Neck = 'Enhancing Torque',
+        Legs = 'Gallant Breeches'
+
+    },
     Enfeebling = {
 
     },
@@ -95,7 +105,7 @@ local sets = {
         Feet = 'Valor Leggings',
     },
     Shield_Bash = {
-        Sub = 'Koenig Shield',
+        Sub = 'Koenig Shield', -- TODO: update to get the name of the wep on OH if not shield, and put it back on after ability?
         Hands = 'Valor Gauntlets',
     },
     Holy_Circle = {
@@ -104,7 +114,7 @@ local sets = {
     Divine_Nuke = { -- HOLY / BANISH M.ATT+ MND
         Head = 'Gallant Coronet',
         Ear1 = 'Moldavite Earring',
-        Neck = 'Divine Torque', -- logic in cast to conditionally swap to uggy pendant
+        -- Neck = 'Divine Torque', -- logic in cast to conditionally swap to uggy pendant
         Body = 'Gallant Surcoat',
         Waist = 'Ryl.Kgt. Belt',
         -- Legs = 'Wonder Braccae',
@@ -128,6 +138,20 @@ local sets = {
         Legs = 'Wonder Braccae',
         Feet = 'Wonder Clomps'
     },
+    elTank = {
+        Head = 'Homam Zucchetto',
+        Neck = 'Parade Gorget',
+        Ear1 = 'Brutal Earring',
+        Ear2 = 'Ethereal Earring',
+        Body = 'Valor Surcoat',
+        Hands = 'Valor Gauntlets',
+        Ring1 = 'Toreador\'s Ring',
+        Ring2 = 'Bomb Queen Ring',
+        Back = 'Gigant Mantle',
+        Waist = 'Warwolf Belt',
+        Legs = 'Crimson Cuisses',
+        Feet = 'Homam Gambieras',
+    },
     -- Ws_SpiritTaker = {
     --     Head = 'Optical Hat',
     --     Neck = 'Peacock Amulet',
@@ -144,18 +168,20 @@ local sets = {
     -- },
     None = { -- aka shield
         Neck = 'Shield Torque',
-        Ear1 = 'Hospitaler Earring',
+        Ear1 = 'Brutal Earring',
         Ear2 = 'Ethereal Earring',
+        Feet = 'Gallant Leggings',
     },
     Dagger = {
         Neck = 'Peacock Amulet',
         Ear1 = 'Brutal Earring',
         Ear2 = 'Stealth Earring',
     },
-    Sword = {
+    Sword = { -- Note: swapping out brutal for stealth. Joytoy + justice + virtue stones = the juice
+        Ammo = 'Virtue Stone',
         Neck = 'Peacock Amulet',
-        Ear1 = 'Brutal Earring',
-        Ear2 = 'Stealth Earring',
+        Ear1 = 'Stealth Earring',
+        Ear2 = 'Ethereal Earring',
     },
     GreatSword = {
         Neck = 'Prudence Torque',
@@ -178,8 +204,6 @@ local sets = {
         Ear2 = 'Ethereal Earring',
     },
     ['hpDown'] = {
-        -- Main = 'Carnage Sword',
-        -- Sub = 'Joyeuse',
         Ammo = 'Phtm. Tathlum',
         Head = 'Reraise Hairpin',
         Neck = 'Willpower Torque',
@@ -195,8 +219,6 @@ local sets = {
         Feet = 'Bounding Boots',
     },
     ['hpUp'] = {
-        -- Main = 'Carnage Sword',
-        -- Sub = 'Joyeuse',
         Ammo = 'Fenrir\'s Stone',
         Head = 'Homam Zucchetto',
         Neck = 'Shield Torque',
@@ -205,7 +227,7 @@ local sets = {
         Body = 'Wonder Kaftan',
         Hands = 'Alkyoneus\'s Brc.',
         Ring1 = 'Bomb Queen Ring',
-        Ring2 = 'Bomb Ring',
+        Ring2 = 'Toreador\'s Ring',
         Back = 'Gigant Mantle',
         Waist = 'Swift Belt',
         Legs = 'Homam Cosciales',
@@ -268,42 +290,54 @@ profile.HandleDefault = function() --AUTO HANDLER?
             print('cover is on') --testing
             gFunc.EquipSet(sets.Cover)
         end
-        -- neck & earrings handling
-        if (player.HPP <= 84) or (player.MPP >= 95) then -- P.Gorget check, only look to replace neck when I'm >95% MP or <84% HP
-            local mainWepSet
-            -- print('between HP/MP threshold')
-            -- print(currentlyEquipped.Sub)
-            -- if(currentlyEquipped.Sub ~= nil and currentlyEquipped.Sub.Resource.Skill == 0) then -- sub existing and equaling 0 means shield
-            --     mainWepSet = wep_table[currentlyEquipped.Sub.Resource.Skill];
-            if(currentlyEquipped.Sub ~= nil) then -- something in the sub slot
-                if (currentlyEquipped.Sub.Resource.Skill == 0) then
-                    mainWepSet = 'None' -- special handling for shield
-                else
-                    mainWepSet = skillz.wep_table[currentlyEquipped.Main.Resource.Skill];
-                    -- print(skillz.wep_table[currentlyEquipped.Main.Resource.Skill]) -- debugging, this would return correct output
-                end
-            elseif(currentlyEquipped.Sub == nil and currentlyEquipped.Main ~= nil) then -- nothing in sub slot, main is present
-                -- local mainWep = currentlyEquipped.Main.Resource.Skill; -- verbose, but leaving in as learning
-                -- local wepSet = sets.wep_table[mainWep];
-                -- print('what is mainwep: ' + mainWepSet)
-                -- print(mainWepSet)
+        -- weapon logic START 
+        local mainWepSet
+        -- print('between HP/MP threshold')
+        -- print(currentlyEquipped.Sub)
+        -- if(currentlyEquipped.Sub ~= nil and currentlyEquipped.Sub.Resource.Skill == 0) then -- sub existing and equaling 0 means shield
+        --     mainWepSet = wep_table[currentlyEquipped.Sub.Resource.Skill];
+        if(currentlyEquipped.Sub ~= nil) then -- something in the sub slot
+            if (currentlyEquipped.Sub.Resource.Skill == 0) then
+                mainWepSet = 'None' -- special handling for shield
+            else
                 mainWepSet = skillz.wep_table[currentlyEquipped.Main.Resource.Skill];
-                -- print(skillz.wep_table[currentlyEquipped.Main.Resource.Skill])
-            end 
-            gFunc.EquipSet(sets[mainWepSet]) -- look in the weapon table, equip the resulting set
+                -- print(skillz.wep_table[currentlyEquipped.Main.Resource.Skill]) -- debugging, this would return correct output
+            end
+        elseif(currentlyEquipped.Sub == nil and currentlyEquipped.Main ~= nil) then -- nothing in sub slot, main is present
+            -- local mainWep = currentlyEquipped.Main.Resource.Skill; -- verbose, but leaving in as learning
+            -- local wepSet = sets.wep_table[mainWep];
+            -- print('what is mainwep: ' + mainWepSet)
+            -- print(mainWepSet)
+            mainWepSet = skillz.wep_table[currentlyEquipped.Main.Resource.Skill];
+            -- print(skillz.wep_table[currentlyEquipped.Main.Resource.Skill])
+        end 
+        gFunc.EquipSet(sets[mainWepSet]) -- look in the weapon table, equip the resulting set
+        -- weapon logic END 
+        -- reworked the paradge gorget logic, it'll slap it on when I'm above 85% hp and less than 95% mp
+        if (player.HPP >= 85  and player.MPP <= 95) then
+            gFunc.Equip('Neck', 'Parade Gorget')
         end --neck logic end
         if (shadows == 0 and player.SubJob == 'NIN') then --CHECK FOR SHADOWS UP
-            gFunc.Equip('Ring2', 'Jelly Ring');
+            gFunc.Equip('Ring2', 'Jelly Ring'); -- TODO: update
             gFunc.Equip('Ear2', 'Ethereal Earring');
         end
-
+        
     elseif (player.Status == 'Resting') then
         gFunc.EquipSet(sets.Resting);
-
+        
     elseif (player.IsMoving == true) then
         gFunc.EquipSet(sets.Movement);
-
+        
     end
+
+    if (gcdisplay.GetToggle('tank') == true) then
+        gFunc.EquipSet(sets.elTank) -- cranking HP up for enmity
+    end
+    -- TODO: toggles for 'serious' tanking of stuff mdt/pdt?/resistance
+    -- outside of engaged check, so can be idle in these sets
+    if(gcdisplay.GetToggle('mdt')) then 
+        gFunc.EquipSet(sets.mdt)
+    end    
 
     gcinclude.CheckDefault();
 end
@@ -335,9 +369,11 @@ end
 
 profile.HandlePrecast = function() -- PRECAST
     local spell = gData.GetAction();
-
+    local target = gData.GetActionTarget();
+	local player = AshitaCore:GetMemoryManager():GetParty():GetMemberName(0);
+    
     -- tank flag check for cure bomb
-    if (gcdisplay.GetToggle('tank') == true and spell.Skill == 'Healing Magic') then -- checking tank flag and that I'm casting healing for curebomb handling
+    if (gcdisplay.GetToggle('tank') == true and spell.Skill == 'Healing Magic' and target.Name == player) then -- checking tank flag and that I'm casting healing for curebomb handling
         gFunc.EquipSet(sets.hpDown) -- dropping HP in precast, to bomb in midcast
     else
         gFunc.EquipSet(sets.Precast);
@@ -348,11 +384,13 @@ end
 
 profile.HandleMidcast = function() -- MIDCAST
     local spell = gData.GetAction();
+    local target = gData.GetActionTarget();
+	local player = AshitaCore:GetMemoryManager():GetParty():GetMemberName(0);
 
     if (spell.Skill == 'Enhancing Magic') then
         gFunc.EquipSet(sets.Enhancing);
     elseif (spell.Skill == 'Healing Magic') then
-        if (gcdisplay.GetToggle('tank') == true) then
+        if (gcdisplay.GetToggle('tank') == true and target.Name == player) then
             gFunc.EquipSet(sets.hpUp) -- cranking HP up for enmity
         else
             gFunc.EquipSet(sets.Cure);
@@ -376,7 +414,7 @@ profile.HandleMidcast = function() -- MIDCAST
         if(damagingDivine == true) then
             gFunc.EquipSet(sets.Divine_Nuke);
             if(spell.Name == 'Enlight') then
-                print('casting enlight, should not swap to uggy pendant');
+                -- print('casting enlight, should not swap to uggy pendant');
             elseif spell.MppAftercast <= 50 then
                 gFunc.Equip('Neck', 'Uggalepih Pendant');
             end

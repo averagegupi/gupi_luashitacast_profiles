@@ -9,7 +9,7 @@ local sets = {
         Hands = 'Blood Fng. Gnt.',
         -- Ring1 = 'Electrum Ring',
         -- Ring2 = 'Fasting Ring',
-        -- Back ='Gigant Mantle',
+        Back = 'Boxer\'s Mantle',
         Feet = 'Homam Gambieras',
     },
     Resting = {
@@ -20,14 +20,15 @@ local sets = {
         Body = 'Ducal aketon',
     },
     Solo = {
+        -- Ammo = 'Fenrir\'s Stone',
         Head = 'Optical Hat',
         Neck = 'Parade Gorget',
         Body = 'Scorpion Harness',
         Hands = 'Dusk Gloves',
         Ear2 = 'Ethereal Earring',
-        Ring1 = 'Rajas Ring',
+        Ring1 = 'Toreador\'s Ring',
         Ring2 = 'Jelly ring',
-        Back = 'Amemet Mantle +1',
+        Back = 'Boxer\'s Mantle',
         Waist = 'Swift Belt',
         Legs = 'Homam Cosciales',
         Feet = 'Homam Gambieras',
@@ -41,16 +42,16 @@ local sets = {
         Hands = 'Abyss gauntlets',
         Ring1 = 'Rajas Ring',
         Ring2 = 'Phalanx ring',
-        Back = 'Fed. Army Mantle',
+        Back = 'Boxer\'s Mantle',
         Waist = 'Swift Belt',
         Legs = 'Chaos Flanchard',
         Feet = 'Chs. Sollerets +1',
     },
-    Tp_Default = {
+    Tp_Default = { -- neck and ear logic SHOULD be handled
         Head = 'Homam Zucchetto',
-        Neck = 'Prudence Torque',
-        Ear1 = 'Brutal Earring',
-        Ear2 = 'Abyssal Earring',
+        -- Neck = 'Prudence Torque',
+        -- Ear1 = 'Brutal Earring',
+        -- Ear2 = 'Abyssal Earring',
         Body = 'Haubergeon',
         Hands = 'Dusk Gloves',
         Ring1 = 'Toreador\'s Ring',
@@ -60,20 +61,20 @@ local sets = {
         Legs = 'Homam Cosciales',
         Feet = 'Homam Gambieras',
     },
-    Tp_DW = {
-        Head = 'Homam Zucchetto',
-        Neck = 'Peacock Amulet',
-        Ear1 = 'Brutal Earring',
-        Ear2 = 'Stealth Earring',
-        Body = 'Haubergeon',
-        Hands = 'Dusk Gloves',
-        Ring1 = 'Rajas Ring',
-        Ring2 = 'Toreador\'s Ring',
-        Back = 'Abyss Cape',
-        Waist = 'Swift Belt',
-        Legs = 'Homam Cosciales',
-        Feet = 'Homam Gambieras',
-    },
+    -- Tp_DW = { -- TODO: remove???
+    --     Head = 'Homam Zucchetto',
+    --     Neck = 'Peacock Amulet',
+    --     Ear1 = 'Brutal Earring',
+    --     Ear2 = 'Stealth Earring',
+    --     Body = 'Haubergeon',
+    --     Hands = 'Dusk Gloves',
+    --     Ring1 = 'Toreador\'s Ring',
+    --     Ring2 = 'Toreador\'s Ring',
+    --     Back = 'Abyss Cape',
+    --     Waist = 'Swift Belt',
+    --     Legs = 'Homam Cosciales',
+    --     Feet = 'Homam Gambieras',
+    -- },
     Precast = {
         Head = 'Homam Zucchetto',
         Neck = 'Willpower Torque',
@@ -82,7 +83,7 @@ local sets = {
         Waist = 'Swift Belt',
         Legs = 'Homam Cosciales',
         Feet = 'Homam Gambieras',
-        Back = 'Abyss Cape',
+        -- Back = 'Abyss Cape',
     },
     Cure = {
         Neck = 'Justice badge',
@@ -110,10 +111,10 @@ local sets = {
     },
     Dark = {
         Head = 'Chs. Burgeonet +1',
-        Neck = 'Prudence Torque',
+        Neck = 'Dark Torque',
         Ear1 = 'Cunning Earring',
         Ear2 = 'Abyssal Earring',
-        Body = 'Ryl.Sqr. Robe',
+        Body = 'Abyss cuirass', -- m att in dark but need inventory
         Hands = 'Blood Fng. Gnt.',
         Ring1 = 'Diamond Ring',
         Ring2 = 'Diamond Ring',
@@ -141,7 +142,6 @@ local sets = {
         Legs = 'Chaos Flanchard',
         Feet = 'Abyss Sollerets',
     },
-
     Preshot = {
     },
     Midshot = {
@@ -152,7 +152,7 @@ local sets = {
         Body = 'Chaos Cuirass',
         Hands = 'Blood Fng. Gnt.',
         Ring1 = 'Coral Ring',
-        Ring2 = 'Coral Ring',
+        Ring2 = 'Merman\'s Ring',
         Back = 'Amemet Mantle +1',
         Waist = 'Ryl.Kgt. Belt',
         Legs = 'Tracker\'s Kecks',
@@ -186,8 +186,44 @@ local sets = {
         Feet = 'Abyss Sollerets',
     },
     Souleater = {
-        Head = 'Gloom Breastplate',
+        Body = 'Gloom Breastplate',
         Back = 'Abyss Cape', -- losing body acc, need it here
+    },
+    -- per weapon logic 
+    None = { -- aka shield
+        Neck = 'Shield Torque',
+        Ear1 = 'Brutal Earring',
+        Ear2 = 'Ethereal Earring',
+    },
+    GreatSword = {
+        Neck = 'Prudence Torque',
+        Ear1 = 'Brutal Earring',
+        Ear2 = 'Abyssal Earring',
+    },
+    GreatAxe = {
+        Neck = 'Peacock Amulet',
+        Ear1 = 'Brutal Earring',
+        Ear2 = 'Ethereal Earring',
+    },
+    Scythe = {
+        Neck = 'Peacock Amulet',
+        Ear1 = 'Brutal Earring',
+        Ear2 = 'Abyssal Earring',
+    },
+    Sword = {
+        Neck = 'Peacock Amulet',
+        Ear1 = 'Brutal Earring',
+        Ear2 = 'Stealth Earring',
+    },
+    Dagger = { --zerg???
+        Neck = 'Prudence Torque',
+        Ear1 = 'Brutal Earring',
+        Ear2 = 'Stealth Earring',
+    },
+    Axe = {
+        Neck = 'Peacock Amulet',
+        Ear1 = 'Brutal Earring',
+        Ear2 = 'Stealth Earring',
     },
     ['zerg'] = {
         Ammo = 'Fenrir\'s Stone',
@@ -250,15 +286,14 @@ profile.HandleDefault = function() --AUTO HANDLER?
     
     local player = gData.GetPlayer(); --PLAYER STATUS CHECK
     if (player.Status == 'Engaged') then
+        gFunc.EquipSet(sets.Tp_Default)
+        
         if(souleater == 1) then
             gFunc.EquipSet(sets.Souleater)
-            gFunc.disable('body') -- diable swaps to body if SE is on, since Gloom needs to stay on
+            -- gFunc.Disable('body') -- diable swaps to body if SE is on, since Gloom needs to stay on
         else
-            gFunc.enable('body')
+            -- gFunc.Enable('body')
         end
-        
-        gFunc.EquipSet(sets.Tp_Default)
-
 
         if(currentlyEquipped.Range == nil) then -- check for range to not be present (aka xbow,bow,boomerang)
             -- print('first check passed');
@@ -266,19 +301,44 @@ profile.HandleDefault = function() --AUTO HANDLER?
                 gFunc.Equip('Ammo', 'Bomb Core')
             end
         end
+        
+        -- current weapon logic START
+        local mainWepSet
+        -- print('between HP/MP threshold')
+        -- print(currentlyEquipped.Sub)
+        -- if(currentlyEquipped.Sub ~= nil and currentlyEquipped.Sub.Resource.Skill == 0) then -- sub existing and equaling 0 means shield
+        --     mainWepSet = wep_table[currentlyEquipped.Sub.Resource.Skill];
+        if(currentlyEquipped.Sub ~= nil) then -- something in the sub slot
+            if (currentlyEquipped.Sub.Resource.Skill == 0) then
+                mainWepSet = 'None' -- special handling for shield
+            else
+                mainWepSet = skillz.wep_table[currentlyEquipped.Main.Resource.Skill];
+                -- print(skillz.wep_table[currentlyEquipped.Main.Resource.Skill]) -- debugging, this would return correct output
+            end
+        elseif(currentlyEquipped.Sub == nil and currentlyEquipped.Main ~= nil) then -- nothing in sub slot, main is present
+            -- local mainWep = currentlyEquipped.Main.Resource.Skill; -- verbose, but leaving in as learning
+            -- local wepSet = sets.wep_table[mainWep];
+            -- print('what is mainwep: ' + mainWepSet)
+            -- print(mainWepSet)
+            mainWepSet = skillz.wep_table[currentlyEquipped.Main.Resource.Skill];
+            -- print(skillz.wep_table[currentlyEquipped.Main.Resource.Skill])
+        end 
+        gFunc.EquipSet(sets[mainWepSet]) -- look in the weapon table, equip the resulting set
 
         if (gcdisplay.GetToggle('Solo') == true) then
             gFunc.EquipSet(sets.Solo)
-            if (player.HPP <= 84) or (player.MPP >= 95) then
-                gFunc.Equip('Neck', 'Evasion Torque')
+            if (player.HPP >= 85 and player.MPP <= 95) then -- check to use p gorget if activatable, otherwise use logic above
+                gFunc.Equip('Neck', 'Parade Gorget')
             end
+            -- shouldn't need these toggles with weapon logic above (???)
+        -- elseif (player.SubJob == 'NIN' and gcdisplay.GetToggle('dw')) then
+        --     gFunc.EquipSet(sets.Tp_DW)
 
-        elseif (player.SubJob == 'NIN' and gcdisplay.GetToggle('dw')) then
-            gFunc.EquipSet(sets.Tp_DW)
-
-        elseif (player.SubJob == 'PLD' and gcdisplay.GetToggle('whoami')) then
-            gFunc.EquipSet(sets.whoami)
+        -- elseif (player.SubJob == 'PLD' and gcdisplay.GetToggle('whoami')) then
+        --     gFunc.EquipSet(sets.whoami)
         end
+        -- current weapon login END
+
 
         if(gcdisplay.GetToggle('zerg')) then
             gFunc.EquipSet(sets.zerg)
@@ -319,6 +379,74 @@ profile.HandlePrecast = function()
     gcinclude.CheckCancels();
 end
 
+-- OBI LOGIC START --
+local DayElementTable = {
+    ['Fire'] = 'Firesday',
+    ['Earth'] = 'Earthsday',
+    ['Water'] = 'Watersday',
+    ['Wind'] = 'Windsday',
+    ['Ice'] = 'Iceday',
+    ['Thunder'] = 'Lightningday',
+    ['Light'] = 'Lightsday',
+    ['Dark'] = 'Darksday'
+};
+
+local ElementalWaistTable = {
+	['Earth'] = 'Dorin Obi',
+	['Water'] = 'Suirin Obi',
+	['Wind'] = 'Furin Obi',
+	['Fire'] = 'Karin Obi',
+	['Ice'] = 'Hyorin Obi',
+	['Thunder'] = 'Rairin Obi',
+	['Light'] = 'Korin Obi',
+	['Dark'] = 'Anrin Obi'
+};
+
+function ObiCheck(spell)
+    local element = spell.Element;
+    local zone = gData.GetEnvironment();
+    
+    local badEle = {
+        ['Fire'] = 'Water',
+        ['Earth'] = 'Wind',
+        ['Water'] = 'Thunder',
+        ['Wind'] = 'Ice',
+        ['Ice'] = 'Fire',
+        ['Thunder'] = 'Earth',
+        ['Light'] = 'Dark',
+        ['Dark'] = 'Light'
+    };
+    
+    local weight = 0;
+    
+    --Day Comparison
+    if (DayElementTable[zone.Day] == element) then
+        weight = weight + 1;
+    elseif (DayElementTable[zone.Day] == badEle[element]) then
+        weight = weight - 1;
+    end
+    
+    --Weather Comparison
+    if string.find(zone.Weather, element) then
+        if string.find(zone.Weather, 'x2') then
+            weight = weight + 2;
+        else
+            weight = weight + 1;
+        end
+    elseif string.find(zone.Weather, badEle[element]) then
+        if string.find(zone.Weather, 'x2') then
+            weight = weight - 2;
+        else
+            weight = weight - 1;
+        end
+    end    
+    
+    return weight;
+	
+end
+
+-- OBI LOGIC END --
+
 profile.HandleMidcast = function()
     local spell = gData.GetAction();
 
@@ -349,10 +477,12 @@ profile.HandleMidcast = function()
         gFunc.EquipSet(sets.Dark);
         if (string.match(spell.Name, 'Dread Spikes')) then
             gFunc.EquipSet(sets.Dread_Spikes);
-        end
-        if (spell.Name:find('^Absorb') ~= nil) then
+        elseif (spell.Name:find('^Absorb') ~= nil) then
             gFunc.EquipSet(sets.Absorb);
         end
+        if ObiCheck(spell) >= 1 then
+			gFunc.Equip('Waist', ElementalWaistTable[spell.Element]);
+		end
     end
 end
 

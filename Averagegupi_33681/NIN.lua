@@ -13,7 +13,7 @@ local ElementalStaffTable = {
 };
 local sets = {
     Idle = { --TODO: REGEN GEAR?
-        Hands = 'Koga Tekko',
+        Hands = 'Kog. Tekko +1',
         Feet = 'Koga Kyahan',
         Body = 'War Shinobi Gi',
     },
@@ -54,7 +54,8 @@ local sets = {
     Precast = { --FAST CAST STUFF
         Head ='Panther Mask',
         Neck = 'Willpower Torque',
-        Hands = 'Koga Tekko',
+        Hands = 'Kog. Tekko +1',
+        Waist = 'Swift Belt',
         Ear1 = 'Loquac. Earring',
     },
     Utsu = { --EVA OR DT HERE?
@@ -67,7 +68,7 @@ local sets = {
         Ear1 = 'Abyssal Earring',
         Ear2 = 'Moldavite Earring',
         Body = 'Blue Cotehardie',
-        Hands = 'Koga Tekko',
+        Hands = 'Kog. Tekko +1',
         Ring1 = 'Diamond Ring',
         Ring2 = 'Diamond Ring',
         Back = 'Fed. Army Mantle',
@@ -80,15 +81,15 @@ local sets = {
         Ear1 = 'Abyssal Earring',
         Ear2 = 'Stealth Earring',
         Body = 'Blue Cotehardie',
-        Hands = 'Koga Tekko',
+        Hands = 'Kog. Tekko +1',
         Ring1 = 'Diamond Ring',
         Ring2 = 'Diamond Ring',
         Back = 'Fed. Army Mantle',
         Waist = 'Koga Sarashi',
         Feet = 'Koga Kyahan',
     },
-    Night_TP = {
-        Hands = 'Koga Tekko',
+    D2D_TP = {
+        Hands = 'Kog. Tekko +1',
     },
     Preshot = {
     },
@@ -100,7 +101,7 @@ local sets = {
         Body = 'War Shinobi Gi',
         Hands = 'Ninja Tekko',
         Ring1 = 'Coral Ring',
-        Ring2 = 'Coral Ring',
+        Ring2 = 'Merman\'s Ring',
         Back = 'Amemet Mantle +1',
         Waist = 'Ryl.Kgt. Belt',
         Legs = 'Ninja Hakama',
@@ -118,11 +119,13 @@ local sets = {
         Back = 'Amemet Mantle +1',
         Waist = 'Warwolf Belt',
         Legs = 'Ryl.Kgt. Breeches',
-        Feet = 'Rasetsu Sune-Ate',
+        Feet = 'Wonder Clomps',
     },
     Night_WS = {
-        Hands = 'Koga Tekko',
         Feet = 'Koga Kyahan',
+    },
+    D2D_WS = {
+        Hands = 'Kog. Tekko +1',
     },
     Enmity = { --ENMITY SET USED /W PROVOKE
         Head = 'Arhat\'s Jinpachi',
@@ -136,9 +139,9 @@ local sets = {
         Ear2 = 'Ethereal Earring',
         Body = 'Scorpion Harness',
         Hands = 'Rasetsu Tekko',
-        Back = 'Gigant Mantle',
+        Back = 'Boxer\'s Mantle',
         Waist = 'Koga Sarashi',
-        Feet = 'Rasetsu Sune-Ate',
+        Feet = 'Fuma Sune-Ate',
         Ring1 = 'Toreador\'s Ring',
         -- Ring2 = 'Bomb Queen Ring',
         Ring2 = 'Toreador\'s Ring',
@@ -147,27 +150,27 @@ local sets = {
         Head = 'Arhat\'s Jinpachi',
         Body = 'Arhat\'s gi',
         Ring1 = 'Jelly ring',
+        Back = 'Boxer\'s Mantle',
     },
     Movement = {
         Feet = 'Nin. Kyahan +1',
     },
     ['cap60'] = {
-        -- Main = 'Zushio',
-        -- Sub = 'Anju',
-        -- Range = 'Deluxe Carbine',
-        -- Ammo = 'Bullet',
+        Main = 'Zushio',
+        Sub = 'Anju',
+        Ammo = 'Fuma Shuriken',
         Head = 'Walkure Mask',
         Neck = 'Peacock Amulet',
         Ear1 = 'Drone Earring',
         Ear2 = 'Drone Earring',
         Body = 'Scorpion Harness',
         Hands = 'Ninja Tekko',
-        Ring1 = 'Rajas Ring',
-        Ring2 = 'Jaeger Ring',
-        Back = 'Nomad\'s Mantle',
-        Waist = 'Swift Belt',
-        Legs = 'Nokizaru Hakama',
-        Feet = 'Nin. Kyahan +1',
+        Ring1 = 'Toreador\'s Ring',
+        Ring2 = 'Toreador\'s Ring',
+        Back = 'Fed. Army Mantle',
+        Waist = 'Ryl.Kgt. Belt',
+        Legs = 'Ryl.Kgt. Breeches',
+        Feet = 'Bounding Boots',
     },
     ['RaccSixty'] = {
         -- Main = 'Fudo',
@@ -181,7 +184,7 @@ local sets = {
         Hands = 'Ninja Tekko',
         Ring1 = 'Scorpion Ring +1',
         Ring2 = 'Scorpion Ring +1',
-        Back = 'Nomad\'s Mantle',
+        Back = 'Fed. Army Mantle',
         Waist = 'Ryl.Kgt. Belt',
         Legs = 'Ninja Hakama',
         Feet = 'Bounding Boots',
@@ -194,7 +197,7 @@ local sets = {
         Neck = 'Peacock Amulet',
         Ear1 = 'Drone Earring',
         Ear2 = 'Drone Earring',
-        Body = 'Brigandine',
+        Body = 'Nokizaru gi',
         Hands = 'Wonder Mitts',
         Ring1 = 'Rajas Ring',
         Ring2 = 'Jaeger Ring',
@@ -258,8 +261,8 @@ profile.HandleDefault = function()
                 gFunc.Equip('Ammo', 'Fenrir\'s Stone')
             end
         end
-        if (game.Time < 6.00) or (game.Time > 18.00) then
-            gFunc.EquipSet(sets.Night_TP);
+        if (game.Time < 7.00) or (game.Time > 17.00) then
+            gFunc.EquipSet(sets.D2D_TP);
         end
             if (gcdisplay.GetToggle('silence') == true) then
                 gFunc.EquipSet(sets.Silence)
@@ -413,6 +416,9 @@ profile.HandleWeaponskill = function()
 
         if (game.Time < 6.00) or (game.Time > 18.00) then
             gFunc.EquipSet(sets.Night_WS);
+        end
+        if (game.Time < 7.00) or (game.Time > 17.00) then
+            gFunc.EquipSet(sets.D2D_WS);
         end
         if (gcdisplay.GetCycle('MeleeSet') ~= 'Default') then
             gFunc.EquipSet('Ws_' .. gcdisplay.GetCycle('MeleeSet'))
