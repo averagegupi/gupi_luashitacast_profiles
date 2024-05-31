@@ -132,6 +132,7 @@ local sets = {
         Body = 'Arhat\'s Gi',
         Legs = 'Nokizaru Hakama',
         Waist = 'Warwolf Belt',
+        Back = 'Resentment Cape',
     },
     Yonin = { --TANKING SET
         Head = 'Optical Hat',

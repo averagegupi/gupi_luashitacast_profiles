@@ -22,13 +22,16 @@ local sets = {
         Ear2 = 'Ethereal Earring',
         Body = 'Cleric\'s Bliaut',
         Hands = 'Blessed mitts',
+        Waist = 'Cleric\'s Belt',
         Legs = 'Blessed trousers',
         Feet = 'Blessed pumps',
         Back = 'Gigant Mantle',
     },
     Resting = {
         Main = 'Dark Staff',
+        Body = 'Errant Hpl.',
         Neck ='Checkered Scarf',
+        Waist = 'Cleric\'s Belt',
         
     },
     Town = {
@@ -59,10 +62,16 @@ local sets = {
         Feet = 'Blessed pumps',
         -- Feet = 'Healer\'s Duckbills',
     },
-    Cure_Precast = { -- No cure set yet, unless get haste body - throw potency stuff here
+    Cure_Precast = { -- precast for specific cure cast time down gear
         Main = 'Rucke\'s Rung',
         Feet = 'Cure Clogs',
+    },
+    Cure_Potency = { -- throw cure potency stuff here
+        -- light staff logic should handle wep
         Body = 'Noble\'s Tunic',
+        Back = 'Red Cape +1',
+        Waist = 'Cleric\'s Belt',
+        Feet = 'Blessed pumps',
 
     },
     Healing = { --healing skill+ to mitigate resists
@@ -89,7 +98,7 @@ local sets = {
         Body = 'Healer\'s Bliaut',
         Hands = 'Blessed Mitts',
         Back = 'Red Cape +1',
-        Waist = 'Mrc.Cpt. Belt',
+        Waist = 'Cleric\'s Belt',
         Legs = 'Blessed trousers',
         Feet = 'Cleric\'s Duckbills',
 
@@ -103,7 +112,7 @@ local sets = {
         Body = 'Blessed bliaut',
         Hands = 'Blessed Mitts',
         Back = 'Red Cape +1',
-        Waist = 'Mrc.Cpt. Belt',
+        Waist = 'Cleric\'s Belt',
         Legs = 'Healer\'s Pantaln.',
         Feet = 'Cleric\'s Duckbills',
 
@@ -118,7 +127,7 @@ local sets = {
         Ring1 = 'Rajas Ring',
         Ring2 = 'Toreador\'s Ring',
         Back = 'Amemet Mantle +1',
-        Waist = 'Mrc.Cpt. Belt',
+        Waist = 'Cleric\'s Belt',
         Legs = 'Wonder Braccae',
         Feet = 'Cleric\'s Duckbills'
     },
@@ -202,7 +211,7 @@ profile.HandleMidcast = function() -- MIDCAST
         end
     elseif (spell.Skill == 'Healing Magic') then
         if(spell.Name:contains('Cure')) then
-            gFunc.EquipSet(sets.Cure_Precast)
+            gFunc.EquipSet(sets.Cure_Potency)
         else 
             gFunc.EquipSet(sets.Healing)
         end

@@ -65,6 +65,7 @@ local sets = {
         Ear1 = 'Coral Earring',
         Ring1 = 'Coral Ring',
         Ring2 = 'Merman\'s Ring',
+        Back = 'Resentment Cape',
     },
     Precast = {
         Head = 'Homam Zucchetto',
