@@ -197,35 +197,35 @@ local sets = {
         Ear1 = 'Brutal Earring',
         Ear2 = 'Ethereal Earring',
     },
-    ['hpDown'] = {
-        Ammo = 'Phtm. Tathlum',
-        Head = 'Reraise Hairpin',
-        Neck = 'Willpower Torque',
-        Ear1 = 'Brutal Earring',
-        Ear2 = 'Loquac. Earring',
-        Body = 'Haubergeon',
-        Hands = 'Homam Manopolas',
-        Ring1 = 'Ether Ring',
-        Ring2 = 'Fasting Ring',
-        Back = 'Amemet Mantle +1',
-        Waist = 'Friar\'s Rope',
-        Legs = 'Ryl.Kgt. Breeches',
-        Feet = 'Bounding Boots',
+    ['hpDown'] = { -- +40 hp
+        Ammo = 'Phtm. Tathlum', -- 0
+        Head = 'Reraise Hairpin', -- -7
+        Neck = 'Willpower Torque', -- 0
+        Ear1 = 'Brutal Earring', -- 0
+        Ear2 = 'Loquac. Earring', -- 0
+        Body = 'Haubergeon', -- 0
+        Hands = 'Wonder Mitts', -- 12
+        Ring1 = 'Aqua Ring', -- 0
+        Ring2 = 'Snow Ring', -- 0
+        Back = 'Amemet Mantle +1', -- 0
+        Waist = 'Sprinter\'s Belt', -- 0
+        Legs = 'Valor Breeches', -- 20
+        Feet = 'Crimson greaves', -- 15
     },
-    ['hpUp'] = {
-        Ammo = 'Fenrir\'s Stone',
-        Head = 'Homam Zucchetto',
-        Neck = 'Shield Torque',
-        Ear1 = 'Morukaka Earring',
-        Ear2 = 'Ethereal Earring',
-        Body = 'Wonder Kaftan',
-        Hands = 'Alkyoneus\'s Brc.',
-        Ring1 = 'Bomb Queen Ring',
-        Ring2 = 'Toreador\'s Ring',
-        Back = 'Gigant Mantle',
-        Waist = 'Sprinter\'s Belt',
-        Legs = 'Homam Cosciales',
-        Feet = 'Homam Gambieras',
+    ['hpUp'] = { -- +395hp -40hp in hpDown set = 355 HP to be cureIV'd; 375hp in daytime /w FenrirStone
+        Ammo = 'Happy Egg', -- 10
+        Head = 'Koenig Schaller', -- 30
+        Neck = 'Shield Torque', -- 7
+        Ear1 = 'Morukaka Earring', -- 35
+        Ear2 = 'Ethereal Earring', -- 15
+        Body = 'Wonder Kaftan', -- 36
+        Hands = 'Alkyoneus\'s Brc.', -- 40
+        Ring1 = 'Bomb Queen Ring', -- 75
+        Ring2 = 'Toreador\'s Ring', -- 10
+        Back = 'Gigant Mantle', -- 80
+        Waist = 'Warwolf Belt', -- 0
+        Legs = 'Homam Cosciales', -- 31
+        Feet = 'Homam Gambieras', -- 26
     },
     ['es'] = {
         Main = 'Earth Staff',
@@ -392,6 +392,7 @@ profile.HandlePrecast = function() -- PRECAST
 end
 
 profile.HandleMidcast = function() -- MIDCAST
+    local game = gData.GetEnvironment();
     local spell = gData.GetAction();
     local target = gData.GetActionTarget();
 	local player = AshitaCore:GetMemoryManager():GetParty():GetMemberName(0);
@@ -401,6 +402,9 @@ profile.HandleMidcast = function() -- MIDCAST
     elseif (spell.Skill == 'Healing Magic') then
         if (gcdisplay.GetToggle('tank') == true and target.Name == player) then
             gFunc.EquipSet(sets.hpUp) -- cranking HP up for enmity
+            if (game.Time > 8.00) and (game.Time < 18.00) then
+                gFunc.Equip('Ammo','Fenrir\'s Stone');
+            end
         else
             gFunc.EquipSet(sets.Cure);
         end
