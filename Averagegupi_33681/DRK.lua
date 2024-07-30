@@ -1,16 +1,27 @@
+local zuccSuccTable = {'Drain', 'Drain II', 'Aspir'};
+local ElementalStaffTable = { 
+    ['Fire'] = 'Fire Staff',
+    ['Earth'] = 'Earth Staff',
+    ['Water'] = 'Water Staff',
+    ['Wind'] = 'Wind Staff',
+    ['Ice'] = 'Ice Staff',
+    ['Thunder'] = 'Thunder Staff',
+    ['Light'] = 'Light Staff',
+    ['Dark'] = 'Dark Staff'
+};
 local profile = {};
 gcinclude = gFunc.LoadFile('common\\gcinclude.lua');
 skillz = gFunc.LoadFile('common\\skillz.lua');
+conq = gFunc.LoadFile('common\\conquest.lua')
 
 local sets = {
     Idle = {
         Neck = 'Parade Gorget',
         Body = 'Vampire Cloak',
-        Hands = 'Blood Fng. Gnt.',
-        -- Ring1 = 'Electrum Ring',
-        -- Ring2 = 'Fasting Ring',
+        -- Hands = 'Blood Fng. Gnt.',
         Back = 'Gigant Mantle',
-        Feet = 'Homam Gambieras',
+        Legs = 'Crimson Cuisses',
+        -- Feet = 'Homam Gambieras',
     },
     Resting = {
         Neck ='Checkered Scarf',
@@ -33,30 +44,16 @@ local sets = {
         Legs = 'Homam Cosciales',
         Feet = 'Homam Gambieras',
     },
-    whoami = {
-        Head = 'Homam Zucchetto',
-        Neck = 'Parade Gorget',
-        Ear1 = 'Drone Earring',
-        Ear2 = 'Drone Earring',
-        Body = 'Abyss cuirass',
-        Hands = 'Abyss gauntlets',
-        Ring1 = 'Rajas Ring',
-        Ring2 = 'Phalanx ring',
-        Back = 'Boxer\'s Mantle',
-        Waist = 'Sprinter\'s Belt',
-        Legs = 'Chaos Flanchard',
-        Feet = 'Chs. Sollerets +1',
+    Acc_Override = {
+        Ring1 = 'Toreador\'s Ring',
+        Back = 'Abyss Cape',
     },
     Tp_Default = { -- neck and ear logic SHOULD be handled
         Head = 'Homam Zucchetto',
-        -- Neck = 'Prudence Torque',
-        -- Ear1 = 'Brutal Earring',
-        -- Ear2 = 'Abyssal Earring',
         Body = 'Haubergeon',
         Hands = 'Homam Manopolas',
-        Ring1 = 'Rajas Ring',
+        Ring1 = 'Toreador\'s Ring',
         Ring2 = 'Toreador\'s Ring',
-        -- Back = 'Abyss Cape',
         Back = 'Amemet Mantle +1',
         Waist = 'Sprinter\'s Belt',
         Legs = 'Homam Cosciales',
@@ -70,17 +67,19 @@ local sets = {
         Waist = 'Sprinter\'s Belt',
         Legs = 'Homam Cosciales',
         Feet = 'Homam Gambieras',
-        -- Back = 'Abyss Cape',
     },
     Cure = {
-        Neck = 'Justice badge',
-        Ring1 = 'Saintly Ring',
-        Ring2 = 'Saintly Ring',
+        -- Neck = 'Justice badge',
+        -- Ring1 = 'Saintly Ring',
+        -- Ring2 = 'Saintly Ring',
         Waist = 'Ryl.Kgt. Belt',
         Legs = 'Abyss Flanchard',
         Feet = 'Chs. Sollerets +1',
     },
-    Enhancing = {},
+    Enhancing = {
+        Neck = 'Enhancing Torque',
+        Back = 'Merciful Cape',
+    },
     Dread_Spikes = {}, --max out HP+ at cast to boost effect
     Enfeebling = {
         Head = 'Homam Zucchetto',
@@ -90,7 +89,7 @@ local sets = {
         Body = 'Chaos Cuirass',
         Hands = 'Abyss Gauntlets',
         Ring1 = 'Snow Ring',
-        Ring2 = 'Diamond Ring',
+        Ring2 = 'Snow Ring',
         Back = 'Abyss Cape',
         Waist = 'Ryl.Kgt. Belt',
         Legs = 'Chaos Flanchard',
@@ -104,8 +103,8 @@ local sets = {
         Body = 'Ryl.Sqr. Robe',
         Hands = 'Blood Fng. Gnt.',
         Ring1 = 'Snow Ring',
-        Ring2 = 'Diamond Ring',
-        Back = 'Abyss Cape',
+        Ring2 = 'Snow Ring',
+        Back = 'Merciful Cape',
         Waist = 'Sprinter\'s Belt',
         Legs = 'Abyss Flanchard',
     },
@@ -119,11 +118,11 @@ local sets = {
         Head = 'Demon helm',
         Neck = 'Prudence torque',
         Ear1 = 'Moldavite Earring',
-        Ear2 = 'Abyssal Earring',
+        Ear2 = 'Novio Earring',
         Body = 'Abyss Cuirass',
         Hands = 'Abyss Gauntlets',
         Ring1 = 'Snow Ring',
-        Ring2 = 'Diamond Ring',
+        Ring2 = 'Snow Ring',
         Back = 'Abyss Cape',
         Waist = 'Ryl.Kgt. Belt',
         Legs = 'Chaos Flanchard',
@@ -133,9 +132,9 @@ local sets = {
     },
     Midshot = {
         Head = 'Optical Hat',
-        Neck = 'Peacock Amulet',
+        Neck = 'Faith Torque',
         Ear1 = 'Drone Earring',
-        Ear2 = 'Drone Earring',
+        Ear2 = 'Waetoto\'s Earring',
         Body = 'Chaos Cuirass',
         Hands = 'Blood Fng. Gnt.',
         Ring1 = 'Coral Ring',
@@ -147,10 +146,10 @@ local sets = {
     },
     Ws_Default = { -- blanket WS
         Head = 'Chs. Burgeonet +1',
-        Neck = 'Thunder gorget',
+        Neck = 'Prudence Torque',
         Ear1 = 'Brutal Earring',
-        Ear2 = 'Abyssal Earring',
-        Body = 'Haubergeon',
+        Ear2 = 'Waetoto\'s Earring',
+        Body = 'Hecatomb Harness',
         Hands = 'Alkyoneus\'s Brc.',
         Ring1 = 'Flame Ring',
         Ring2 = 'Flame Ring',
@@ -163,9 +162,6 @@ local sets = {
 
     },
     BloodWeapon = {},
-    Movement = {
-        Legs = 'Crimson Cuisses',
-    },
     WeaponBash = {
         Hands = 'Chs. Gauntlets +1'
     },
@@ -274,6 +270,9 @@ profile.HandleDefault = function() --AUTO HANDLER?
     local player = gData.GetPlayer(); --PLAYER STATUS CHECK
     if (player.Status == 'Engaged') then
         gFunc.EquipSet(sets.Tp_Default)
+        if (gcdisplay.GetToggle('acc') == true) then
+            gFunc.EquipSet(sets.Acc_Override)    
+        end
         
         if(souleater == 1) then
             gFunc.EquipSet(sets.Souleater)
@@ -314,9 +313,6 @@ profile.HandleDefault = function() --AUTO HANDLER?
             if (player.HPP >= 85 and player.MPP <= 95) then -- check to use p gorget if activatable, otherwise use logic above
                 gFunc.Equip('Neck', 'Parade Gorget')
             end
-            -- shouldn't need these toggles with weapon logic above (???)
-        -- elseif (player.SubJob == 'NIN' and gcdisplay.GetToggle('dw')) then
-        --     gFunc.EquipSet(sets.Tp_DW)
 
         -- elseif (player.SubJob == 'PLD' and gcdisplay.GetToggle('whoami')) then
         --     gFunc.EquipSet(sets.whoami)
@@ -329,10 +325,14 @@ profile.HandleDefault = function() --AUTO HANDLER?
         end
 
     elseif (player.Status == 'Resting') then
-        gFunc.EquipSet(sets.Resting);
+        if (player.HPP >= 85) then -- check to use p gorget if activatable, otherwise use logic above
+            gFunc.Equip('Neck', 'Parade Gorget')
+        else
+            gFunc.EquipSet(sets.Resting);
+        end
 
-    elseif (player.IsMoving == true) then
-        gFunc.EquipSet(sets.Movement);
+    -- elseif (player.IsMoving == true) then -- W.Legs in idle set, no longer need this check
+    --     gFunc.EquipSet(sets.Movement);
     end
 
     gcinclude.CheckDefault();
@@ -455,6 +455,13 @@ profile.HandleMidcast = function()
         if spell.MppAftercast <= 50 then
 			gFunc.Equip('Neck', 'Uggalepih Pendant');
 		end
+        if (conq:GetInsideControl()) then
+            -- print('Testing; Nuking while inside region controlled by current nation - Circlet ON')
+            gFunc.Equip('Head', 'Republic Circlet')
+        end
+        if (gcdisplay.GetToggle('nuke') == true) then
+            gFunc.Equip('main', ElementalStaffTable[spell.Element]); 
+        end
     elseif (spell.Skill == 'Enfeebling Magic') then
         gFunc.EquipSet(sets.Enfeebling);
     elseif (spell.Skill == 'Dark Magic') then
@@ -463,6 +470,8 @@ profile.HandleMidcast = function()
             gFunc.EquipSet(sets.Dread_Spikes);
         elseif (spell.Name:find('^Absorb') ~= nil) then
             gFunc.EquipSet(sets.Absorb);
+        elseif (string.contains(spell.Name, 'Drain') or string.contains(spell.Name, 'Aspir')) then 
+            gFunc.Equip('ring2', 'Overlord\'s Ring');
         end
         if ObiCheck(spell) >= 1 then
 			gFunc.Equip('Waist', ElementalWaistTable[spell.Element]);
@@ -493,9 +502,10 @@ profile.HandleWeaponskill = function()
 
         local currentlyEquipped = gData.GetEquipment();
         local mainWep = skillz.wep_table[currentlyEquipped.Main.Resource.Skill]; -- this will return the string value in wep table
-        -- replace rajas with 2nd flame for GS ws
-        if (mainWep == 'GreatSword') then
+        -- Flame and Abyssal handling for GS/Scythe
+        if (mainWep == 'GreatSword' or mainWep == 'Scythe') then
             gFunc.Equip('Ring1', 'Flame Ring')
+            gFunc.Equip('Ear2', 'Abyssal Earring')
         end
         -- print('Main wep')
         -- print(mainWep)

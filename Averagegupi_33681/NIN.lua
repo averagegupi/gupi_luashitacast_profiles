@@ -1,6 +1,7 @@
 local profile = {};
 gcinclude = gFunc.LoadFile('common\\gcinclude.lua');
 skillz = gFunc.LoadFile('common\\skillz.lua');
+conq = gFunc.LoadFile('common\\conquest.lua')
 local ElementalStaffTable = { 
     ['Fire'] = 'Fire Staff',
     ['Earth'] = 'Earth Staff',
@@ -12,9 +13,9 @@ local ElementalStaffTable = {
     ['Dark'] = 'Dark Staff'
 };
 local sets = {
-    Idle = { --TODO: REGEN GEAR?
-        Hands = 'Kog. Tekko +1',
-        Feet = 'Koga Kyahan',
+    Idle = {
+        Head = 'Arhat\'s Jinpachi',
+        Hands = 'Kog. Tekko +1', --dusk gloves, swap em out
         Body = 'War Shinobi Gi',
     },
     Resting = {},
@@ -28,34 +29,36 @@ local sets = {
     },
     Stun = {
         Main = 'Senjuinrikio',
-        Sub = 'Stun Kukri',
+        Sub = 'Mamushito +1',
     },
     Town = {
         Body = 'Ducal aketon',
     },
     Tp_Default = {
-        -- Ammo = 'Bomb Core',
-        Head = 'Optical Hat',
-        Neck = 'Peacock Amulet',
+        Head = 'Panther Mask',
+        Neck = 'Hope Torque',
         Ear1 = 'Brutal Earring',
         Ear2 = 'Stealth Earring',
         Body = 'Ninja Chainmail',
         Hands = 'Dusk Gloves',
-        Ring1 = 'Toreador\'s Ring',
+        Ring1 = 'Rajas Ring',
         Ring2 = 'Toreador\'s Ring',
         Back = 'Amemet Mantle +1',
         Waist = 'Sprinter\'s Belt',
-        Legs = 'Koga Hakama',
+        Legs = 'Byakko\'s Haidate',
         Feet = 'Fuma Sune-Ate',
     },
     Tp_Acc = {
-        --TODO: build?
+        Head = 'Optical Hat',
+        Body = 'Koga Chainmail',
+        Ring1 = 'Toreador\'s Ring',
     },
-    Precast = { --FAST CAST STUFF
+    Precast = { --HASTE + FAST CAST STUFF
         Head ='Panther Mask',
         Neck = 'Willpower Torque',
         Hands = 'Kog. Tekko +1',
         Waist = 'Sprinter\'s Belt',
+        Legs = 'Byakko\'s Haidate',
         Ear1 = 'Loquac. Earring',
     },
     Utsu = { --EVA OR DT HERE?
@@ -70,9 +73,10 @@ local sets = {
         Body = 'Blue Cotehardie',
         Hands = 'Kog. Tekko +1',
         Ring1 = 'Snow Ring',
-        Ring2 = 'Diamond Ring',
+        Ring2 = 'Snow Ring',
         Back = 'Fed. Army Mantle',
         Waist = 'Ryl.Kgt. Belt',
+        Legs = 'Byakko\'s Haidate',
         Feet = 'Nin. Kyahan +1',
     },
     Enfeeb = { -- TODO: INT stack gear?
@@ -83,9 +87,10 @@ local sets = {
         Body = 'Blue Cotehardie',
         Hands = 'Kog. Tekko +1',
         Ring1 = 'Snow Ring',
-        Ring2 = 'Diamond Ring',
+        Ring2 = 'Snow Ring',
         Back = 'Fed. Army Mantle',
         Waist = 'Koga Sarashi',
+        Legs = 'Byakko\'s Haidate',
         Feet = 'Koga Kyahan',
     },
     D2D_TP = {
@@ -99,7 +104,7 @@ local sets = {
         Ear1 = 'Drone Earring',
         Ear2 = 'Drone Earring',
         Body = 'War Shinobi Gi',
-        Hands = 'Ninja Tekko',
+        Hands = 'Nin. Tekko +1',
         Ring1 = 'Coral Ring',
         Ring2 = 'Merman\'s Ring',
         Back = 'Amemet Mantle +1',
@@ -111,14 +116,14 @@ local sets = {
         Head = 'Optical Hat',
         Neck = 'Peacock Amulet',
         Ear1 = 'Brutal Earring',
-        Ear2 = 'Ethereal Earring',
+        Ear2 = 'Waetoto\'s Earring',
         Body = 'Haubergeon',
-        Hands = 'Alkyoneus\'s Brc.',
+        Hands = 'Nin. Tekko +1',
         Ring1 = 'Rajas Ring',
         Ring2 = 'Flame Ring',
         Back = 'Amemet Mantle +1',
         Waist = 'Warwolf Belt',
-        Legs = 'Ryl.Kgt. Breeches',
+        Legs = 'Byakko\'s Haidate',
         Feet = 'Wonder Clomps',
     },
     Night_WS = {
@@ -168,15 +173,12 @@ local sets = {
         Hands = 'Ninja Tekko',
         Ring1 = 'Toreador\'s Ring',
         Ring2 = 'Toreador\'s Ring',
-        Back = 'Fed. Army Mantle',
+        Back = 'Resentment Cape',
         Waist = 'Ryl.Kgt. Belt',
         Legs = 'Ryl.Kgt. Breeches',
-        Feet = 'Bounding Boots',
+        Feet = 'Wonder Clomps',
     },
     ['RaccSixty'] = {
-        -- Main = 'Fudo',
-        -- Sub = 'Warp Cudgel',
-        -- Ammo = 'Fuma Shuriken',
         Head = 'Ninja Hatsuburi',
         Neck = 'Peacock Amulet',
         Ear1 = 'Drone Earring',
@@ -205,7 +207,7 @@ local sets = {
         Back = 'Nomad\'s Mantle',
         Waist = 'Sprinter\'s Belt',
         Legs = 'Nokizaru Hakama',
-        Feet = 'Bounding Boots',
+        Feet = 'Wonder Clomps',
     },
 };
 
@@ -239,10 +241,13 @@ profile.HandleDefault = function()
 
     -- print(currentlyEquipped.Ammo) --table return
     -- print(currentlyEquipped.Ammo.Resource.Skill) -- 0 return for non-throwable (bomb core)
-
+    -- print(conq:GetOutsideControl())
 
 
     gFunc.EquipSet(sets.Idle);
+    if (conq:GetOutsideControl() and player.HPP < 99) then
+        gFunc.Equip('Head', 'President. Hairpin')
+    end
     if (game.Time < 7.00) or (game.Time > 17.00) then
         gFunc.EquipSet(sets.Movement);
     end
@@ -254,6 +259,9 @@ profile.HandleDefault = function()
 
     if (player.Status == 'Engaged') then
         gFunc.EquipSet(sets.Tp_Default);
+        if (gcdisplay.GetToggle('acc') == true) then
+            gFunc.EquipSet(sets.Tp_Acc)    
+        end
         if(currentlyEquipped.Range == nil) then -- check for range to not be present (aka xbow,bow,boomerang)
             -- print('first check passed');
             if(currentlyEquipped.Ammo.Resource.Skill == 0 and yonin == 0) then

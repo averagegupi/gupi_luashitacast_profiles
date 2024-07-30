@@ -2,6 +2,7 @@ local Divine_Nuke_Table = {'Banish', 'Banish II', 'Holy', 'Enlight'};
 local profile = {};
 gcinclude = gFunc.LoadFile('common\\gcinclude.lua');
 skillz = gFunc.LoadFile('common\\skillz.lua');
+conq = gFunc.LoadFile('common\\conquest.lua')
 
 local sets = {
     Idle = {
@@ -66,6 +67,8 @@ local sets = {
         Ring1 = 'Coral Ring',
         Ring2 = 'Merman\'s Ring',
         Back = 'Resentment Cape',
+        Legs = 'Crimson Cuisses',
+        Feet = 'Crimson Greaves',
     },
     Precast = {
         Head = 'Homam Zucchetto',
@@ -85,7 +88,8 @@ local sets = {
     },
     Enhancing = { -- TODO: for sj RDM bar/enspell/phalanx
         Neck = 'Enhancing Torque',
-        Legs = 'Glt. Breeches +1'
+        Legs = 'Glt. Breeches +1',
+        Back = 'Merciful Cape',
 
     },
     Enfeebling = {
@@ -115,6 +119,7 @@ local sets = {
     Divine_Nuke = { -- HOLY / BANISH M.ATT+ MND
         Head = 'Gallant Coronet',
         Ear1 = 'Moldavite Earring',
+        Ear2 = 'Novio Earring',
         Neck = 'Divine Torque', -- logic in cast to conditionally swap to uggy pendant
         Body = 'Gallant Surcoat',
         Waist = 'Ryl.Kgt. Belt',
@@ -129,11 +134,11 @@ local sets = {
         Head = 'Optical Hat',
         Neck = 'Peacock Amulet',
         Ear1 = 'Brutal Earring',
-        Ear2 = 'Ethereal Earring',
-        Body = 'Haubergeon',
+        Ear2 = 'Waetoto\'s Earring',
+        Body = 'Hecatomb Harness',
         Hands = 'Alkyoneus\'s Brc.',
         Ring1 = 'Rajas Ring',
-        Ring2 = 'Flame Ring',
+        Ring2 = 'Aqua Ring',
         Back = 'Amemet Mantle +1',
         Waist = 'Warwolf Belt',
         Legs = 'Valor Breeches',
@@ -145,7 +150,7 @@ local sets = {
         Ear1 = 'Morukaka Earring',
         Ear2 = 'Ethereal Earring',
         Body = 'Valor Surcoat',
-        Hands = 'Homam Manopolaslets',
+        Hands = 'Homam Manopolas',
         Ring1 = 'Jelly Ring',
         Ring2 = 'Bomb Queen Ring',
         Back = 'Boxer\'s Mantle',
@@ -222,6 +227,13 @@ local sets = {
         Legs = 'Homam Cosciales',
         Feet = 'Homam Gambieras',
     },
+    ['es'] = {
+        Main = 'Earth Staff',
+    },
+    ['sb'] = {
+        Main = 'Joyeuse',
+        Sub = 'Ice Shield',
+    },
 };
 profile.Sets = sets;
 
@@ -254,8 +266,16 @@ profile.HandleDefault = function() --AUTO HANDLER?
     local player_entity = GetPlayerEntity(); -- Verbose, but leaving this in as an example
     local player = gData.GetPlayer(); --PLAYER STATUS CHECK
     
+    -- print(conq:GetOutsideControl()) -- are you in a region controlled by nation other than yours
+    -- print(conq:GetInsideControl()) -- are you in a region controlled by your nation
     
     gFunc.EquipSet(sets.Idle);
+    if (gcdisplay.GetToggle('es') == true) then 
+        gFunc.EquipSet(sets.es) 
+    end
+    if (gcdisplay.GetToggle('sb') == true) then 
+        gFunc.EquipSet(sets.sb) 
+    end
 
     -- print(player_entity.Look.Sub.type)
     -- need to check for currentlyEquipped.Sub to exist, if so there is something in the OH
@@ -315,7 +335,7 @@ profile.HandleDefault = function() --AUTO HANDLER?
         end
         
         if (gcdisplay.GetToggle('tank') == true) then
-            gFunc.EquipSet(sets.elTank) -- cranking HP up for enmity
+            gFunc.EquipSet(sets.elTank)
         end
         -- TODO: toggles for 'serious' tanking of stuff mdt/pdt?/resistance
         -- outside of engaged check, so can be idle in these sets
@@ -428,9 +448,10 @@ profile.HandleWeaponskill = function() -- WEAPONSKILL
 
         local currentlyEquipped = gData.GetEquipment();
         local mainWep = skillz.wep_table[currentlyEquipped.Main.Resource.Skill]; -- this will return the string value in wep table
-        -- replace rajas with 2nd flame for GS ws
+        -- Flame and Abyssal handling for GS
         if (mainWep == 'GreatSword') then
             gFunc.Equip('Ring1', 'Flame Ring')
+            gFunc.Equip('Ear2', 'Abyssal Earring')
         end
         -- print('Main wep')
         -- print(mainWep)

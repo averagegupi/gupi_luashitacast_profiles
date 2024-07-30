@@ -12,6 +12,7 @@ local ElementalStaffTable = { -- important
 local profile = {};
 gcinclude = gFunc.LoadFile('common\\gcinclude.lua');
 skillz = gFunc.LoadFile('common\\skillz.lua');
+conq = gFunc.LoadFile('common\\conquest.lua')
 
 local sets = {
     Idle = {
@@ -22,6 +23,7 @@ local sets = {
         Ear2 = 'Ethereal Earring',
         Body = 'Cleric\'s Bliaut',
         Hands = 'Blessed mitts',
+        Ring1 = 'Carect Ring',
         Waist = 'Cleric\'s Belt',
         Legs = 'Blessed trousers',
         Feet = 'Blessed pumps',
@@ -29,7 +31,7 @@ local sets = {
     },
     Resting = {
         Main = 'Dark Staff',
-        Body = 'Errant Hpl.',
+        Body = 'Hlr. Bliaut +1',
         Neck ='Checkered Scarf',
         Waist = 'Cleric\'s Belt',
         
@@ -39,12 +41,12 @@ local sets = {
     },
     Tp_Default = {
         Head = 'Optical Hat',
-        Neck = 'Peacock Amulet',
+        Neck = 'Prudence Torque',
         Ear1 = 'Brutal Earring',
-        Ear2 = 'Ethereal Earring',
+        Ear2 = 'Stealth Earring',
         Body = 'Reverend Mail',
         Hands = 'Blessed Mitts',
-        Ring1 = 'Toreador\'s Ring',
+        Ring1 = 'Rajas Ring',
         Ring2 = 'Toreador\'s Ring',
         -- Back = 'Red Cape +1',
         Waist = 'Swift Belt',
@@ -69,6 +71,7 @@ local sets = {
     Cure_Potency = { -- throw cure potency stuff here
         -- light staff logic should handle wep
         Body = 'Noble\'s Tunic',
+        Ring1 = 'Aqua Ring',
         Back = 'Red Cape +1',
         Waist = 'Cleric\'s Belt',
         Feet = 'Blessed pumps',
@@ -81,6 +84,8 @@ local sets = {
     },
     Enhancing = {
         Neck = 'Enhancing Torque',
+        Ring1 = 'Aqua Ring',
+        Back = 'Merciful Cape',
         Feet = 'Cleric\'s Duckbills',
 
     },
@@ -95,12 +100,18 @@ local sets = {
     Enfeebling = {
         Head = 'Healer\'s Cap',
         Neck = 'Enfeebling torque',
-        Body = 'Healer\'s Bliaut',
-        Hands = 'Blessed Mitts',
+        Body = 'Hlr. Bliaut +1',
+        Hands = 'Cleric\'s Mitts',
+        Ring1 = 'Aqua Ring',
         Back = 'Red Cape +1',
         Waist = 'Cleric\'s Belt',
         Legs = 'Blessed trousers',
         Feet = 'Cleric\'s Duckbills',
+
+    },
+    Dark = {
+        Neck = 'Dark Torque',
+        Back = 'Merciful Cape',
 
     },
     -- ABILITIES --
@@ -108,8 +119,10 @@ local sets = {
     Divine_Nuke = { -- HOLY / BANISH M.ATT+ MND
         Head = 'Healer\'s Cap',
         Neck = 'Divine Torque', -- logic in cast to conditionally swap to uggy pendant
-        Ear2 = 'Moldavite Earring',
+        Ear1 = 'Moldavite Earring',
+        Ear2 = 'Novio Earring',
         Body = 'Blessed bliaut',
+        Ring1 = 'Aqua Ring',
         Hands = 'Blessed Mitts',
         Back = 'Red Cape +1',
         Waist = 'Cleric\'s Belt',
@@ -119,13 +132,13 @@ local sets = {
     },
     Ws_Default = { -- blanket WS
         Head = 'Optical Hat',
-        Neck = 'Peacock Amulet',
+        -- Neck = 'Peacock Amulet',
         Ear1 = 'Brutal Earring',
-        Ear2 = 'Ethereal Earring',
+        Ear2 = 'Waetoto\'s Earring',
         Body = 'Reverend Mail',
         Hands = 'Healer\'s Mitts',
         Ring1 = 'Rajas Ring',
-        Ring2 = 'Toreador\'s Ring',
+        Ring2 = 'Aqua Ring',
         Back = 'Amemet Mantle +1',
         Waist = 'Cleric\'s Belt',
         Legs = 'Wonder Braccae',
@@ -158,15 +171,24 @@ end
 
 profile.HandleDefault = function() --AUTO HANDLER?
 
-    -- local isCoverOn = gData.GetBuffCount('Cover')
+    local outsideControl = conq:GetOutsideControl()
     local shadows = gData.GetBuffCount('Copy Image') + gData.GetBuffCount('Copy Image (2)') + gData.GetBuffCount('Copy Image (3)') + gData.GetBuffCount('Copy Image (4+)')
     local currentlyEquipped = gData.GetEquipment();
     local player_entity = GetPlayerEntity(); -- Verbose, but leaving this in as an example
     local player = gData.GetPlayer(); --PLAYER STATUS CHECK
     
+    -- print(outsideControl)
     
     gFunc.EquipSet(sets.Idle);
-
+    if (outsideControl) then
+        gFunc.Equip('Neck', 'Rep.Gold Medal')
+        if(player.HPP < 99) then
+            gFunc.Equip('Head', 'President. Hairpin')
+        end
+    end
+    if(player.MP <= 950) then
+        gFunc.Equip('Ring1', 'Aqua Ring')
+    end
 
     if (player.Status == 'Engaged') then
         gFunc.EquipSet(sets.Tp_Default)
@@ -220,7 +242,7 @@ profile.HandleMidcast = function() -- MIDCAST
     elseif (spell.Skill == 'Enfeebling Magic') then
         gFunc.EquipSet(sets.Enfeebling);
     elseif (spell.Skill == 'Dark Magic') then
-        gFunc.EquipSet(sets.Enmity);
+        gFunc.EquipSet(sets.Dark);
     elseif(spell.Skill == 'Singing') then
         gFunc.EquipSet(sets.brdSub)
 
@@ -238,6 +260,10 @@ profile.HandleMidcast = function() -- MIDCAST
                 -- print('casting enlight, should not swap to uggy pendant');
             if spell.MppAftercast <= 50 then
                 gFunc.Equip('Neck', 'Uggalepih Pendant');
+            end
+            if (conq:GetInsideControl()) then
+                -- print('Testing; Nuking while inside region controlled by current nation - Circlet ON')
+                gFunc.Equip('Head', 'Republic Circlet')
             end
         -- else -- if its not a nuke, then its flash, slap enmity stuff on
             -- gFunc.EquipSet(sets.Enmity);

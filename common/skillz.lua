@@ -100,7 +100,7 @@ skillz.wepSkills = { -- Weaponskills
         ['Guillotine'] = {en='Guillotine',skillchain={'Induration'}},
         ['Cross Reaper'] = {en='Cross Reaper',skillchain={'Distortion'}},
         ['Spiral Hell'] = {en='Spiral Hell',skillchain={'Distortion','Scission'}},
-        ['Catastrophe'] = {en='Catastrophe',skillchain={'Fusion','Compression'}},
+        ['Catastrophe'] = {en='Catastrophe',skillchain={'Darkness','Gravitation'}},
     },
 
     Polearm = {--Polearm
