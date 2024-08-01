@@ -16,7 +16,8 @@ conq = gFunc.LoadFile('common\\conquest.lua')
 
 local sets = {
     Idle = {
-        Main = 'Earth Staff',
+        Main = 'Kirin\'s Pole',
+        Ammo = 'Fenrir\'s Stone',
         Head = 'Healer\'s Cap',
         Neck = 'Uggalepih Pendant',
         Ear1 = 'Loquac. Earring',
@@ -170,7 +171,7 @@ profile.HandleCommand = function(args) --INPUT HANDLER?
 end
 
 profile.HandleDefault = function() --AUTO HANDLER?
-
+    local game = gData.GetEnvironment();
     local outsideControl = conq:GetOutsideControl()
     local shadows = gData.GetBuffCount('Copy Image') + gData.GetBuffCount('Copy Image (2)') + gData.GetBuffCount('Copy Image (3)') + gData.GetBuffCount('Copy Image (4+)')
     local currentlyEquipped = gData.GetEquipment();
@@ -180,6 +181,9 @@ profile.HandleDefault = function() --AUTO HANDLER?
     -- print(outsideControl)
     
     gFunc.EquipSet(sets.Idle);
+    if (game.Time < 6.00) or (game.Time > 18.00) then
+        gFunc.Equip('Ammo','Happy Egg');
+    end
     if (outsideControl) then
         gFunc.Equip('Neck', 'Rep.Gold Medal')
         if(player.HPP < 99) then
@@ -243,8 +247,6 @@ profile.HandleMidcast = function() -- MIDCAST
         gFunc.EquipSet(sets.Enfeebling);
     elseif (spell.Skill == 'Dark Magic') then
         gFunc.EquipSet(sets.Dark);
-    elseif(spell.Skill == 'Singing') then
-        gFunc.EquipSet(sets.brdSub)
 
     elseif (spell.Skill == 'Divine Magic') then
         local damagingDivine = false -- set a flag for damage or just enmity divine spell (like flash)

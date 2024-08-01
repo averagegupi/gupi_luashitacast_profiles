@@ -1,4 +1,3 @@
-local Divine_Nuke_Table = {'Banish', 'Banish II', 'Holy', 'Enlight'};
 local profile = {};
 gcinclude = gFunc.LoadFile('common\\gcinclude.lua');
 skillz = gFunc.LoadFile('common\\skillz.lua');
@@ -6,11 +5,7 @@ conq = gFunc.LoadFile('common\\conquest.lua')
 
 local sets = {
     Idle = {
-        Body = 'Royal Cloak',
-        Neck = 'Parade Gorget',
-        Hands = 'Homam Manopolas',
-        Legs = 'Crimson Cuisses',
-        -- Feet = 'Homam Gambieras',
+
     },
     Resting = {
         
@@ -19,172 +14,82 @@ local sets = {
         Body = 'Ducal aketon',
     },
     Tp_Default = {
-        Head = 'Homam Zucchetto',
-        Neck = 'Parade Gorget',
-        Ear1 = 'Morukaka Earring',
-        Ear2 = 'Ethereal Earring',
-        Body = 'Valor Surcoat',
-        Hands = 'Homam Manopolas',
-        Ring1 = 'Rajas Ring',
-        Ring2 = 'Toreador\'s Ring',
-        Back = 'Boxer\'s Mantle',
-        Waist = 'Sprinter\'s Belt',
-        Legs = 'Homam Cosciales',
-        Feet = 'Homam Gambieras',
+        Head = '',
+        Neck = '',
+        Ear1 = '',
+        Ear2 = '',
+        Body = '',
+        Hands = '',
+        Ring1 = '',
+        Ring2 = '',
+        Back = '',
+        Waist = '',
+        Legs = '',
+        Feet = '',
     },
-    dd = {
-        Head = 'Homam Zucchetto',
-        -- Neck = 'Peacock Amulet',
-        Ear1 = 'Brutal Earring',
-        -- Ear2 = 'Ethereal Earring',
-        Body = 'Scorpion Harness',
-        Hands = 'Homam Manopolas',
-        Ring1 = 'Toreador\'s Ring',
-        Ring2 = 'Toreador\'s Ring',
-        Back = 'Boxer\'s Mantle',
-        Waist = 'Sprinter\'s Belt',
-        Legs = 'Homam Cosciales',
-        Feet = 'Homam Gambieras',
-    },
-    noShield = {
-        Feet = 'Homam Gambieras',
-        
-    },
-    Enmity = { -- TODO: LOAD UP THAT PLATE
-        Head = 'Valor Coronet',
-        Body = 'Valor Surcoat',
-        Hands = 'Homam Manopolaslets',
-        Legs = 'Valor Breeches',
-        Feet = 'Valor Leggings',
-        Waist = 'Warwolf Belt',
-        Back = 'Valor Cape',
-    },
-    Tp_DW = {
 
+    Enmity = { -- TODO: LOAD UP THAT PLATE
+        Waist = 'Warwolf Belt',
+        Back = 'Resentment Cape',
     },
+
     mdt = {
         Ear1 = 'Coral Earring',
         Ring1 = 'Coral Ring',
         Ring2 = 'Merman\'s Ring',
         Back = 'Resentment Cape',
-        Legs = 'Crimson Cuisses',
-        Feet = 'Crimson Greaves',
     },
     Precast = {
-        Head = 'Homam Zucchetto',
-        Neck = 'Willpower Torque',
-        Ear1 = 'Loquac. Earring',
-        Hands = 'Homam Manopolas',
-        Legs = 'Homam Cosciales',
-        Waist = 'Sprinter\'s Belt',
-        Feet = 'Homam Gambieras',
     },
-    Cure = {
-        Ear1 = 'Hospitaler Earring',
 
-    },
-    maxHpPrecast = {
-
-    },
     Enhancing = { -- TODO: for sj RDM bar/enspell/phalanx
         Ear1 = 'Moldavite Earring', -- apparently MAB impacts spike damage, slap these on for blaze spikes
         Ear2 = 'Novio Earring',
         Neck = 'Enhancing Torque',
-        Legs = 'Glt. Breeches +1',
         Back = 'Merciful Cape',
-
     },
+    
     Enfeebling = {
-
     },
     -- ABILITIES --
+    -- TODO: add MNK abilities
     Rampart = {
-        Head = 'Valor Coronet'
-    },
-    Cover = {
-        Head = 'Gallant Coronet',
-        Body = 'Valor Surcoat',
-        Ear1 = 'Morukaka Earring', -- swap out Ethereal, cover augment doesn't stack with it
-        Ear2 = 'Coral Earring', -- swap out Ethereal, cover augment doesn't stack with it
 
     },
-    Sentinel = {
-        Feet = 'Valor Leggings',
-    },
-    Shield_Bash = {
-        Sub = 'Ice Shield', -- TODO: update to get the name of the wep on OH if not shield, and put it back on after ability?
-        Hands = 'Valor Gauntlets',
-    },
-    Holy_Circle = {
-        Feet = 'Glt. Leggings +1',
-    },
-    Divine_Nuke = { -- HOLY / BANISH M.ATT+ MND
-        Head = 'Gallant Coronet',
-        Ear1 = 'Moldavite Earring',
-        Ear2 = 'Novio Earring',
-        Neck = 'Divine Torque', -- logic in cast to conditionally swap to uggy pendant
-        Body = 'Gallant Surcoat',
-        Waist = 'Ryl.Kgt. Belt',
-        Legs = 'Wonder Braccae',
-        Feet = 'Valor Leggings',
 
-    },
     Movement = {
-        Legs = 'Crimson Cuisses',
     },
+
     Ws_Default = { -- blanket WS
-        Head = 'Optical Hat',
-        Neck = 'Peacock Amulet',
-        Ear1 = 'Brutal Earring',
-        Ear2 = 'Waetoto\'s Earring',
-        Body = 'Hecatomb Harness',
-        Hands = 'Alkyoneus\'s Brc.',
-        Ring1 = 'Rajas Ring',
-        Ring2 = 'Aqua Ring',
-        Back = 'Amemet Mantle +1',
-        Waist = 'Warwolf Belt',
-        Legs = 'Valor Breeches',
-        Feet = 'Wonder Clomps'
+        Head = '',
+        Neck = '',
+        Ear1 = '',
+        Ear2 = '',
+        Body = '',
+        Hands = '',
+        Ring1 = '',
+        Ring2 = '',
+        Back = '',
+        Waist = '',
+        Legs = '',
+        Feet = '',
+    },
+    brdSub = {
+        Ear2 = 'Singer\'s Earring',
+        Back = 'Singer\'s Mantle',
     },
     elTank = {
-        Head = 'Koenig Schaller',
-        Neck = 'Parade Gorget',
-        Ear1 = 'Morukaka Earring',
-        Ear2 = 'Ethereal Earring',
-        Body = 'Valor Surcoat',
-        Hands = 'Homam Manopolas',
-        Ring1 = 'Jelly Ring',
-        Ring2 = 'Bomb Queen Ring',
-        Back = 'Boxer\'s Mantle',
-        Waist = 'Warwolf Belt',
-        Legs = 'Crimson Cuisses',
-        Feet = 'Glt. Leggings +1',
+
     },
+    -- TODO: test this, pretty sure no H2H is still H2H skill
     None = { -- aka shield
-        Head = 'Koenig Schaller',
-        Neck = 'Shield Torque',
-        Ear1 = 'Morukaka Earring',
-        Ear2 = 'Ethereal Earring',
-        Feet = 'Glt. Leggings +1',
+    --     Head = 'Koenig Schaller',
+    --     Neck = 'Shield Torque',
+    --     Ear1 = 'Morukaka Earring',
+    --     Ear2 = 'Ethereal Earring',
+    --     Feet = 'Glt. Leggings +1',
     },
-    Dagger = {
-        Neck = 'Peacock Amulet',
-        Ear1 = 'Brutal Earring',
-        Ear2 = 'Stealth Earring',
-    },
-    Sword = { -- Note: swapping out brutal for stealth. Joytoy + justice + virtue stones = the juice
-        Ammo = 'Virtue Stone',
-        Neck = 'Peacock Amulet',
-        Ear1 = 'Stealth Earring',
-        Ear2 = 'Ethereal Earring',
-    },
-    GreatSword = {
-        Neck = 'Prudence Torque',
-        -- Ear1 = 'Brutal Earring',
-        Ear1 = 'Abyssal Earring',
-        Ear2 = 'Ethereal Earring', --testing
-    },
-    Polearm = {
+    HandToHand = {
         Neck = 'Peacock Amulet',
         Ear1 = 'Brutal Earring',
         Ear2 = 'Ethereal Earring',
@@ -199,43 +104,38 @@ local sets = {
         Ear1 = 'Brutal Earring',
         Ear2 = 'Ethereal Earring',
     },
+    -- TODO: copy/paste this from PLD, keeping this logic in here if I get dumb ideas about tanking
     ['hpDown'] = { -- +40 hp
-        Ammo = 'Phtm. Tathlum', -- 0
-        Head = 'Reraise Hairpin', -- -7
-        Neck = 'Willpower Torque', -- 0
-        Ear1 = 'Brutal Earring', -- 0
-        Ear2 = 'Loquac. Earring', -- 0
-        Body = 'Haubergeon', -- 0
-        Hands = 'Wonder Mitts', -- 12
-        Ring1 = 'Aqua Ring', -- 0
-        Ring2 = 'Snow Ring', -- 0
-        Back = 'Amemet Mantle +1', -- 0
-        Waist = 'Sprinter\'s Belt', -- 0
-        Legs = 'Valor Breeches', -- 20
-        Feet = 'Crimson greaves', -- 15
+    --     Ammo = 'Phtm. Tathlum', -- 0
+    --     Head = 'Reraise Hairpin', -- -7
+    --     Neck = 'Willpower Torque', -- 0
+    --     Ear1 = 'Brutal Earring', -- 0
+    --     Ear2 = 'Loquac. Earring', -- 0
+    --     Body = 'Haubergeon', -- 0
+    --     Hands = 'Wonder Mitts', -- 12
+    --     Ring1 = 'Aqua Ring', -- 0
+    --     Ring2 = 'Snow Ring', -- 0
+    --     Back = 'Amemet Mantle +1', -- 0
+    --     Waist = 'Sprinter\'s Belt', -- 0
+    --     Legs = 'Valor Breeches', -- 20
+    --     Feet = 'Crimson greaves', -- 15
     },
     ['hpUp'] = { -- +395hp -40hp in hpDown set = 355 HP to be cureIV'd; 375hp in daytime /w FenrirStone
-        Ammo = 'Happy Egg', -- 10
-        Head = 'Koenig Schaller', -- 30
-        Neck = 'Shield Torque', -- 7
-        Ear1 = 'Morukaka Earring', -- 35
-        Ear2 = 'Ethereal Earring', -- 15
-        Body = 'Wonder Kaftan', -- 36
-        Hands = 'Alkyoneus\'s Brc.', -- 40
-        Ring1 = 'Bomb Queen Ring', -- 75
-        Ring2 = 'Toreador\'s Ring', -- 10
-        Back = 'Gigant Mantle', -- 80
-        Waist = 'Warwolf Belt', -- 0
-        Legs = 'Homam Cosciales', -- 31
-        Feet = 'Homam Gambieras', -- 26
+    --     Ammo = 'Happy Egg', -- 10
+    --     Head = 'Koenig Schaller', -- 30
+    --     Neck = 'Shield Torque', -- 7
+    --     Ear1 = 'Morukaka Earring', -- 35
+    --     Ear2 = 'Ethereal Earring', -- 15
+    --     Body = 'Wonder Kaftan', -- 36
+    --     Hands = 'Alkyoneus\'s Brc.', -- 40
+    --     Ring1 = 'Bomb Queen Ring', -- 75
+    --     Ring2 = 'Toreador\'s Ring', -- 10
+    --     Back = 'Gigant Mantle', -- 80
+    --     Waist = 'Warwolf Belt', -- 0
+    --     Legs = 'Homam Cosciales', -- 31
+    --     Feet = 'Homam Gambieras', -- 26
     },
-    ['es'] = {
-        Main = 'Earth Staff',
-    },
-    ['sb'] = {
-        Main = 'Joyeuse',
-        Sub = 'Ice Shield',
-    },
+
 };
 profile.Sets = sets;
 
@@ -248,8 +148,8 @@ profile.OnLoad = function() -- LOAD
     gcinclude.Initialize();
 
     AshitaCore:GetChatManager():QueueCommand(1, '/macro book 1');
-    AshitaCore:GetChatManager():QueueCommand(1, '/macro set 5');
-    AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 94');
+    AshitaCore:GetChatManager():QueueCommand(1, '/macro set 4');
+    AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 99');
 end
 
 profile.OnUnload = function() --UNLOAD
@@ -262,7 +162,6 @@ end
 
 profile.HandleDefault = function() --AUTO HANDLER?
 
-    local isCoverOn = gData.GetBuffCount('Cover')
     local shadows = gData.GetBuffCount('Copy Image') + gData.GetBuffCount('Copy Image (2)') + gData.GetBuffCount('Copy Image (3)') + gData.GetBuffCount('Copy Image (4+)')
     local currentlyEquipped = gData.GetEquipment();
     local player_entity = GetPlayerEntity(); -- Verbose, but leaving this in as an example
@@ -272,12 +171,6 @@ profile.HandleDefault = function() --AUTO HANDLER?
     -- print(conq:GetInsideControl()) -- are you in a region controlled by your nation
     
     gFunc.EquipSet(sets.Idle);
-    if (gcdisplay.GetToggle('es') == true) then 
-        gFunc.EquipSet(sets.es) 
-    end
-    if (gcdisplay.GetToggle('sb') == true) then 
-        gFunc.EquipSet(sets.sb) 
-    end
 
     -- print(player_entity.Look.Sub.type)
     -- need to check for currentlyEquipped.Sub to exist, if so there is something in the OH
@@ -286,11 +179,7 @@ profile.HandleDefault = function() --AUTO HANDLER?
     -- print('Main: ' + currentlyEquipped.Main.Resource.Skill)
 
     if (player.Status == 'Engaged') then
-        -- default here is tank set
         gFunc.EquipSet(sets.Tp_Default)
-        if(currentlyEquipped.Sub == nil or currentlyEquipped.Sub ~= 0) then -- check for shield. If none, swap boots
-            gFunc.EquipSet(sets.noShield);
-        end
     
         -- weapon logic START 
         local mainWepSet
@@ -315,18 +204,6 @@ profile.HandleDefault = function() --AUTO HANDLER?
             end 
             gFunc.EquipSet(sets[mainWepSet]) -- look in the weapon table, equip the resulting set
             -- weapon logic END 
-            -- reworked the paradge gorget logic, it'll slap it on when I'm above 85% hp and less than 95% mp
-            if (player.HPP >= 85  and player.MPP <= 95) then
-                gFunc.Equip('Neck', 'Parade Gorget')
-            end --neck logic end
-            if (shadows == 0 and player.SubJob == 'NIN') then --CHECK FOR SHADOWS UP
-                gFunc.Equip('Ring1', 'Jelly Ring'); -- TODO: update
-                gFunc.Equip('Ear2', 'Ethereal Earring');
-            end
-            -- dd flag check
-            if (gcdisplay.GetToggle('dd') == true) then -- this is the flag for damage set
-                gFunc.EquipSet(sets.dd) -- slapping generic damage set on
-            end
             
         elseif (player.Status == 'Resting') then
             gFunc.EquipSet(sets.Resting);
@@ -344,11 +221,6 @@ profile.HandleDefault = function() --AUTO HANDLER?
         if(gcdisplay.GetToggle('mdt')) then 
             gFunc.EquipSet(sets.mdt)
         end    
-        -- cover check
-        if(isCoverOn == 1) then
-            print('cover is on') --testing
-            gFunc.EquipSet(sets.Cover)
-        end
         
         gcinclude.CheckDefault();
     end
@@ -356,23 +228,8 @@ profile.HandleDefault = function() --AUTO HANDLER?
     profile.HandleAbility = function() --ABILITY HANDLER
     local ability = gData.GetAction();
 
-    if string.match(ability.Name, 'Rampart') then
-        gFunc.EquipSet(sets.Rampart);
-
-    elseif string.match(ability.Name, 'Cover') then
-        gFunc.EquipSet(sets.Cover);
-
-    elseif string.match(ability.Name, 'Sentinel') then
-        gFunc.EquipSet(sets.Sentinel);
-
-    elseif string.match(ability.Name, 'Shield Bash') then
-        gFunc.EquipSet(sets.Shield_Bash);
-
-    elseif string.match(ability.Name, 'Holy Circle') then
-        gFunc.EquipSet(sets.Holy_Circle);
-
-    elseif string.match(ability.Name, 'Provoke') then
-        gFunc.EquipSet(sets.Enmity);
+    if string.match(ability.Name, 'Boost') then
+        gFunc.EquipSet(sets.Boost);
     end
 
     gcinclude.CheckCancels();
@@ -412,30 +269,14 @@ profile.HandleMidcast = function() -- MIDCAST
         end
     -- elseif (spell.Skill == 'Elemental Magic') then
     --     gFunc.EquipSet(sets.Nuke);
-    -- TODO: probably useless for PLD, but build this table out for /RDM tanking??
     elseif (spell.Skill == 'Enfeebling Magic') then -- enmity here for /RDM bind,blind,etc
         gFunc.EquipSet(sets.Enmity);
     elseif (spell.Skill == 'Dark Magic') then -- enmity here if /DRK stun
         gFunc.EquipSet(sets.Enmity);
-
     elseif (spell.Skill == 'Divine Magic') then
-        local damagingDivine = false -- set a flag for damage or just enmity divine spell (like flash)
-        for _, s in ipairs(Divine_Nuke_Table) do -- loop through table
-            if s == spell.Name then
-                damagingDivine = true
-                break
-            end
-        end
-        if(damagingDivine == true) then
-            gFunc.EquipSet(sets.Divine_Nuke);
-            if(spell.Name == 'Enlight') then
-                -- print('casting enlight, should not swap to uggy pendant');
-            elseif spell.MppAftercast <= 50 then
-                gFunc.Equip('Neck', 'Uggalepih Pendant');
-            end
-        else -- if its not a nuke, then its flash, slap enmity stuff on
-            gFunc.EquipSet(sets.Enmity);
-        end
+        gFunc.EquipSet(sets.Enmity);
+    elseif(spell.Skill == 'Singing') then
+        gFunc.EquipSet(sets.brdSub)
     end
 end
 
@@ -454,11 +295,7 @@ profile.HandleWeaponskill = function() -- WEAPONSKILL
 
         local currentlyEquipped = gData.GetEquipment();
         local mainWep = skillz.wep_table[currentlyEquipped.Main.Resource.Skill]; -- this will return the string value in wep table
-        -- Flame and Abyssal handling for GS
-        if (mainWep == 'GreatSword') then
-            gFunc.Equip('Ring1', 'Flame Ring')
-            gFunc.Equip('Ear2', 'Abyssal Earring')
-        end
+
         -- print('Main wep')
         -- print(mainWep)
 
@@ -499,9 +336,7 @@ profile.HandleWeaponskill = function() -- WEAPONSKILL
         gFunc.EquipSet('Ws_' .. gcdisplay.GetCycle('MeleeSet')) end
     end
 
-    -- if (wsName == 'Spirit Taker') then
-    --     gFunc.EquipSet(sets.Ws_SpiritTaker)
-    -- end
+
 end
 
 return profile;
