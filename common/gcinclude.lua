@@ -134,6 +134,10 @@ function gcinclude.SetVariables()
 		gcdisplay.CreateToggle('es', false);
 		gcdisplay.CreateToggle('sb', false);
 	end
+	if (player.MainJob == 'MNK') then
+		gcdisplay.CreateToggle('tank', false);
+		gcdisplay.CreateToggle('mdt', false);
+	end
 	if (player.MainJob == 'PUP') then
 		gcdisplay.CreateCycle('PupMode', {[1] = 'Tank', [2] = 'Melee', [3] = 'Ranger', [4] = 'Mage'});
 	end
@@ -361,6 +365,18 @@ function gcinclude.HandleCommands(args)
 			gcdisplay.AdvanceToggle('sb');
 			toggle = 'sb';
 			status = gcdisplay.GetToggle('sb');
+		end
+	end
+	if (player.MainJob == 'MNK') then
+		if (args[1] == 'mdt') then
+			gcdisplay.AdvanceToggle('mdt');
+			toggle = 'mdt';
+			status = gcdisplay.GetToggle('mdt');
+		end
+		if (args[1] == 'tank') then
+			gcdisplay.AdvanceToggle('tank');
+			toggle = 'tank';
+			status = gcdisplay.GetToggle('tank');
 		end
 	end
 	if (player.MainJob == 'PUP') then

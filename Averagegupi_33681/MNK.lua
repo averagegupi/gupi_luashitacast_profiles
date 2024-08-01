@@ -78,11 +78,10 @@ local sets = {
         Ear2 = 'Singer\'s Earring',
         Back = 'Singer\'s Mantle',
     },
-    elTank = {
-
+    elTank = { -- TODO: use for skillup farming atm, but update to actual tank/guard
+        Back = 'Cvl. Mantle'
     },
-    -- TODO: test this, pretty sure no H2H is still H2H skill
-    None = { -- aka shield
+    None = { -- TODO: test this, pretty sure no H2H is still H2H skill; this was for shield on PLD
     --     Head = 'Koenig Schaller',
     --     Neck = 'Shield Torque',
     --     Ear1 = 'Morukaka Earring',
@@ -104,8 +103,7 @@ local sets = {
         Ear1 = 'Brutal Earring',
         Ear2 = 'Ethereal Earring',
     },
-    -- TODO: copy/paste this from PLD, keeping this logic in here if I get dumb ideas about tanking
-    ['hpDown'] = { -- +40 hp
+    ['hpDown'] = { -- TODO: copy/paste this from PLD, keeping this logic in here if I get dumb ideas about tanking
     --     Ammo = 'Phtm. Tathlum', -- 0
     --     Head = 'Reraise Hairpin', -- -7
     --     Neck = 'Willpower Torque', -- 0
@@ -216,7 +214,6 @@ profile.HandleDefault = function() --AUTO HANDLER?
         if (gcdisplay.GetToggle('tank') == true) then
             gFunc.EquipSet(sets.elTank)
         end
-        -- TODO: toggles for 'serious' tanking of stuff mdt/pdt?/resistance
         -- outside of engaged check, so can be idle in these sets
         if(gcdisplay.GetToggle('mdt')) then 
             gFunc.EquipSet(sets.mdt)
