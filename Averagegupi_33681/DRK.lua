@@ -266,7 +266,7 @@ profile.HandleDefault = function() --AUTO HANDLER?
     local mainWep
 
     gFunc.EquipSet(sets.Idle);
-    if (game.Time < 6.00) or (game.Time > 18.00) then
+    if (game.Time > 6.00 and game.Time < 18.00) then
         gFunc.Equip('Hands', 'Garden Bangles')
     end
 
@@ -453,9 +453,10 @@ end
 
 profile.HandleMidcast = function()
     local spell = gData.GetAction();
-
+    local obiValue = ObiCheck(spell);
     local currentlyEquipped = gData.GetEquipment();
 
+    print(obiValue)
     -- print('first check: ' + currentlyEquipped.Ammo ~= nil);
     -- print('second check: ' currentlyEquipped.Ammo.Resource.Skill);
 
@@ -479,6 +480,12 @@ profile.HandleMidcast = function()
             -- print('Testing; Nuking while inside region controlled by current nation - Circlet ON')
             gFunc.Equip('Head', 'Republic Circlet')
         end
+        if obiValue >= 1 then
+            print('Obi for day/element going on - ELEMENTAL')
+            gFunc.Equip('Waist', ElementalWaistTable[spell.Element]);
+        else
+            print('Obi check not met')
+        end
         if (gcdisplay.GetToggle('nuke') == true) then
             gFunc.Equip('main', ElementalStaffTable[spell.Element]); 
         end
@@ -493,9 +500,12 @@ profile.HandleMidcast = function()
         elseif (string.contains(spell.Name, 'Drain') or string.contains(spell.Name, 'Aspir')) then 
             gFunc.Equip('ring2', 'Overlord\'s Ring');
         end
-        if ObiCheck(spell) >= 1 then
-			gFunc.Equip('Waist', ElementalWaistTable[spell.Element]);
-		end
+        if obiValue >= 1 then
+            print('Obi for day/element going on - DARK MAGIC')
+            gFunc.Equip('Waist', ElementalWaistTable[spell.Element]);
+        else
+            print('Obi check not met')
+        end
     end
 end
 

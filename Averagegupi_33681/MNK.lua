@@ -190,7 +190,7 @@ profile.HandleDefault = function() --AUTO HANDLER?
     -- print(conq:GetInsideControl()) -- are you in a region controlled by your nation
     
     gFunc.EquipSet(sets.Idle);
-    if (game.Time < 6.00) or (game.Time > 18.00) then
+    if (game.Time > 6.00 and game.Time < 18.00) then
         gFunc.Equip('Hands', 'Garden Bangles')
     end
 

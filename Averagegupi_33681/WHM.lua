@@ -185,8 +185,8 @@ profile.HandleDefault = function() --AUTO HANDLER?
     gFunc.EquipSet(sets.Idle);
     if (game.Time < 6.00) or (game.Time > 18.00) then
         gFunc.Equip('Ammo','Happy Egg');
-        gFunc.Equip('Hands', 'Garden Bangles')
     else
+        gFunc.Equip('Hands', 'Garden Bangles')
         gFunc.Equip('Ammo', 'Fenrir\'s Stone')
     end
     if (outsideControl) then
