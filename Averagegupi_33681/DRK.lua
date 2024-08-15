@@ -499,12 +499,12 @@ profile.HandleMidcast = function()
             gFunc.EquipSet(sets.Absorb);
         elseif (string.contains(spell.Name, 'Drain') or string.contains(spell.Name, 'Aspir')) then 
             gFunc.Equip('ring2', 'Overlord\'s Ring');
-        end
-        if obiValue >= 1 then
-            print('Obi for day/element going on - DARK MAGIC')
-            gFunc.Equip('Waist', ElementalWaistTable[spell.Element]);
-        else
-            print('Obi check not met')
+            if obiValue >= 1 then
+                print('Obi for day/element going on - DARK MAGIC')
+                gFunc.Equip('Waist', ElementalWaistTable[spell.Element]);
+            else
+                print('Obi check not met')
+            end
         end
     end
 end
