@@ -456,7 +456,7 @@ profile.HandleMidcast = function()
     local obiValue = ObiCheck(spell);
     local currentlyEquipped = gData.GetEquipment();
 
-    print(obiValue)
+    -- print(obiValue)
     -- print('first check: ' + currentlyEquipped.Ammo ~= nil);
     -- print('second check: ' currentlyEquipped.Ammo.Resource.Skill);
 
