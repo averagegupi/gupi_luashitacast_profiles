@@ -117,6 +117,7 @@ function gcinclude.SetVariables()
 		gcdisplay.CreateToggle('fudo', false);
 		gcdisplay.CreateToggle('stun', false);
 		gcdisplay.CreateToggle('acc', false);
+		gcdisplay.CreateToggle('mdt', false);
 		gcdisplay.CreateToggle('cap60', false);
 		gcdisplay.CreateToggle('cap50', false);
 		gcdisplay.CreateToggle('nuke', false);
@@ -124,6 +125,7 @@ function gcinclude.SetVariables()
 	if (player.MainJob == 'DRK') then
 		gcdisplay.CreateToggle('Solo', false);
 		gcdisplay.CreateToggle('acc', false);
+		gcdisplay.CreateToggle('mdt', false);
 		gcdisplay.CreateToggle('zerg', false);
 		gcdisplay.CreateToggle('nuke', false);
 	end
@@ -302,6 +304,11 @@ function gcinclude.HandleCommands(args)
 		toggle = 'cap60';
 		status = gcdisplay.GetToggle('cap60');
 		end
+		if (args[1] == 'mdt') then
+			gcdisplay.AdvanceToggle('mdt');
+			toggle = 'mdt';
+			status = gcdisplay.GetToggle('mdt');
+		end
 		if (args[1] == 'cap50') then
 		gcdisplay.AdvanceToggle('cap50');
 		toggle = 'cap50';
@@ -328,6 +335,11 @@ function gcinclude.HandleCommands(args)
 			gcdisplay.AdvanceToggle('acc');
 			toggle = 'acc';
 			status = gcdisplay.GetToggle('acc');
+		end
+		if (args[1] == 'mdt') then
+			gcdisplay.AdvanceToggle('mdt');
+			toggle = 'mdt';
+			status = gcdisplay.GetToggle('mdt');
 		end
 		if (args[1] == 'zerg') then
 			gcdisplay.AdvanceToggle('zerg');

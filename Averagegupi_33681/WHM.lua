@@ -112,6 +112,8 @@ local sets = {
     },
     Dark = {
         Neck = 'Dark Torque',
+        Ear2 = 'Abyssal Earring',
+        Ring1 = 'Overlord\'s Ring',
         Back = 'Merciful Cape',
 
     },
@@ -119,7 +121,7 @@ local sets = {
 
     Divine_Nuke = { -- HOLY / BANISH M.ATT+ MND
         Head = 'Healer\'s Cap',
-        Neck = 'Divine Torque', -- logic in cast to conditionally swap to uggy pendant
+        Neck = 'Faith Torque', -- logic in cast to conditionally swap to uggy pendant
         Ear1 = 'Moldavite Earring',
         Ear2 = 'Novio Earring',
         Body = 'Blessed bliaut',
@@ -140,7 +142,7 @@ local sets = {
         Hands = 'Healer\'s Mitts',
         Ring1 = 'Rajas Ring',
         Ring2 = 'Aqua Ring',
-        Back = 'Amemet Mantle +1',
+        Back = 'Ryl. Army Mantle',
         Waist = 'Cleric\'s Belt',
         Legs = 'Wonder Braccae',
         Feet = 'Cleric\'s Duckbills'
@@ -183,6 +185,9 @@ profile.HandleDefault = function() --AUTO HANDLER?
     gFunc.EquipSet(sets.Idle);
     if (game.Time < 6.00) or (game.Time > 18.00) then
         gFunc.Equip('Ammo','Happy Egg');
+        gFunc.Equip('Hands', 'Garden Bangles')
+    else
+        gFunc.Equip('Ammo', 'Fenrir\'s Stone')
     end
     if (outsideControl) then
         gFunc.Equip('Neck', 'Rep.Gold Medal')

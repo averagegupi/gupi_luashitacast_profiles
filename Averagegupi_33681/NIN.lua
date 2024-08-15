@@ -113,7 +113,7 @@ local sets = {
         Feet = 'Ninja Kyahan',
     },
     Ws_Default = {
-        Head = 'Optical Hat',
+        Head = 'Shr.Znr.Kabuto',
         Neck = 'Peacock Amulet',
         Ear1 = 'Brutal Earring',
         Ear2 = 'Waetoto\'s Earring',
@@ -135,9 +135,18 @@ local sets = {
     Enmity = { --ENMITY SET USED /W PROVOKE
         Head = 'Arhat\'s Jinpachi',
         Body = 'Arhat\'s Gi',
+        Ring1 = 'Sattva Ring',
         Legs = 'Nokizaru Hakama',
         Waist = 'Warwolf Belt',
         Back = 'Resentment Cape',
+    },
+    mdt = {
+        Ear1 = 'Coral Earring',
+        Ring1 = 'Sattva Ring',
+        Ring2 = 'Merman\'s Ring',
+        Back = 'Resentment Cape',
+        Legs = 'Crimson Cuisses',
+        Feet = 'Crimson Greaves',
     },
     Yonin = { --TANKING SET
         Head = 'Optical Hat',
@@ -155,7 +164,8 @@ local sets = {
     Yonin_NoShadow = { -- -DT (YONIN BUT NO SHADOW)
         Head = 'Arhat\'s Jinpachi',
         Body = 'Arhat\'s gi',
-        Ring1 = 'Jelly ring',
+        Ring1 = 'Sattva Ring',
+        Ring2 = 'Jelly ring',
         Back = 'Boxer\'s Mantle',
     },
     Movement = {
@@ -204,8 +214,8 @@ local sets = {
         Hands = 'Wonder Mitts',
         Ring1 = 'Rajas Ring',
         Ring2 = 'Jaeger Ring',
-        Back = 'Nomad\'s Mantle',
-        Waist = 'Sprinter\'s Belt',
+        Back = 'Resentment Cape',
+        Waist = 'Ryl.Kgt. Belt',
         Legs = 'Nokizaru Hakama',
         Feet = 'Wonder Clomps',
     },
@@ -251,7 +261,7 @@ profile.HandleDefault = function()
     if (game.Time < 7.00) or (game.Time > 17.00) then
         gFunc.EquipSet(sets.Movement);
     end
-    if (player.SubJob == 'RDM' and player.MP < 41) then
+    if ((player.SubJob == 'RDM' or player.SubJob == 'DRK') and player.MP < 41) then
         gFunc.Equip('body', 'Blue Cotehardie')
     end
     -- print(player.MP)
@@ -301,6 +311,12 @@ profile.HandleDefault = function()
             gFunc.EquipSet(sets.Movement);
         end
     end
+
+    -- TODO: toggles for 'serious' tanking of stuff mdt/pdt?/resistance
+    -- outside of engaged check, so can be idle in these sets
+    if(gcdisplay.GetToggle('mdt')) then 
+        gFunc.EquipSet(sets.mdt)
+    end  
 
     gcinclude.CheckDefault();
 end

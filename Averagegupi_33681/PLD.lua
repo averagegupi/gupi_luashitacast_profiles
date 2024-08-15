@@ -25,7 +25,7 @@ local sets = {
         Ear2 = 'Ethereal Earring',
         Body = 'Valor Surcoat',
         Hands = 'Homam Manopolas',
-        Ring1 = 'Rajas Ring',
+        Ring1 = 'Sattva Ring',
         Ring2 = 'Toreador\'s Ring',
         Back = 'Boxer\'s Mantle',
         Waist = 'Sprinter\'s Belt',
@@ -39,7 +39,7 @@ local sets = {
         -- Ear2 = 'Ethereal Earring',
         Body = 'Scorpion Harness',
         Hands = 'Homam Manopolas',
-        Ring1 = 'Toreador\'s Ring',
+        Ring1 = 'Sattva Ring',
         Ring2 = 'Toreador\'s Ring',
         Back = 'Boxer\'s Mantle',
         Waist = 'Sprinter\'s Belt',
@@ -54,6 +54,7 @@ local sets = {
         Head = 'Valor Coronet',
         Body = 'Valor Surcoat',
         Hands = 'Homam Manopolaslets',
+        Ring1 = 'Sattva Ring',
         Legs = 'Valor Breeches',
         Feet = 'Valor Leggings',
         Waist = 'Warwolf Belt',
@@ -64,7 +65,7 @@ local sets = {
     },
     mdt = {
         Ear1 = 'Coral Earring',
-        Ring1 = 'Coral Ring',
+        Ring1 = 'Sattva Ring',
         Ring2 = 'Merman\'s Ring',
         Back = 'Resentment Cape',
         Legs = 'Crimson Cuisses',
@@ -115,6 +116,18 @@ local sets = {
         Sub = 'Ice Shield', -- TODO: update to get the name of the wep on OH if not shield, and put it back on after ability?
         Hands = 'Valor Gauntlets',
     },
+    Chivalry = { --MND mod
+        Head = 'Gallant Coronet',
+        Neck = 'Faith Torque',
+        Body = 'Wonder Kaftan',
+        Ring1 = 'Aqua Ring',
+        Ring2 = 'Rajas Ring',
+        Back = 'Ryl. Army Mantle',
+        Waist = 'Ryl.Kgt. Belt',
+        Legs = 'Wonder Braccae',
+        Feet = 'Valor Leggings',
+
+    },
     Holy_Circle = {
         Feet = 'Glt. Leggings +1',
     },
@@ -122,8 +135,10 @@ local sets = {
         Head = 'Gallant Coronet',
         Ear1 = 'Moldavite Earring',
         Ear2 = 'Novio Earring',
-        Neck = 'Divine Torque', -- logic in cast to conditionally swap to uggy pendant
+        Neck = 'Faith Torque', -- logic in cast to conditionally swap to uggy pendant
         Body = 'Gallant Surcoat',
+        Ring1 = 'Aqua Ring',
+        Back = 'Ryl. Army Mantle',
         Waist = 'Ryl.Kgt. Belt',
         Legs = 'Wonder Braccae',
         Feet = 'Valor Leggings',
@@ -144,7 +159,7 @@ local sets = {
         Back = 'Amemet Mantle +1',
         Waist = 'Warwolf Belt',
         Legs = 'Valor Breeches',
-        Feet = 'Wonder Clomps'
+        Feet = 'Valor leggings'
     },
     elTank = {
         Head = 'Koenig Schaller',
@@ -153,8 +168,8 @@ local sets = {
         Ear2 = 'Ethereal Earring',
         Body = 'Valor Surcoat',
         Hands = 'Homam Manopolas',
-        Ring1 = 'Jelly Ring',
-        Ring2 = 'Bomb Queen Ring',
+        Ring1 = 'Sattva Ring',
+        Ring2 = 'Jelly Ring',
         Back = 'Boxer\'s Mantle',
         Waist = 'Warwolf Belt',
         Legs = 'Crimson Cuisses',
@@ -222,8 +237,8 @@ local sets = {
         Ear2 = 'Ethereal Earring', -- 15
         Body = 'Wonder Kaftan', -- 36
         Hands = 'Alkyoneus\'s Brc.', -- 40
-        Ring1 = 'Bomb Queen Ring', -- 75
-        Ring2 = 'Toreador\'s Ring', -- 10
+        Ring1 = 'Sattva Ring', -- 30
+        Ring2 = 'Bomb Queen Ring', -- 75
         Back = 'Gigant Mantle', -- 80
         Waist = 'Warwolf Belt', -- 0
         Legs = 'Homam Cosciales', -- 31
@@ -370,6 +385,9 @@ profile.HandleDefault = function() --AUTO HANDLER?
 
     elseif string.match(ability.Name, 'Holy Circle') then
         gFunc.EquipSet(sets.Holy_Circle);
+
+    elseif string.match(ability.Name, 'Chivalry') then
+        gFunc.EquipSet(sets.Chivalry);
 
     elseif string.match(ability.Name, 'Provoke') then
         gFunc.EquipSet(sets.Enmity);

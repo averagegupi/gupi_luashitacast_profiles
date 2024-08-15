@@ -18,14 +18,14 @@ local sets = {
         Neck = '',
         Ear1 = '',
         Ear2 = '',
-        Body = '',
-        Hands = '',
+        Body = 'Jujitsu Gi',
+        Hands = 'Ochiudo\'s Kote',
         Ring1 = '',
         Ring2 = '',
         Back = '',
         Waist = '',
-        Legs = '',
-        Feet = '',
+        Legs = 'Aikido koshita',
+        Feet = 'Fuma Kyahan',
     },
 
     Enmity = { -- TODO: LOAD UP THAT PLATE
@@ -53,7 +53,22 @@ local sets = {
     },
     -- ABILITIES --
     -- TODO: add MNK abilities
-    Rampart = {
+    Focus = {
+        Head = 'Temple Crown',
+    },
+    Dodge = {
+        Feet = 'Temple Gaiters',
+    },
+    Chakra = { -- VIT mod;
+        Body = 'Temple Cyclas', -- 3 VIT; Enhances Chakra effect
+    },
+    Boost = {
+        Hands = 'Temple Gloves',
+    },
+    Counterstance = {
+
+    },
+    ChiBlast = { -- MND mod
 
     },
 
@@ -64,22 +79,28 @@ local sets = {
         Head = '',
         Neck = '',
         Ear1 = '',
-        Ear2 = '',
+        Ear2 = 'Waetoto\'s Earring',
         Body = '',
         Hands = '',
         Ring1 = '',
         Ring2 = '',
-        Back = '',
+        Back = 'Ryl. Army Mantle',
         Waist = '',
-        Legs = '',
-        Feet = '',
+        Legs = 'Republic Subligar',
+        Feet = 'Wonder Clomps',
     },
     brdSub = {
         Ear2 = 'Singer\'s Earring',
         Back = 'Singer\'s Mantle',
     },
     elTank = { -- TODO: use for skillup farming atm, but update to actual tank/guard
-        Back = 'Cvl. Mantle'
+        Ear1 = 'Beetle Earring +1',
+        Ear2 = 'Beetle Earring +1',
+        Ring1 = 'Sattva Ring',
+        Ring2 = 'Woodsman Ring',
+        Back = 'Cvl. Mantle',
+        Waist = 'Tilt Belt',
+        Feet = 'Stumbling Sandals',
     },
     None = { -- TODO: test this, pretty sure no H2H is still H2H skill; this was for shield on PLD
     --     Head = 'Koenig Schaller',
@@ -159,7 +180,7 @@ profile.HandleCommand = function(args) --INPUT HANDLER?
 end
 
 profile.HandleDefault = function() --AUTO HANDLER?
-
+    local game = gData.GetEnvironment();
     local shadows = gData.GetBuffCount('Copy Image') + gData.GetBuffCount('Copy Image (2)') + gData.GetBuffCount('Copy Image (3)') + gData.GetBuffCount('Copy Image (4+)')
     local currentlyEquipped = gData.GetEquipment();
     local player_entity = GetPlayerEntity(); -- Verbose, but leaving this in as an example
@@ -169,6 +190,9 @@ profile.HandleDefault = function() --AUTO HANDLER?
     -- print(conq:GetInsideControl()) -- are you in a region controlled by your nation
     
     gFunc.EquipSet(sets.Idle);
+    if (game.Time < 6.00) or (game.Time > 18.00) then
+        gFunc.Equip('Hands', 'Garden Bangles')
+    end
 
     -- print(player_entity.Look.Sub.type)
     -- need to check for currentlyEquipped.Sub to exist, if so there is something in the OH
@@ -225,8 +249,23 @@ profile.HandleDefault = function() --AUTO HANDLER?
     profile.HandleAbility = function() --ABILITY HANDLER
     local ability = gData.GetAction();
 
+    if string.match(ability.Name, 'Focus') then
+        gFunc.EquipSet(sets.Focus);
+    end
+    if string.match(ability.Name, 'Dodge') then
+        gFunc.EquipSet(sets.Dodge);
+    end
     if string.match(ability.Name, 'Boost') then
         gFunc.EquipSet(sets.Boost);
+    end
+    if string.match(ability.Name, 'Chakra') then
+        gFunc.EquipSet(sets.Chakra);
+    end
+    if string.match(ability.Name, 'Chi Blast') then
+        gFunc.EquipSet(sets.ChiBlast);
+    end
+    if string.match(ability.Name, 'Counterstance') then
+        gFunc.EquipSet(sets.Counterstance);
     end
 
     gcinclude.CheckCancels();
@@ -292,6 +331,9 @@ profile.HandleWeaponskill = function() -- WEAPONSKILL
 
         local currentlyEquipped = gData.GetEquipment();
         local mainWep = skillz.wep_table[currentlyEquipped.Main.Resource.Skill]; -- this will return the string value in wep table
+        if (mainWep == nil) then
+            mainWep = 'HandToHand'
+        end
 
         -- print('Main wep')
         -- print(mainWep)

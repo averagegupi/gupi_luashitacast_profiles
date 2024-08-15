@@ -37,7 +37,7 @@ local sets = {
         Body = 'Scorpion Harness',
         Hands = 'Homam Manopolas',
         Ear2 = 'Ethereal Earring',
-        Ring1 = 'Toreador\'s Ring',
+        Ring1 = 'Sattva Ring',
         Ring2 = 'Jelly ring',
         Back = 'Boxer\'s Mantle',
         Waist = 'Sprinter\'s Belt',
@@ -77,8 +77,18 @@ local sets = {
         Feet = 'Chs. Sollerets +1',
     },
     Enhancing = {
+        Ear1 = 'Moldavite Earring', -- apparently MAB impacts spike damage, slap these on for blaze spikes
+        Ear2 = 'Novio Earring',
         Neck = 'Enhancing Torque',
         Back = 'Merciful Cape',
+    },
+    mdt = {
+        Ear1 = 'Coral Earring',
+        Ring1 = 'Sattva Ring',
+        Ring2 = 'Merman\'s Ring',
+        Back = 'Resentment Cape',
+        Legs = 'Crimson Cuisses',
+        Feet = 'Crimson Greaves',
     },
     Dread_Spikes = {}, --max out HP+ at cast to boost effect
     Enfeebling = {
@@ -252,9 +262,13 @@ profile.HandleDefault = function() --AUTO HANDLER?
     if spikes ~= 0 then gFunc.EquipSet(sets.Spikes) end
     local souleater = gData.GetBuffCount('Souleater');
     local currentlyEquipped = gData.GetEquipment();
+    local game = gData.GetEnvironment();
     local mainWep
 
     gFunc.EquipSet(sets.Idle);
+    if (game.Time < 6.00) or (game.Time > 18.00) then
+        gFunc.Equip('Hands', 'Garden Bangles')
+    end
 
 
     -- local currentlyEquipped = gData.GetEquipment();
@@ -334,6 +348,12 @@ profile.HandleDefault = function() --AUTO HANDLER?
     -- elseif (player.IsMoving == true) then -- W.Legs in idle set, no longer need this check
     --     gFunc.EquipSet(sets.Movement);
     end
+    
+    -- TODO: toggles for 'serious' tanking of stuff mdt/pdt?/resistance
+    -- outside of engaged check, so can be idle in these sets
+    if(gcdisplay.GetToggle('mdt')) then 
+        gFunc.EquipSet(sets.mdt)
+    end  
 
     gcinclude.CheckDefault();
 end
