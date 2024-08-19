@@ -60,6 +60,13 @@ local sets = {
         Waist = 'Warwolf Belt',
         Back = 'Valor Cape',
     },
+    Utsu = { -- stack haste for the recast reduction
+        Head = 'Homam Zucchetto',
+        Hands = 'Homam Manopolas',
+        Waist = 'Sprinter\'s Belt',
+        Legs = 'Homam Cosciales',
+        Feet = 'Homam Gambieras',
+    },
     Tp_DW = {
 
     },
@@ -517,6 +524,8 @@ profile.HandleMidcast = function() -- MIDCAST
         gFunc.EquipSet(sets.Enmity);
     elseif (spell.Skill == 'Dark Magic') then -- enmity here if /DRK stun
         gFunc.EquipSet(sets.Enmity);
+    elseif (spell.Skill == 'Ninjutsu') then -- finish in full haste gear for recast
+        gFunc.EquipSet(sets.Utsu);
 
     elseif (spell.Skill == 'Divine Magic') then
         local damagingDivine = false -- set a flag for damage or just enmity divine spell (like flash)
