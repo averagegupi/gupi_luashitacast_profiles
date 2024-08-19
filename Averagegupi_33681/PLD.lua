@@ -1,4 +1,5 @@
 local Divine_Nuke_Table = {'Banish', 'Banish II', 'Holy', 'Enlight'};
+local fastCastValue = 0.04 -- Loq/Homam pants
 local profile = {};
 gcinclude = gFunc.LoadFile('common\\gcinclude.lua');
 skillz = gFunc.LoadFile('common\\skillz.lua');
@@ -71,14 +72,12 @@ local sets = {
         Legs = 'Crimson Cuisses',
         Feet = 'Crimson Greaves',
     },
-    Precast = {
-        Head = 'Homam Zucchetto',
-        Neck = 'Willpower Torque',
+    Precast = { -- FC only
         Ear1 = 'Loquac. Earring',
-        Hands = 'Homam Manopolas',
         Legs = 'Homam Cosciales',
-        Waist = 'Sprinter\'s Belt',
-        Feet = 'Homam Gambieras',
+    },
+    Midcast = { -- SIRD
+        Neck = 'Willpower Torque',
     },
     Cure = {
         Ear1 = 'Hospitaler Earring',
@@ -214,22 +213,22 @@ local sets = {
         Ear1 = 'Brutal Earring',
         Ear2 = 'Ethereal Earring',
     },
-    ['hpDown'] = { -- +40 hp
+    ['hpDown'] = { -- -7 hp
         Ammo = 'Phtm. Tathlum', -- 0
         Head = 'Reraise Hairpin', -- -7
         Neck = 'Willpower Torque', -- 0
         Ear1 = 'Brutal Earring', -- 0
         Ear2 = 'Loquac. Earring', -- 0
-        Body = 'Haubergeon', -- 0
-        Hands = 'Wonder Mitts', -- 12
+        Body = 'Wonder Maillot +1', -- 0
+        -- Hands = 'Wonder Mitts', -- body also swaps hands, 0
         Ring1 = 'Aqua Ring', -- 0
         Ring2 = 'Snow Ring', -- 0
         Back = 'Amemet Mantle +1', -- 0
         Waist = 'Sprinter\'s Belt', -- 0
-        Legs = 'Valor Breeches', -- 20
-        Feet = 'Crimson greaves', -- 15
+        Legs = 'Taru. Trunks +1', -- 0
+        -- Feet = 'Crimson greaves', -- legs swap feet, 0
     },
-    ['hpUp'] = { -- +395hp -40hp in hpDown set = 355 HP to be cureIV'd; 375hp in daytime /w FenrirStone
+    ['hpUp'] = { -- +395hp + 7hp in hpDown set = 402 HP to be cureIV'd; 422hp in daytime /w FenrirStone
         Ammo = 'Happy Egg', -- 10
         Head = 'Koenig Schaller', -- 30
         Neck = 'Shield Torque', -- 7
@@ -268,12 +267,55 @@ profile.OnLoad = function() -- LOAD
 end
 
 profile.OnUnload = function() --UNLOAD
+    AshitaCore:GetFontManager():Delete('_picklerick');
     gcinclude.Unload();
 end
 
 profile.HandleCommand = function(args) --INPUT HANDLER?
     gcinclude.HandleCommands(args);
 end
+
+playedthissomanytimesIknowwhatImtalkingabout = function (refresh)
+    
+    local default_config = {
+        font = {
+            family = 'Consolas',
+            size = 10,
+            color = math.d3dcolor(255, 255, 0, 0),
+            position = {350, 350}
+        },
+        background = {
+            color = math.d3dcolor(128, 0, 0, 0),
+            visible = true
+        }
+    };
+    
+    local tp_config = default_config;
+    
+    -- Create the font object..
+    local f = AshitaCore:GetFontManager():Create('_picklerick');
+    f:SetColor(tp_config.font.color);
+    f:SetFontFamily(tp_config.font.family);
+    f:SetFontHeight(tp_config.font.size);
+    f:SetPositionX(tp_config.font.position[1]);
+    f:SetPositionY(tp_config.font.position[2]);
+    f:SetText('');
+    f:SetVisible(true);
+    f:GetBackground():SetVisible(tp_config.background.visible);
+    f:GetBackground():SetColor(tp_config.background.color);
+    
+    
+    local f = AshitaCore:GetFontManager():Get('_picklerick')
+    local txt = ''
+    if (refresh == 0) then
+        txt = string.format('|cFFFF0000|%s|r', 'Refresh!')
+        -- tell reminder for refresh, is a joke, don't uncomment this unless you want to get blisted
+        -- AshitaCore:GetChatManager():QueueCommand(1, '/tell  refresh me pls');
+    end
+    if (f ~= nil) then
+        f:SetText(txt)
+    end
+end 
 
 profile.HandleDefault = function() --AUTO HANDLER?
 
@@ -282,6 +324,7 @@ profile.HandleDefault = function() --AUTO HANDLER?
     local currentlyEquipped = gData.GetEquipment();
     local player_entity = GetPlayerEntity(); -- Verbose, but leaving this in as an example
     local player = gData.GetPlayer(); --PLAYER STATUS CHECK
+    local refresh = gData.GetBuffCount('Refresh')
     
     -- print(conq:GetOutsideControl()) -- are you in a region controlled by nation other than yours
     -- print(conq:GetInsideControl()) -- are you in a region controlled by your nation
@@ -352,7 +395,11 @@ profile.HandleDefault = function() --AUTO HANDLER?
         end
         
         if (gcdisplay.GetToggle('tank') == true) then
+            -- print(refresh);
+            playedthissomanytimesIknowwhatImtalkingabout(refresh)
             gFunc.EquipSet(sets.elTank)
+        else
+            AshitaCore:GetFontManager():Delete('_picklerick');
         end
         -- TODO: toggles for 'serious' tanking of stuff mdt/pdt?/resistance
         -- outside of engaged check, so can be idle in these sets
@@ -416,6 +463,15 @@ profile.HandleMidcast = function() -- MIDCAST
     local spell = gData.GetAction();
     local target = gData.GetActionTarget();
 	local player = AshitaCore:GetMemoryManager():GetParty():GetMemberName(0);
+
+    -- MIDCAST SIRD/SKILL CHECK START; *starting small, will build upon as more usecases arise.
+    -- For now this will be used specifically with tank toggle
+    if(gcdisplay.GetToggle('tank') == true) then
+        
+    else
+        
+    end
+    -- MIDCAST SIRD/SKILL CHECK END
 
     if (spell.Skill == 'Enhancing Magic') then
         gFunc.EquipSet(sets.Enhancing);
