@@ -1,5 +1,4 @@
 local Divine_Nuke_Table = {'Banish', 'Banish II', 'Holy', 'Enlight'};
-local fastCastValue = 0.04 -- Loq/Homam pants
 local profile = {};
 gcinclude = gFunc.LoadFile('common\\gcinclude.lua');
 skillz = gFunc.LoadFile('common\\skillz.lua');
@@ -76,8 +75,19 @@ local sets = {
         Ear1 = 'Loquac. Earring',
         Legs = 'Homam Cosciales',
     },
-    Midcast = { -- SIRD
-        Neck = 'Willpower Torque',
+    tankInterim = { -- between pre and mid cast
+        Head = 'Koenig Schaller', 
+        Neck = 'Willpower Torque', -- 10 SIRD
+        Ear1 = 'Loquac. Earring',
+        Ear2 = 'Ethereal Earring',
+        -- Body = 'Valor Surcoat',
+        Hands = 'Homam Manopolas',
+        Ring1 = 'Sattva Ring',
+        Ring2 = 'Merman\'s Ring',
+        Back = 'Boxer\'s Mantle',
+        Waist = 'Warwolf Belt',
+        -- Legs = 'Valor Breeches', -- 10 SIRD
+        Feet = 'Glt. Leggings +1',
     },
     Cure = {
         Ear1 = 'Hospitaler Earring',
@@ -228,19 +238,19 @@ local sets = {
         Legs = 'Taru. Trunks +1', -- 0
         -- Feet = 'Crimson greaves', -- legs swap feet, 0
     },
-    ['hpUp'] = { -- +395hp + 7hp in hpDown set = 402 HP to be cureIV'd; 422hp in daytime /w FenrirStone
+    ['hpUp'] = { -- 371 cure nighttime, 20 enmity = 445 enmity generated
         Ammo = 'Happy Egg', -- 10
-        Head = 'Koenig Schaller', -- 30
+        Head = 'Valor Coronet', -- 18hp/ 2 enmity
         Neck = 'Shield Torque', -- 7
         Ear1 = 'Morukaka Earring', -- 35
         Ear2 = 'Ethereal Earring', -- 15
-        Body = 'Wonder Kaftan', -- 36
-        Hands = 'Alkyoneus\'s Brc.', -- 40
-        Ring1 = 'Sattva Ring', -- 30
+        Body = 'Valor Surcoat', -- 23 / 4 enmity
+        Hands = 'Homam Manopolas', -- 20 / 3 enmity
+        Ring1 = 'Sattva Ring', -- 30 / 5 enmity
         Ring2 = 'Bomb Queen Ring', -- 75
         Back = 'Gigant Mantle', -- 80
-        Waist = 'Warwolf Belt', -- 0
-        Legs = 'Homam Cosciales', -- 31
+        Waist = 'Warwolf Belt', -- 0 /3 enmity
+        Legs = 'Valor Breeches', -- 20 / 3 enmity
         Feet = 'Homam Gambieras', -- 26
     },
     ['es'] = {
@@ -446,13 +456,28 @@ end
 profile.HandlePrecast = function() -- PRECAST
     local spell = gData.GetAction();
     local target = gData.GetActionTarget();
-	local player = AshitaCore:GetMemoryManager():GetParty():GetMemberName(0);
+	local player = gData.GetPlayer();
+    local me = AshitaCore:GetMemoryManager():GetParty():GetMemberName(0);
+    local fastCastValue = 0.04 -- Loq/Homam pants
+    local minimumBuffer = 0.1;
+    local packetDelay = 0.25; -- using packetflow
     
+    gFunc.EquipSet(sets.Precast);
+
     -- tank flag check for cure bomb
-    if (gcdisplay.GetToggle('tank') == true and spell.Skill == 'Healing Magic' and target.Name == player) then -- checking tank flag and that I'm casting healing for curebomb handling
+    if (gcdisplay.GetToggle('tank') == true and spell.Skill == 'Healing Magic' and target.Name == me) then -- checking tank flag and that I'm casting healing for curebomb handling
+        -- print('hp down going on')
         gFunc.EquipSet(sets.hpDown) -- dropping HP in precast, to bomb in midcast
-    else
-        gFunc.EquipSet(sets.Precast);
+    end
+
+    if (player.SubJob == "RDM") then
+        -- RDM is .15, warlock mantle??
+        fastCastValue = fastCastValue + 0.15
+    end
+    local castDelay = ((spell.CastTime * (1 - fastCastValue)) / 1000) - minimumBuffer;
+    
+    if (castDelay >= packetDelay) then
+        gFunc.SetMidDelay(castDelay);
     end
 
     gcinclude.CheckCancels();
@@ -467,9 +492,10 @@ profile.HandleMidcast = function() -- MIDCAST
     -- MIDCAST SIRD/SKILL CHECK START; *starting small, will build upon as more usecases arise.
     -- For now this will be used specifically with tank toggle
     if(gcdisplay.GetToggle('tank') == true) then
-        
-    else
-        
+        -- need this here since hpDown is throwing on event clothes that cant use hand/feet gear. Manually replacing before interim set
+        gFunc.Equip('Body','Valor Surcoat')
+        gFunc.Equip('Legs','Valor Breeches')
+        gFunc.InterimEquipSet(sets.tankInterim)  
     end
     -- MIDCAST SIRD/SKILL CHECK END
 
