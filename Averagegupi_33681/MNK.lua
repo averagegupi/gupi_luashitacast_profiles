@@ -14,16 +14,16 @@ local sets = {
         Body = 'Ducal aketon',
     },
     Tp_Default = {
-        Head = '',
-        Neck = '',
-        Ear1 = '',
-        Ear2 = '',
+        Head = 'Temple Crown',
+        Neck = 'Peacock Amulet',
+        Ear1 = 'Beetle Earring +1',
+        Ear2 = 'Beetle Earring +1',
         Body = 'Jujitsu Gi',
         Hands = 'Ochiudo\'s Kote',
-        Ring1 = '',
-        Ring2 = '',
-        Back = '',
-        Waist = '',
+        Ring1 = 'Sattva Ring',
+        Ring2 = 'Woodsman Ring',
+        Back = 'Ryl. Army Mantle',
+        Waist = 'Brown Belt',
         Legs = 'Aikido koshita',
         Feet = 'Fuma Kyahan',
     },
@@ -48,11 +48,7 @@ local sets = {
         Neck = 'Enhancing Torque',
         Back = 'Merciful Cape',
     },
-    
-    Enfeebling = {
-    },
     -- ABILITIES --
-    -- TODO: add MNK abilities
     Focus = {
         Head = 'Temple Crown',
     },
@@ -61,6 +57,9 @@ local sets = {
     },
     Chakra = { -- VIT mod;
         Body = 'Temple Cyclas', -- 3 VIT; Enhances Chakra effect
+        Back = 'Cvl. Mantle',
+        Ring1 = 'Sattva Ring',
+        Ear2 = 'Waetoto\'s Earring',
     },
     Boost = {
         Hands = 'Temple Gloves',
@@ -81,11 +80,11 @@ local sets = {
         Ear1 = '',
         Ear2 = 'Waetoto\'s Earring',
         Body = '',
-        Hands = '',
+        Hands = 'Ochiudo\'s Kote',
         Ring1 = '',
         Ring2 = '',
         Back = 'Ryl. Army Mantle',
-        Waist = '',
+        -- Waist = '',
         Legs = 'Republic Subligar',
         Feet = 'Wonder Clomps',
     },
@@ -168,7 +167,7 @@ profile.OnLoad = function() -- LOAD
 
     AshitaCore:GetChatManager():QueueCommand(1, '/macro book 1');
     AshitaCore:GetChatManager():QueueCommand(1, '/macro set 4');
-    AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 99');
+    AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset 92');
 end
 
 profile.OnUnload = function() --UNLOAD

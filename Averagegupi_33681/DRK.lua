@@ -33,7 +33,7 @@ local sets = {
     Solo = {
         -- Ammo = 'Fenrir\'s Stone',
         Head = 'Optical Hat',
-        Neck = 'Parade Gorget',
+        -- Neck = 'Parade Gorget',
         Body = 'Scorpion Harness',
         Hands = 'Homam Manopolas',
         Ear2 = 'Ethereal Earring',
@@ -59,27 +59,23 @@ local sets = {
         Legs = 'Homam Cosciales',
         Feet = 'Homam Gambieras',
     },
-    Precast = {
-        Head = 'Homam Zucchetto',
-        Neck = 'Willpower Torque',
+    Precast = { -- FC only
         Ear1 = 'Loquac. Earring',
-        Hands = 'Homam Manopolas',
-        Waist = 'Sprinter\'s Belt',
         Legs = 'Homam Cosciales',
-        Feet = 'Homam Gambieras',
+    },
+    Midcast = { -- SIRD or evasion
+        Neck = 'Willpower Torque',
     },
     Cure = {
-        -- Neck = 'Justice badge',
-        -- Ring1 = 'Saintly Ring',
-        -- Ring2 = 'Saintly Ring',
         Waist = 'Ryl.Kgt. Belt',
         Legs = 'Abyss Flanchard',
         Feet = 'Chs. Sollerets +1',
     },
     Enhancing = {
-        Ear1 = 'Moldavite Earring', -- apparently MAB impacts spike damage, slap these on for blaze spikes
+        Ear1 = 'Moldavite Earring', -- apparently MAB impacts spike damage, slap these on
         Ear2 = 'Novio Earring',
         Neck = 'Enhancing Torque',
+        Body = 'Abyss Cuirass',
         Back = 'Merciful Cape',
     },
     mdt = {
@@ -87,10 +83,24 @@ local sets = {
         Ring1 = 'Sattva Ring',
         Ring2 = 'Merman\'s Ring',
         Back = 'Resentment Cape',
-        Legs = 'Crimson Cuisses',
+        Legs = 'Abyss Flanchard',
         Feet = 'Crimson Greaves',
     },
-    Dread_Spikes = {}, --max out HP+ at cast to boost effect
+    Dread_Spikes = { --max out HP+ at cast to boost effect
+        Ammo = 'Fenrir\'s Stone', --30 (daytime)
+        Head = 'Homam Zucchetto', -- 22
+        Neck = 'Evasion Torque', -- 7
+        Ear1 = 'Morukaka\'s Earring', -- 35
+        Ear2 = 'Ethereal Earring', -- 15
+        Body = 'Wonder Kaftan', -- 36
+        Hands = 'Alkyoneus\'s Brc.', -- 40
+        Ring1 = 'Sattva Ring', -- 30
+        Ring2 = 'Bomb Queen Ring', -- 75
+        Back = 'Gigant Mantle', -- 80
+        Waist = 'Sprinter\'s Belt',
+        Legs = 'Homam Cosciales', -- 26
+        Feet = 'Homam Gambieras', -- 31
+    },
     Enfeebling = {
         Head = 'Homam Zucchetto',
         Neck = 'Enfeebling Torque',
@@ -108,19 +118,22 @@ local sets = {
     Dark = {
         Head = 'Chs. Burgeonet +1',
         Neck = 'Dark Torque',
-        Ear1 = 'Cunning Earring',
         Ear2 = 'Abyssal Earring',
-        Body = 'Ryl.Sqr. Robe',
+        Body = 'Wonder Kaftan', -- use to bump HP up
         Hands = 'Blood Fng. Gnt.',
         Ring1 = 'Snow Ring',
         Ring2 = 'Snow Ring',
         Back = 'Merciful Cape',
         Waist = 'Sprinter\'s Belt',
         Legs = 'Abyss Flanchard',
+        Feet = 'Homam Gambieras',
     },
     Absorb = {
         Head = 'Black Sallet',
+        Ear1 = 'Cunning Earring', -- override loq, need spell to land
         Hands = 'Black Gadlings',
+        Back = 'Abyss Cape', -- 2 more mAcc than merciful, need spell to land
+        Waist = 'Ryl.Kgt. Belt', -- not worried about recast, want spell to land
         Legs = 'Black Cuisses',
         Feet = 'Black Sollerets',
     },
@@ -136,7 +149,7 @@ local sets = {
         Back = 'Abyss Cape',
         Waist = 'Ryl.Kgt. Belt',
         Legs = 'Chaos Flanchard',
-        Feet = 'Abyss Sollerets',
+        Feet = 'Homam Gambieras',
     },
     Preshot = {
     },
@@ -167,9 +180,6 @@ local sets = {
         Waist = 'Warwolf Belt',
         Legs = 'Black cuisses',
         Feet = 'Chs. Sollerets +1',
-    },
-    Spikes = { -- set to leave body on with dread spikes up, only body here!
-
     },
     BloodWeapon = {},
     WeaponBash = {
@@ -209,7 +219,7 @@ local sets = {
         Ear2 = 'Stealth Earring',
     },
     Dagger = { --zerg???
-        Neck = 'Prudence Torque',
+        Neck = 'Peacock Amulet',
         Ear1 = 'Brutal Earring',
         Ear2 = 'Stealth Earring',
     },
@@ -259,7 +269,7 @@ end
 
 profile.HandleDefault = function() --AUTO HANDLER?
     local spikes = gData.GetBuffCount('Dread Spikes');
-    if spikes ~= 0 then gFunc.EquipSet(sets.Spikes) end
+    -- if spikes ~= 0 then gFunc.EquipSet(sets.Spikes) end
     local souleater = gData.GetBuffCount('Souleater');
     local currentlyEquipped = gData.GetEquipment();
     local game = gData.GetEnvironment();
@@ -515,7 +525,7 @@ end
 
 profile.HandleMidshot = function()
     gFunc.EquipSet(sets.Midshot);
-    if (gcdisplay.GetToggle('TH') == true) then gFunc.EquipSet(sets.TH) end
+    -- if (gcdisplay.GetToggle('TH') == true) then gFunc.EquipSet(sets.TH) end
 end
 
 profile.HandleWeaponskill = function()
