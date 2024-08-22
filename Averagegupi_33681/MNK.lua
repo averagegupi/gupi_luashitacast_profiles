@@ -16,15 +16,17 @@ local sets = {
     Tp_Default = {
         Head = 'Temple Crown',
         Neck = 'Peacock Amulet',
-        Ear1 = 'Beetle Earring +1',
-        Ear2 = 'Beetle Earring +1',
-        Body = 'Jujitsu Gi',
+        Ear1 = 'Spike Earring',
+        Ear2 = 'Spike Earring',
+        Body = 'Scorpion Harness',
         Hands = 'Ochiudo\'s Kote',
-        Ring1 = 'Sattva Ring',
-        Ring2 = 'Woodsman Ring',
+        Ring1 = 'Toreador\'s Ring',
+        -- Ring1 = 'Sattva Ring',
+        Ring2 = 'Toreador\'s Ring',
         Back = 'Ryl. Army Mantle',
         Waist = 'Brown Belt',
-        Legs = 'Aikido koshita',
+        Legs = 'Republic Subligar',
+        -- Legs = 'Aikido koshita',
         Feet = 'Fuma Kyahan',
     },
 
@@ -56,10 +58,11 @@ local sets = {
         Feet = 'Temple Gaiters',
     },
     Chakra = { -- VIT mod;
-        Body = 'Temple Cyclas', -- 3 VIT; Enhances Chakra effect
-        Back = 'Cvl. Mantle',
-        Ring1 = 'Sattva Ring',
         Ear2 = 'Waetoto\'s Earring',
+        Body = 'Temple Cyclas', -- 3 VIT; Enhances Chakra effect
+        Ring1 = 'Sattva Ring',
+        Back = 'Cvl. Mantle',
+        Legs = 'Wonder Braccae',
     },
     Boost = {
         Hands = 'Temple Gloves',
@@ -75,7 +78,7 @@ local sets = {
     },
 
     Ws_Default = { -- blanket WS
-        Head = '',
+        Head = 'Temple Crown',
         Neck = '',
         Ear1 = '',
         Ear2 = 'Waetoto\'s Earring',
@@ -93,12 +96,14 @@ local sets = {
         Back = 'Singer\'s Mantle',
     },
     elTank = { -- TODO: use for skillup farming atm, but update to actual tank/guard
-        Ear1 = 'Beetle Earring +1',
-        Ear2 = 'Beetle Earring +1',
-        Ring1 = 'Sattva Ring',
+        Ear1 = 'Spike Earring',
+        Ear2 = 'Spike Earring',
+        -- Ring1 = 'Sattva Ring',
+        Ring1 = 'Woodsman Ring',
         Ring2 = 'Woodsman Ring',
         Back = 'Cvl. Mantle',
         Waist = 'Tilt Belt',
+        Legs = 'Temple Hose',
         Feet = 'Stumbling Sandals',
     },
     None = { -- TODO: test this, pretty sure no H2H is still H2H skill; this was for shield on PLD
@@ -201,38 +206,39 @@ profile.HandleDefault = function() --AUTO HANDLER?
 
     if (player.Status == 'Engaged') then
         gFunc.EquipSet(sets.Tp_Default)
+        -- print('tp set on')
     
         -- weapon logic START 
-        local mainWepSet
+        -- local mainWepSet
         -- print('between HP/MP threshold')
         -- print(currentlyEquipped.Sub)
         -- if(currentlyEquipped.Sub ~= nil and currentlyEquipped.Sub.Resource.Skill == 0) then -- sub existing and equaling 0 means shield
             --     mainWepSet = wep_table[currentlyEquipped.Sub.Resource.Skill];
-            if(currentlyEquipped.Sub ~= nil) then -- something in the sub slot
-                if (currentlyEquipped.Sub.Resource.Skill == 0) then
-                    mainWepSet = 'None' -- special handling for shield
-                else
-                    mainWepSet = skillz.wep_table[currentlyEquipped.Main.Resource.Skill];
-                    -- print(skillz.wep_table[currentlyEquipped.Main.Resource.Skill]) -- debugging, this would return correct output
-                end
-            elseif(currentlyEquipped.Sub == nil and currentlyEquipped.Main ~= nil) then -- nothing in sub slot, main is present
+            -- if(currentlyEquipped.Sub ~= nil) then -- something in the sub slot
+            --     if (currentlyEquipped.Sub.Resource.Skill == 0) then
+            --         mainWepSet = 'None' -- special handling for shield
+            --     else
+            --         mainWepSet = skillz.wep_table[currentlyEquipped.Main.Resource.Skill];
+            --         -- print(skillz.wep_table[currentlyEquipped.Main.Resource.Skill]) -- debugging, this would return correct output
+            --     end
+            -- elseif(currentlyEquipped.Sub == nil and currentlyEquipped.Main ~= nil) then -- nothing in sub slot, main is present
                 -- local mainWep = currentlyEquipped.Main.Resource.Skill; -- verbose, but leaving in as learning
                 -- local wepSet = sets.wep_table[mainWep];
                 -- print('what is mainwep: ' + mainWepSet)
                 -- print(mainWepSet)
-                mainWepSet = skillz.wep_table[currentlyEquipped.Main.Resource.Skill];
+                -- mainWepSet = skillz.wep_table[currentlyEquipped.Main.Resource.Skill];
                 -- print(skillz.wep_table[currentlyEquipped.Main.Resource.Skill])
-            end 
-            gFunc.EquipSet(sets[mainWepSet]) -- look in the weapon table, equip the resulting set
+            -- end 
+            -- gFunc.EquipSet(sets[mainWepSet]) -- look in the weapon table, equip the resulting set
             -- weapon logic END 
             
-        elseif (player.Status == 'Resting') then
-            gFunc.EquipSet(sets.Resting);
-            
-        elseif (player.IsMoving == true) then
-            gFunc.EquipSet(sets.Movement);
-            
-        end
+    elseif (player.Status == 'Resting') then
+        gFunc.EquipSet(sets.Resting);
+        
+    elseif (player.IsMoving == true) then
+        gFunc.EquipSet(sets.Movement);
+        
+    end
         
         if (gcdisplay.GetToggle('tank') == true) then
             gFunc.EquipSet(sets.elTank)
