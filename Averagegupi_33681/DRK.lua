@@ -396,14 +396,14 @@ end
 
 -- OBI LOGIC START --
 local DayElementTable = {
-    ['Fire'] = 'Firesday',
-    ['Earth'] = 'Earthsday',
-    ['Water'] = 'Watersday',
-    ['Wind'] = 'Windsday',
-    ['Ice'] = 'Iceday',
-    ['Thunder'] = 'Lightningday',
-    ['Light'] = 'Lightsday',
-    ['Dark'] = 'Darksday'
+    ['Firesday'] = 'Fire',
+    ['Earthsday'] = 'Earth',
+    ['Watersday'] = 'Water',
+    ['Windsday'] = 'Wind',
+    ['Iceday'] = 'Ice',
+    ['Lightningday'] = 'Thunder',
+    ['Lightsday'] = 'Light',
+    ['Darksday'] = 'Dark'
 };
 
 local ElementalWaistTable = {
@@ -434,6 +434,14 @@ function ObiCheck(spell)
     
     local weight = 0;
     
+    -- leaving in for debugging purposes
+    -- print('day')
+    -- print(zone.Day)
+    -- print('day compare ')
+    -- print(DayElementTable[zone.Day])
+    -- print(' spell element of:')
+    -- print(element)
+
     --Day Comparison
     if (DayElementTable[zone.Day] == element) then
         weight = weight + 1;
@@ -464,10 +472,10 @@ end
 
 profile.HandleMidcast = function()
     local spell = gData.GetAction();
-    local obiValue = ObiCheck(spell);
+    local obiValue
     local currentlyEquipped = gData.GetEquipment();
 
-    -- print(obiValue)
+    -- print(spell.Element)
     -- print('first check: ' + currentlyEquipped.Ammo ~= nil);
     -- print('second check: ' currentlyEquipped.Ammo.Resource.Skill);
 
@@ -484,6 +492,7 @@ profile.HandleMidcast = function()
         gFunc.EquipSet(sets.Cure);
     elseif (spell.Skill == 'Elemental Magic') then
         gFunc.EquipSet(sets.Nuke);
+        obiValue = ObiCheck(spell);
         if spell.MppAftercast <= 50 then
 			gFunc.Equip('Neck', 'Uggalepih Pendant');
 		end
@@ -495,7 +504,7 @@ profile.HandleMidcast = function()
             print('Obi for day/element going on - ELEMENTAL')
             gFunc.Equip('Waist', ElementalWaistTable[spell.Element]);
         else
-            print('Obi check not met')
+            print('Obi check not met - ELEMENTAL')
         end
         if (gcdisplay.GetToggle('nuke') == true) then
             gFunc.Equip('main', ElementalStaffTable[spell.Element]); 
@@ -509,12 +518,14 @@ profile.HandleMidcast = function()
         elseif (spell.Name:find('^Absorb') ~= nil) then
             gFunc.EquipSet(sets.Absorb);
         elseif (string.contains(spell.Name, 'Drain') or string.contains(spell.Name, 'Aspir')) then 
+            obiValue = ObiCheck(spell);
             gFunc.Equip('ring2', 'Overlord\'s Ring');
+            -- print(obiValue);
             if obiValue >= 1 then
                 print('Obi for day/element going on - DARK MAGIC')
                 gFunc.Equip('Waist', ElementalWaistTable[spell.Element]);
             else
-                print('Obi check not met')
+                print('Obi check not met - DARK')
             end
         end
     end
