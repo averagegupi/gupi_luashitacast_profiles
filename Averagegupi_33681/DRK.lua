@@ -34,7 +34,7 @@ local sets = {
         -- Ammo = 'Fenrir\'s Stone',
         Head = 'Optical Hat',
         -- Neck = 'Parade Gorget',
-        Body = 'Scorpion Harness',
+        Body = 'Demon\'s Harness',
         Hands = 'Homam Manopolas',
         Ear2 = 'Ethereal Earring',
         Ring1 = 'Sattva Ring',
@@ -45,7 +45,7 @@ local sets = {
         Feet = 'Homam Gambieras',
     },
     Acc_Override = {
-        Ring1 = 'Toreador\'s Ring',
+        -- Ring1 = 'Toreador\'s Ring',
         Back = 'Abyss Cape',
     },
     Tp_Default = { -- neck and ear logic SHOULD be handled
@@ -90,7 +90,7 @@ local sets = {
         Ammo = 'Fenrir\'s Stone', --30 (daytime)
         Head = 'Homam Zucchetto', -- 22
         Neck = 'Evasion Torque', -- 7
-        Ear1 = 'Morukaka\'s Earring', -- 35
+        Ear1 = 'Morukaka Earring', -- 35
         Ear2 = 'Ethereal Earring', -- 15
         Body = 'Wonder Kaftan', -- 36
         Hands = 'Alkyoneus\'s Brc.', -- 40
@@ -118,9 +118,9 @@ local sets = {
     Dark = {
         Head = 'Chs. Burgeonet +1', -- 5
         Neck = 'Dark Torque', -- 7
-        Ear1 = 'Morukaka\'s Earring', -- crank the hp up so I'm getting the most value out of amount drained
+        Ear1 = 'Morukaka Earring', -- crank the hp up so I'm getting the most value out of amount drained
         Ear2 = 'Abyssal Earring', -- 5
-        -- Body = 'Demon\'s Harness', -- 5 TODO: SOON!!!
+        Body = 'Demon\'s Harness', -- 5
         Hands = 'Blood Fng. Gnt.', -- 11
         Ring1 = 'Snow Ring', -- 0
         Ring2 = 'Snow Ring', -- 0 swapped for drain/aspir for overlords ring
@@ -159,7 +159,7 @@ local sets = {
         Neck = 'Faith Torque',
         Ear1 = 'Drone Earring',
         Ear2 = 'Waetoto\'s Earring',
-        Body = 'Chaos Cuirass',
+        Body = 'Hecatomb Harness',
         Hands = 'Blood Fng. Gnt.',
         Ring1 = 'Coral Ring',
         Ring2 = 'Merman\'s Ring',
@@ -448,7 +448,13 @@ function ObiCheck(spell)
     elseif (DayElementTable[zone.Day] == badEle[element]) then
         weight = weight - 1;
     end
-    
+
+    -- leaving in for debugging purposes
+    -- print('weather')
+    -- print(zone.Weather)
+    -- print(element)
+    -- print(string.find(zone.Weather, 'x2'))
+
     --Weather Comparison
     if string.find(zone.Weather, element) then
         if string.find(zone.Weather, 'x2') then
