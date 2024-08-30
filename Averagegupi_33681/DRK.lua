@@ -45,12 +45,12 @@ local sets = {
         Feet = 'Homam Gambieras',
     },
     Acc_Override = {
-        -- Ring1 = 'Toreador\'s Ring',
+        Body = 'Homam Corazza',
         Back = 'Abyss Cape',
     },
     Tp_Default = { -- neck and ear logic SHOULD be handled
         Head = 'Homam Zucchetto',
-        Body = 'Haubergeon',
+        Body = 'Homam Corazza', -- will need to test, stacking triple attack % seems exponentially strong
         Hands = 'Homam Manopolas',
         Ring1 = 'Toreador\'s Ring',
         Ring2 = 'Toreador\'s Ring',
@@ -235,7 +235,7 @@ local sets = {
         Neck = 'Peacock Amulet',
         Ear1 = 'Brutal Earring',
         Ear2 = 'Ethereal Earring',
-        Body = 'Abyss Cuirass',
+        Body = 'Homam Corazza',
         Hands = 'Homam Manopolas',
         Ring1 = 'Toreador\'s Ring',
         Ring2 = 'Toreador\'s Ring',

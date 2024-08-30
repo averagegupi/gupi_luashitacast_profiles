@@ -23,10 +23,9 @@ local sets = {
         Ring1 = 'Toreador\'s Ring',
         -- Ring1 = 'Sattva Ring',
         Ring2 = 'Toreador\'s Ring',
-        Back = 'Ryl. Army Mantle',
+        Back = 'Amemet Mantle +1',
         Waist = 'Brown Belt',
-        Legs = 'Republic Subligar',
-        -- Legs = 'Aikido koshita',
+        Legs = 'Temple Hose',
         Feet = 'Fuma Kyahan',
     },
 
@@ -96,10 +95,12 @@ local sets = {
         Back = 'Singer\'s Mantle',
     },
     elTank = { -- TODO: use for skillup farming atm, but update to actual tank/guard
+        Head = 'Arhat\'s Jinpachi',
         Ear1 = 'Spike Earring',
         Ear2 = 'Spike Earring',
-        -- Ring1 = 'Sattva Ring',
-        Ring1 = 'Woodsman Ring',
+        Body = 'Arhat\'s gi',
+        Ring1 = 'Sattva Ring',
+        -- Ring1 = 'Woodsman Ring',
         Ring2 = 'Woodsman Ring',
         Back = 'Cvl. Mantle',
         Waist = 'Tilt Belt',
@@ -242,6 +243,9 @@ profile.HandleDefault = function() --AUTO HANDLER?
         
         if (gcdisplay.GetToggle('tank') == true) then
             gFunc.EquipSet(sets.elTank)
+            if (game.Time > 6.00 and game.Time < 18.00) then
+                gFunc.Equip('Hands', 'Garden Bangles')
+            end
         end
         -- outside of engaged check, so can be idle in these sets
         if(gcdisplay.GetToggle('mdt')) then 

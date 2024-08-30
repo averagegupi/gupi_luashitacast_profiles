@@ -25,12 +25,14 @@ local sets = {
         Body = 'Cleric\'s Bliaut',
         Hands = 'Blessed mitts',
         Ring1 = 'Carect Ring',
+        Ring2 = 'Bomb Queen Ring',
         Waist = 'Cleric\'s Belt',
         Legs = 'Blessed trousers',
         Feet = 'Blessed pumps',
         Back = 'Gigant Mantle',
     },
     Resting = {
+        Ammo = 'Phtm. Tathlum',
         Main = 'Dark Staff',
         Body = 'Hlr. Bliaut +1',
         Neck ='Checkered Scarf',
@@ -47,7 +49,7 @@ local sets = {
         Ear2 = 'Stealth Earring',
         Body = 'Reverend Mail',
         Hands = 'Blessed Mitts',
-        Ring1 = 'Rajas Ring',
+        Ring1 = 'Toreador\'s Ring',
         Ring2 = 'Toreador\'s Ring',
         -- Back = 'Red Cape +1',
         Waist = 'Swift Belt',
@@ -57,7 +59,9 @@ local sets = {
     Tp_DW = {
 
     },
+    -- TODO: check how much MP is being lost from idle, and try to swap accordingly
     Precast = { -- baseline, max out haste/fastcast gear 
+        Ammo = 'Phtm. Tathlum',
         Ear1 = 'Loquac. Earring',
         Hands = 'Blessed Mitts',
         Waist = 'Swift Belt',
@@ -140,7 +144,7 @@ local sets = {
         Ear2 = 'Waetoto\'s Earring',
         Body = 'Reverend Mail',
         Hands = 'Healer\'s Mitts',
-        Ring1 = 'Rajas Ring',
+        Ring1 = 'Toreador\'s Ring',
         Ring2 = 'Aqua Ring',
         Back = 'Ryl. Army Mantle',
         Waist = 'Cleric\'s Belt',
@@ -180,13 +184,14 @@ profile.HandleDefault = function() --AUTO HANDLER?
     local player_entity = GetPlayerEntity(); -- Verbose, but leaving this in as an example
     local player = gData.GetPlayer(); --PLAYER STATUS CHECK
     
-    -- print(outsideControl)
     
     gFunc.EquipSet(sets.Idle);
     if (game.Time < 6.00) or (game.Time > 18.00) then
         gFunc.Equip('Ammo','Happy Egg');
     else
-        gFunc.Equip('Hands', 'Garden Bangles')
+        if(player.HPP < 99) then
+            gFunc.Equip('Hands', 'Garden Bangles')
+        end
         gFunc.Equip('Ammo', 'Fenrir\'s Stone')
     end
     if (outsideControl) then
@@ -204,7 +209,6 @@ profile.HandleDefault = function() --AUTO HANDLER?
 
     elseif (player.Status == 'Resting') then
         gFunc.EquipSet(sets.Resting);
-
 
     end
 
