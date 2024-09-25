@@ -32,9 +32,9 @@ local sets = {
     },
     Solo = {
         -- Ammo = 'Fenrir\'s Stone',
-        Head = 'Optical Hat',
+        Head = 'Homam Zucchetto',
         -- Neck = 'Parade Gorget',
-        Body = 'Demon\'s Harness',
+        Body = 'Homam Corazza',
         Hands = 'Homam Manopolas',
         Ear2 = 'Ethereal Earring',
         Ring1 = 'Sattva Ring',
@@ -44,7 +44,12 @@ local sets = {
         Legs = 'Homam Cosciales',
         Feet = 'Homam Gambieras',
     },
+    DrgSJ = {
+        -- Body = 'Haubergeon',
+        Ear2 = 'Wyvern Earring',
+    },
     Acc_Override = {
+        Neck = 'Peacock Amulet',
         Body = 'Homam Corazza',
         Back = 'Abyss Cape',
     },
@@ -161,7 +166,7 @@ local sets = {
         Ear2 = 'Waetoto\'s Earring',
         Body = 'Hecatomb Harness',
         Hands = 'Blood Fng. Gnt.',
-        Ring1 = 'Coral Ring',
+        Ring1 = 'Merman\'s Ring',
         Ring2 = 'Merman\'s Ring',
         Back = 'Amemet Mantle +1',
         Waist = 'Ryl.Kgt. Belt',
@@ -312,6 +317,18 @@ profile.HandleDefault = function() --AUTO HANDLER?
         
         -- current weapon logic START
         local mainWepSet
+
+        -- SJ DRG LOGIC START | not using atm but setting specifc wep types to use wyvern earring on assuming sj DRG
+        -- local twoHanders = {'GreatSword','Scythe','GreatAxe'}
+        -- for i, setName in ipairs(twoHanders) do
+        --     print("setName " .. setName .. ": " .. mainWepSet)
+        --     if(setName == mainWepSet) then
+        --         gFunc.Equip('Ear2', 'Wyvern Earring');
+        --         return
+        --     end
+        -- end
+        -- SJ DRG LOGIC END
+
         -- print('between HP/MP threshold')
         -- print(currentlyEquipped.Sub)
         -- if(currentlyEquipped.Sub ~= nil and currentlyEquipped.Sub.Resource.Skill == 0) then -- sub existing and equaling 0 means shield
@@ -332,6 +349,12 @@ profile.HandleDefault = function() --AUTO HANDLER?
             -- print(skillz.wep_table[currentlyEquipped.Main.Resource.Skill])
         end 
         gFunc.EquipSet(sets[mainWepSet]) -- look in the weapon table, equip the resulting set
+        
+        -- check for sj of DRG and throw wyvern in Ear2 slot
+        if(player.SubJob == 'DRG') then
+            gFunc.EquipSet(sets.DrgSJ)
+            -- gFunc.Equip('Ear2', 'Wyvern Earring');
+        end
 
         if (gcdisplay.GetToggle('Solo') == true) then
             gFunc.EquipSet(sets.Solo)
