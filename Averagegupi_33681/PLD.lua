@@ -288,28 +288,10 @@ profile.OnUnload = function() --UNLOAD
     gcinclude.Unload();
 end
 
-local DayElementTable = {
-    ['Firesday'] = 'Enfire',
-    ['Earthsday'] = 'Enstone',
-    ['Watersday'] = 'Enwater',
-    ['Windsday'] = 'Enaero',
-    ['Iceday'] = 'Enblizzard',
-    ['Lightningday'] = 'Enthunder',
-    ['Lightsday'] = 'Enfire',
-    ['Darksday'] = 'Enwater'
-};
-
 profile.HandleCommand = function(args) --INPUT HANDLER?
-    if (args[1] == 'enspell') then
-        doEnspell()
-    end
     gcinclude.HandleCommands(args);
 end
 
-doEnspell = function ()
-    local zone = gData.GetEnvironment();
-    AshitaCore:GetChatManager():QueueCommand(1, '/ma ' + DayElementTable[zone.Day] + ' <me>');
-end
 
 playedthissomanytimesIknowwhatImtalkingabout = function (refresh)
     

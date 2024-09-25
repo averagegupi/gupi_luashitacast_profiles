@@ -432,10 +432,29 @@ function gcinclude.HandleCommands(args)
 			gcinclude.DoSiphon();
 		end
 	end
+	if (args[1] == 'enspell') then
+        doEnspell()
+    end
 
 	if gcinclude.settings.Messages then
 		gcinclude.Message(toggle, status)
 	end
+end
+
+local DayElementTable = {
+    ['Firesday'] = 'Enfire',
+    ['Earthsday'] = 'Enstone',
+    ['Watersday'] = 'Enwater',
+    ['Windsday'] = 'Enaero',
+    ['Iceday'] = 'Enblizzard',
+    ['Lightningday'] = 'Enthunder',
+    ['Lightsday'] = 'Enfire',
+    ['Darksday'] = 'Enwater'
+};
+
+doEnspell = function ()
+    local zone = gData.GetEnvironment();
+    AshitaCore:GetChatManager():QueueCommand(1, '/ma ' + DayElementTable[zone.Day] + ' <me>');
 end
 
 function gcinclude.CheckCommonDebuffs()
