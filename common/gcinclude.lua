@@ -788,6 +788,7 @@ function gcinclude.Initialize()
 	gcdisplay.Initialize:once(2);
 	gcinclude.SetVariables:once(2);
 	gcinclude.SetAlias:once(2);
+	AshitaCore:GetFontManager():Delete('_picklerick');
 end
 
 return gcinclude;

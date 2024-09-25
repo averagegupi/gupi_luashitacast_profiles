@@ -284,7 +284,6 @@ profile.OnLoad = function() -- LOAD
 end
 
 profile.OnUnload = function() --UNLOAD
-    AshitaCore:GetFontManager():Delete('_picklerick');
     gcinclude.Unload();
 end
 
