@@ -18,7 +18,7 @@ local sets = {
     Idle = {
         Main = 'Kirin\'s Pole',
         Ammo = 'Fenrir\'s Stone',
-        Head = 'Healer\'s Cap',
+        Head = 'Hlr. Cap +1',
         Neck = 'Uggalepih Pendant',
         Ear1 = 'Loquac. Earring',
         Ear2 = 'Ethereal Earring',
@@ -34,8 +34,9 @@ local sets = {
     Resting = {
         Ammo = 'Phtm. Tathlum',
         Main = 'Dark Staff',
+        Head = 'Hlr. Cap +1',
         Body = 'Hlr. Bliaut +1',
-        Neck ='Checkered Scarf',
+        Neck = 'Checkered Scarf',
         Waist = 'Cleric\'s Belt',
         
     },
@@ -83,7 +84,7 @@ local sets = {
 
     },
     Healing = { --healing skill+ to mitigate resists
-        Hands = 'Healer\'s Mitts',
+        Hands = 'Hlr. Mitts +1',
         Legs = 'Cleric\'s Pantaln.',
 
     },
@@ -103,7 +104,7 @@ local sets = {
         Body = 'Cleric\'s Bliaut',
     },
     Enfeebling = {
-        Head = 'Healer\'s Cap',
+        Head = 'Hlr. Cap +1',
         Neck = 'Enfeebling torque',
         Body = 'Hlr. Bliaut +1',
         Hands = 'Cleric\'s Mitts',
@@ -124,7 +125,7 @@ local sets = {
     -- ABILITIES --
 
     Divine_Nuke = { -- HOLY / BANISH M.ATT+ MND
-        Head = 'Healer\'s Cap',
+        Head = 'Hlr. Cap +1',
         Neck = 'Faith Torque', -- logic in cast to conditionally swap to uggy pendant
         Ear1 = 'Moldavite Earring',
         Ear2 = 'Novio Earring',
@@ -143,7 +144,7 @@ local sets = {
         Ear1 = 'Brutal Earring',
         Ear2 = 'Waetoto\'s Earring',
         Body = 'Reverend Mail',
-        Hands = 'Healer\'s Mitts',
+        Hands = 'Hlr. Mitts +1',
         Ring1 = 'Toreador\'s Ring',
         Ring2 = 'Aqua Ring',
         Back = 'Ryl. Army Mantle',
