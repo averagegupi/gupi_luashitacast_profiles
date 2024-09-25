@@ -83,8 +83,9 @@ local sets = {
         Legs = 'Homam Cosciales',
     },
     tankInterim = { -- between pre and mid cast
+    -- body and legs handled individually due to event gear restrictions
         Head = 'Koenig Schaller', 
-        Neck = 'Willpower Torque', -- 10 SIRD
+        Neck = 'Willpower Torque', -- 5 SIRD
         Ear1 = 'Loquac. Earring',
         Ear2 = 'Ethereal Earring',
         -- Body = 'Valor Surcoat',
