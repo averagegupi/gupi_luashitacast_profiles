@@ -8,6 +8,9 @@ local sets = {
 
     },
     Resting = {
+        Neck = 'Checkered Scarf',
+        Body = 'Melee Cyclas',
+        Back = 'Melee Cape',
         
     },
     Town = {
@@ -16,7 +19,8 @@ local sets = {
     Tp_Default = {
         Head = 'Temple Crown',
         Neck = 'Peacock Amulet',
-        Ear1 = 'Spike Earring',
+        Ear1 = 'Coral Earring',
+        -- Ear2 = 'Wyvern Earring',
         Ear2 = 'Spike Earring',
         Body = 'Scorpion Harness',
         Hands = 'Ochiudo\'s Kote',
@@ -26,7 +30,7 @@ local sets = {
         Back = 'Amemet Mantle +1',
         Waist = 'Brown Belt',
         Legs = 'Temple Hose',
-        Feet = 'Fuma Kyahan',
+        Feet = 'Temple Gaiters',
     },
 
     Enmity = { -- TODO: LOAD UP THAT PLATE
@@ -36,11 +40,12 @@ local sets = {
 
     mdt = {
         Ear1 = 'Coral Earring',
-        Ring1 = 'Coral Ring',
+        Ring1 = 'Sattva Ring',
         Ring2 = 'Merman\'s Ring',
         Back = 'Resentment Cape',
     },
     Precast = {
+        Ear1 = 'Loquac. Earring'
     },
 
     Enhancing = { -- TODO: for sj RDM bar/enspell/phalanx
@@ -57,10 +62,11 @@ local sets = {
         Feet = 'Temple Gaiters',
     },
     Chakra = { -- VIT mod;
+        Ammo = 'Happy Egg',
         Ear2 = 'Waetoto\'s Earring',
         Body = 'Temple Cyclas', -- 3 VIT; Enhances Chakra effect
         Ring1 = 'Sattva Ring',
-        Back = 'Cvl. Mantle',
+        Back = 'Melee Cape',
         Legs = 'Wonder Braccae',
     },
     Boost = {
@@ -70,24 +76,28 @@ local sets = {
 
     },
     ChiBlast = { -- MND mod
-
+        Head = 'Temple Crown',
+        Neck = 'Faith Torque',
+        Ring1 = 'Aqua Ring',
+        Back = 'Melee Cape',
+        Legs = 'Wonder Braccae',
     },
 
     Movement = {
     },
 
     Ws_Default = { -- blanket WS
-        Head = 'Temple Crown',
-        Neck = '',
-        Ear1 = '',
+        Head = 'Shr.Znr.Kabuto',
+        Neck = 'Faith Torque',
+        Ear1 = 'Coral Earring',
         Ear2 = 'Waetoto\'s Earring',
         Body = '',
-        Hands = 'Ochiudo\'s Kote',
-        Ring1 = '',
-        Ring2 = '',
-        Back = 'Ryl. Army Mantle',
-        -- Waist = '',
-        Legs = 'Republic Subligar',
+        Hands = 'Alkyoneus\'s Brc.',
+        Ring1 = 'Sattva Ring',
+        Ring2 = 'Flame Ring',
+        Back = 'Amemet Mantle +1',
+        Waist = 'Warwolf Belt',
+        Legs = 'Byakko\'s Haidate',
         Feet = 'Wonder Clomps',
     },
     brdSub = {
@@ -96,16 +106,18 @@ local sets = {
     },
     elTank = { -- TODO: use for skillup farming atm, but update to actual tank/guard
         Head = 'Arhat\'s Jinpachi',
-        Ear1 = 'Spike Earring',
+        Neck = 'Guarding Torque',
+        Ear1 = 'Coral Earring',
         Ear2 = 'Spike Earring',
         Body = 'Arhat\'s gi',
         Ring1 = 'Sattva Ring',
         -- Ring1 = 'Woodsman Ring',
-        Ring2 = 'Woodsman Ring',
-        Back = 'Cvl. Mantle',
-        Waist = 'Tilt Belt',
+        Ring2 = 'Jelly Ring',
+        Back = 'Amemet Mantle +1',
+        Waist = 'Brown Belt',
         Legs = 'Temple Hose',
-        Feet = 'Stumbling Sandals',
+        -- Feet = 'Stumbling Sandals',
+        Feet = 'Fuma Kyahan',
     },
     None = { -- TODO: test this, pretty sure no H2H is still H2H skill; this was for shield on PLD
     --     Head = 'Koenig Schaller',
@@ -186,6 +198,7 @@ end
 
 profile.HandleDefault = function() --AUTO HANDLER?
     local game = gData.GetEnvironment();
+    local outsideControl = conq:GetOutsideControl()
     local shadows = gData.GetBuffCount('Copy Image') + gData.GetBuffCount('Copy Image (2)') + gData.GetBuffCount('Copy Image (3)') + gData.GetBuffCount('Copy Image (4+)')
     local currentlyEquipped = gData.GetEquipment();
     local player_entity = GetPlayerEntity(); -- Verbose, but leaving this in as an example
@@ -195,8 +208,12 @@ profile.HandleDefault = function() --AUTO HANDLER?
     -- print(conq:GetInsideControl()) -- are you in a region controlled by your nation
     
     gFunc.EquipSet(sets.Idle);
-    if (game.Time > 6.00 and game.Time < 18.00) then
+    if (game.Time > 6.00 and game.Time < 18.00) then -- daytime
         gFunc.Equip('Hands', 'Garden Bangles')
+        gFunc.Equip('Ammo', 'Fenrir\'s Stone')
+    end
+    if (outsideControl) then
+        gFunc.Equip('Head', 'President. Hairpin')
     end
 
     -- print(player_entity.Look.Sub.type)
@@ -232,7 +249,18 @@ profile.HandleDefault = function() --AUTO HANDLER?
             -- end 
             -- gFunc.EquipSet(sets[mainWepSet]) -- look in the weapon table, equip the resulting set
             -- weapon logic END 
-            
+
+        -- moved this inside engaged check for idle/resting sets
+        if (gcdisplay.GetToggle('tank') == true) then
+            gFunc.EquipSet(sets.elTank)
+            if (game.Time > 6.00 and game.Time < 18.00) then
+                gFunc.Equip('Hands', 'Garden Bangles')
+            end
+            if (player.HPP <= 50) then
+                gFunc.Equip('Waist', 'Muscle Belt')
+            end
+        end
+
     elseif (player.Status == 'Resting') then
         gFunc.EquipSet(sets.Resting);
         
@@ -241,12 +269,6 @@ profile.HandleDefault = function() --AUTO HANDLER?
         
     end
         
-        if (gcdisplay.GetToggle('tank') == true) then
-            gFunc.EquipSet(sets.elTank)
-            if (game.Time > 6.00 and game.Time < 18.00) then
-                gFunc.Equip('Hands', 'Garden Bangles')
-            end
-        end
         -- outside of engaged check, so can be idle in these sets
         if(gcdisplay.GetToggle('mdt')) then 
             gFunc.EquipSet(sets.mdt)
