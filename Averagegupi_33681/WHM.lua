@@ -28,7 +28,7 @@ local sets = {
         Ring2 = 'Bomb Queen Ring',
         Waist = 'Cleric\'s Belt',
         Legs = 'Blessed trousers',
-        Feet = 'Blessed pumps',
+        Feet = 'Rostrum pumps',
         Back = 'Gigant Mantle',
     },
     Resting = {
@@ -55,7 +55,7 @@ local sets = {
         -- Back = 'Red Cape +1',
         Waist = 'Swift Belt',
         Legs = 'Blessed trousers',
-        Feet = 'Blessed pumps',
+        Feet = 'Wonder Clomps',
     },
     Tp_DW = {
 
@@ -67,7 +67,7 @@ local sets = {
         Hands = 'Blessed Mitts',
         Waist = 'Swift Belt',
         Legs = 'Blessed trousers',
-        Feet = 'Blessed pumps',
+        Feet = 'Rostrum Pumps',
         -- Feet = 'Healer\'s Duckbills',
     },
     Cure_Precast = { -- precast for specific cure cast time down gear
@@ -80,7 +80,7 @@ local sets = {
         Ring1 = 'Aqua Ring',
         Back = 'Red Cape +1',
         Waist = 'Cleric\'s Belt',
-        Feet = 'Blessed pumps',
+        Feet = 'Rostrum Pumps', -- cure clogs swap after precast for recast
 
     },
     Healing = { --healing skill+ to mitigate resists
