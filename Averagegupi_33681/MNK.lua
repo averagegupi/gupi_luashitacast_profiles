@@ -5,6 +5,7 @@ conq = gFunc.LoadFile('common\\conquest.lua')
 
 local sets = {
     Idle = {
+        Body = 'Melee Cyclas',
 
     },
     Resting = {
@@ -20,24 +21,24 @@ local sets = {
         Head = 'Temple Crown',
         Neck = 'Peacock Amulet',
         Ear1 = 'Coral Earring',
-        -- Ear2 = 'Wyvern Earring',
-        Ear2 = 'Spike Earring',
+        Ear2 = 'Spike Earring', -- ear2 will be replaced by wyvern for drg SJ
         Body = 'Scorpion Harness',
         Hands = 'Ochiudo\'s Kote',
         Ring1 = 'Toreador\'s Ring',
-        -- Ring1 = 'Sattva Ring',
         Ring2 = 'Toreador\'s Ring',
         Back = 'Amemet Mantle +1',
         Waist = 'Brown Belt',
         Legs = 'Temple Hose',
-        Feet = 'Temple Gaiters',
+        Feet = 'Creek M. Clomps',
     },
-
+    DrgSJ = {
+        Ear2 = 'Wyvern Earring',
+    },
     Enmity = { -- TODO: LOAD UP THAT PLATE
         Waist = 'Warwolf Belt',
+        Ring1 = 'Sattva Ring',
         Back = 'Resentment Cape',
     },
-
     mdt = {
         Ear1 = 'Coral Earring',
         Ring1 = 'Sattva Ring',
@@ -47,7 +48,6 @@ local sets = {
     Precast = {
         Ear1 = 'Loquac. Earring'
     },
-
     Enhancing = { -- TODO: for sj RDM bar/enspell/phalanx
         Ear1 = 'Moldavite Earring', -- apparently MAB impacts spike damage, slap these on for blaze spikes
         Ear2 = 'Novio Earring',
@@ -98,26 +98,25 @@ local sets = {
         Back = 'Amemet Mantle +1',
         Waist = 'Warwolf Belt',
         Legs = 'Byakko\'s Haidate',
-        Feet = 'Wonder Clomps',
+        Feet = 'Creek M. Clomps',
     },
     brdSub = {
         Ear2 = 'Singer\'s Earring',
         Back = 'Singer\'s Mantle',
     },
     elTank = { -- TODO: use for skillup farming atm, but update to actual tank/guard
+        Ammo = 'Fenrir\'s Stone',
         Head = 'Arhat\'s Jinpachi',
         Neck = 'Guarding Torque',
         Ear1 = 'Coral Earring',
-        Ear2 = 'Spike Earring',
+        Ear2 = 'Ethereal Earring',
         Body = 'Arhat\'s gi',
         Ring1 = 'Sattva Ring',
-        -- Ring1 = 'Woodsman Ring',
         Ring2 = 'Jelly Ring',
-        Back = 'Amemet Mantle +1',
+        Back = 'Boxer\'s Mantle',
         Waist = 'Brown Belt',
         Legs = 'Temple Hose',
-        -- Feet = 'Stumbling Sandals',
-        Feet = 'Fuma Kyahan',
+        Feet = 'Melee Gaiters',
     },
     None = { -- TODO: test this, pretty sure no H2H is still H2H skill; this was for shield on PLD
     --     Head = 'Koenig Schaller',
@@ -215,6 +214,9 @@ profile.HandleDefault = function() --AUTO HANDLER?
     if (outsideControl) then
         gFunc.Equip('Head', 'President. Hairpin')
     end
+    -- if (player.SubJob == 'RDM' and player.MPP < 99) then
+    --     gFunc.Equip('Body', 'Royal Cloak')
+    -- end
 
     -- print(player_entity.Look.Sub.type)
     -- need to check for currentlyEquipped.Sub to exist, if so there is something in the OH
@@ -225,7 +227,9 @@ profile.HandleDefault = function() --AUTO HANDLER?
     if (player.Status == 'Engaged') then
         gFunc.EquipSet(sets.Tp_Default)
         -- print('tp set on')
-    
+        if(player.SubJob == 'DRG') then
+            gFunc.EquipSet(sets.DrgSJ)
+        end
         -- weapon logic START 
         -- local mainWepSet
         -- print('between HP/MP threshold')

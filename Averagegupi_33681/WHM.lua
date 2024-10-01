@@ -55,7 +55,7 @@ local sets = {
         -- Back = 'Red Cape +1',
         Waist = 'Swift Belt',
         Legs = 'Blessed trousers',
-        Feet = 'Wonder Clomps',
+        Feet = 'Creek M. Clomps',
     },
     Tp_DW = {
 

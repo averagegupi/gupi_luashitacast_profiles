@@ -56,10 +56,10 @@ local sets = {
     Precast = { --HASTE + FAST CAST STUFF
         Head ='Panther Mask',
         Neck = 'Willpower Torque',
+        Ear1 = 'Loquac. Earring',
         Hands = 'Kog. Tekko +1',
         Waist = 'Sprinter\'s Belt',
         Legs = 'Byakko\'s Haidate',
-        Ear1 = 'Loquac. Earring',
     },
     Utsu = { --EVA OR DT HERE?
         Neck = 'Willpower Torque',
@@ -124,7 +124,7 @@ local sets = {
         Back = 'Amemet Mantle +1',
         Waist = 'Warwolf Belt',
         Legs = 'Byakko\'s Haidate',
-        Feet = 'Wonder Clomps',
+        Feet = 'Creek M. Clomps',
     },
     Night_WS = {
         Feet = 'Koga Kyahan',
@@ -186,7 +186,7 @@ local sets = {
         Back = 'Resentment Cape',
         Waist = 'Ryl.Kgt. Belt',
         Legs = 'Nokizaru Hakama',
-        Feet = 'Wonder Clomps',
+        Feet = 'Bounding Boots',
     },
     ['RaccSixty'] = {
         Head = 'Ninja Hatsuburi',
@@ -217,7 +217,7 @@ local sets = {
         Back = 'Resentment Cape',
         Waist = 'Ryl.Kgt. Belt',
         Legs = 'Nokizaru Hakama',
-        Feet = 'Wonder Clomps',
+        Feet = 'Bounding Boots',
     },
 };
 
