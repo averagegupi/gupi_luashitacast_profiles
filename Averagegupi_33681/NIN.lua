@@ -124,7 +124,7 @@ local sets = {
         Back = 'Amemet Mantle +1',
         Waist = 'Warwolf Belt',
         Legs = 'Byakko\'s Haidate',
-        Feet = 'Creek M. Clomps',
+        Feet = 'Creek M Clomps',
     },
     Night_WS = {
         Feet = 'Koga Kyahan',
