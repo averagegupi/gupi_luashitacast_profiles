@@ -18,21 +18,25 @@ local sets = {
         Body = 'Ducal aketon',
     },
     Tp_Default = {
-        Head = 'Temple Crown',
-        Neck = 'Peacock Amulet',
-        Ear1 = 'Coral Earring',
-        Ear2 = 'Spike Earring', -- ear2 will be replaced by wyvern for drg SJ
+        Ammo = 'Virtue Stone',
+        Head = 'Optical Hat',
+        Neck = 'Faith Torque',
+        Ear1 = 'Coral Earring', -- ear1 will be replaced by wyvern for drg SJ
+        Ear2 = 'Ethereal Earring',
         Body = 'Scorpion Harness',
-        Hands = 'Ochiudo\'s Kote',
+        Hands = 'Melee Gloves',
         Ring1 = 'Toreador\'s Ring',
         Ring2 = 'Toreador\'s Ring',
         Back = 'Amemet Mantle +1',
         Waist = 'Brown Belt',
         Legs = 'Temple Hose',
-        Feet = 'Creek M. Clomps',
+        Feet = 'Fuma Sune-Ate',
     },
     DrgSJ = {
-        Ear2 = 'Wyvern Earring',
+        Ear1 = 'Wyvern Earring',
+    },
+    Acc_Override = { -- TODO: build this out
+
     },
     Enmity = { -- TODO: LOAD UP THAT PLATE
         Waist = 'Warwolf Belt',
@@ -63,17 +67,20 @@ local sets = {
     },
     Chakra = { -- VIT mod;
         Ammo = 'Happy Egg',
-        Ear2 = 'Waetoto\'s Earring',
+        Ear1 = 'Waetoto\'s Earring',
         Body = 'Temple Cyclas', -- 3 VIT; Enhances Chakra effect
+        Hands = 'Melee Gloves', -- Enhances Chakra effect II
         Ring1 = 'Sattva Ring',
         Back = 'Melee Cape',
+        Waist = 'Warwolf Belt',
         Legs = 'Wonder Braccae',
+        Feet = 'Creek M Clomps',
     },
     Boost = {
         Hands = 'Temple Gloves',
     },
     Counterstance = {
-
+        Feet = 'Melee Gaiters'
     },
     ChiBlast = { -- MND mod
         Head = 'Temple Crown',
@@ -90,15 +97,15 @@ local sets = {
         Head = 'Shr.Znr.Kabuto',
         Neck = 'Faith Torque',
         Ear1 = 'Coral Earring',
-        Ear2 = 'Waetoto\'s Earring',
+        Ear2 = 'Ethereal Earring',
         Body = '',
-        Hands = 'Alkyoneus\'s Brc.',
-        Ring1 = 'Sattva Ring',
-        Ring2 = 'Flame Ring',
+        Hands = 'Melee Gloves',
+        Ring1 = 'Toreador\'s Ring',
+        Ring2 = 'Toreador\'s Ring',
         Back = 'Amemet Mantle +1',
         Waist = 'Warwolf Belt',
         Legs = 'Byakko\'s Haidate',
-        Feet = 'Creek M. Clomps',
+        Feet = 'Creek M Clomps',
     },
     brdSub = {
         Ear2 = 'Singer\'s Earring',
@@ -108,11 +115,13 @@ local sets = {
         Ammo = 'Fenrir\'s Stone',
         Head = 'Arhat\'s Jinpachi',
         Neck = 'Guarding Torque',
-        Ear1 = 'Coral Earring',
+        Ear1 = 'Waetoto\'s Earring',
         Ear2 = 'Ethereal Earring',
         Body = 'Arhat\'s gi',
+        Hands = 'Melee Gloves',
         Ring1 = 'Sattva Ring',
         Ring2 = 'Jelly Ring',
+        -- Ring2 = 'Deflecting Band', -- tactical guard, slow +5% (use?)
         Back = 'Boxer\'s Mantle',
         Waist = 'Brown Belt',
         Legs = 'Temple Hose',
@@ -126,7 +135,7 @@ local sets = {
     --     Feet = 'Glt. Leggings +1',
     },
     HandToHand = {
-        Neck = 'Peacock Amulet',
+        Neck = 'Faith Torque',
         Ear1 = 'Brutal Earring',
         Ear2 = 'Ethereal Earring',
     },
@@ -174,6 +183,26 @@ local sets = {
 };
 profile.Sets = sets;
 
+local HandleGabagool = function()
+
+    local eyyImWalkinHere = { 
+        [0] = "Yo, you orderin' or just standin' there? What you want?",
+        [1] = "Get a caprese hero, it ain't gonna disappoint!",
+        [2] = "You want that hero toasted, or you like it weak?",
+        [3] = "Fresh mozz just dropped, you want in or what?",
+        [4] = "Classic pep-if you know, you know. Get one.",
+        [5] = "Extra provolone? Don\'t be cheap, load it up!",
+        [6] = "Our marinara? You ain't dippin' in better anywhere else.",
+        [7] = "You tryna skip the prosciutto? Nah, you need that Parma.",
+        [8] = "These cannolis will blow your mind. Take one, don\'t argue.",
+        [9] = "Pesto so good, you ain\'t ever goin' back to that store-bought trash!",
+        };
+        -- print(eyyImWalkinHere[math.random(0,9)])
+
+    return eyyImWalkinHere[math.random(0,9)]
+
+end
+
 profile.Packer = {
     --{Name = 'Averagegupi', Quantity = 'all'},
 };
@@ -198,8 +227,8 @@ end
 profile.HandleDefault = function() --AUTO HANDLER?
     local game = gData.GetEnvironment();
     local outsideControl = conq:GetOutsideControl()
-    local shadows = gData.GetBuffCount('Copy Image') + gData.GetBuffCount('Copy Image (2)') + gData.GetBuffCount('Copy Image (3)') + gData.GetBuffCount('Copy Image (4+)')
     local currentlyEquipped = gData.GetEquipment();
+    local isCounterstanceOn = gData.GetBuffCount('Counterstance')
     local player_entity = GetPlayerEntity(); -- Verbose, but leaving this in as an example
     local player = gData.GetPlayer(); --PLAYER STATUS CHECK
     
@@ -263,6 +292,12 @@ profile.HandleDefault = function() --AUTO HANDLER?
             if (player.HPP <= 50) then
                 gFunc.Equip('Waist', 'Muscle Belt')
             end
+        end
+
+        -- TOOD: need this inside engaged, or outside?
+        if(isCounterstanceOn == 1) then
+            -- print('counterstance is on') --testing
+            gFunc.EquipSet(sets.Counterstance)
         end
 
     elseif (player.Status == 'Resting') then
@@ -397,6 +432,9 @@ profile.HandleWeaponskill = function() -- WEAPONSKILL
                 -- idkRenamePls_Snow.append(name)
             end
         end
+
+        local testing123 = HandleGabagool()
+        AshitaCore:GetChatManager():QueueCommand(1, '/p ' + testing123);
         -- print(action.Resource.Element)
         -- for i, name in ipairs(action.Resource.Element) do
         --     print("Element " .. i .. ": " .. name)
@@ -409,7 +447,6 @@ profile.HandleWeaponskill = function() -- WEAPONSKILL
         if (gcdisplay.GetCycle('MeleeSet') ~= 'Default') then
         gFunc.EquipSet('Ws_' .. gcdisplay.GetCycle('MeleeSet')) end
     end
-
 
 end
 
