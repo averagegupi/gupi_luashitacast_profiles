@@ -18,8 +18,7 @@ local sets = {
         Body = 'Ducal aketon',
     },
     Tp_Default = {
-        Ammo = 'Virtue Stone',
-        Head = 'Optical Hat',
+        Head = 'Panther Mask',
         Neck = 'Faith Torque',
         Ear1 = 'Coral Earring', -- ear1 will be replaced by wyvern for drg SJ
         Ear2 = 'Ethereal Earring',
@@ -29,13 +28,15 @@ local sets = {
         Ring2 = 'Toreador\'s Ring',
         Back = 'Amemet Mantle +1',
         Waist = 'Brown Belt',
-        Legs = 'Temple Hose',
+        Legs = 'Tpl. Hose +1',
         Feet = 'Fuma Sune-Ate',
     },
     DrgSJ = {
         Ear1 = 'Wyvern Earring',
     },
     Acc_Override = { -- TODO: build this out
+        Head = 'Optical Hat',
+        Neck = 'Peacock Amulet',
 
     },
     Enmity = { -- TODO: LOAD UP THAT PLATE
@@ -67,6 +68,7 @@ local sets = {
     },
     Chakra = { -- VIT mod;
         Ammo = 'Happy Egg',
+        Head = 'Genbu\'s Kabuto',
         Ear1 = 'Waetoto\'s Earring',
         Body = 'Temple Cyclas', -- 3 VIT; Enhances Chakra effect
         Hands = 'Melee Gloves', -- Enhances Chakra effect II
@@ -85,9 +87,9 @@ local sets = {
     ChiBlast = { -- MND mod
         Head = 'Temple Crown',
         Neck = 'Faith Torque',
-        Ring1 = 'Aqua Ring',
+        Ring2 = 'Aqua Ring',
         Back = 'Melee Cape',
-        Legs = 'Wonder Braccae',
+        Legs = 'Tpl. Hose +1',
     },
 
     Movement = {
@@ -101,7 +103,7 @@ local sets = {
         Body = '',
         Hands = 'Melee Gloves',
         Ring1 = 'Toreador\'s Ring',
-        Ring2 = 'Toreador\'s Ring',
+        Ring2 = 'Flame Ring',
         Back = 'Amemet Mantle +1',
         Waist = 'Warwolf Belt',
         Legs = 'Byakko\'s Haidate',
@@ -124,7 +126,7 @@ local sets = {
         -- Ring2 = 'Deflecting Band', -- tactical guard, slow +5% (use?)
         Back = 'Boxer\'s Mantle',
         Waist = 'Brown Belt',
-        Legs = 'Temple Hose',
+        Legs = 'Tpl. Hose +1',
         Feet = 'Melee Gaiters',
     },
     None = { -- TODO: test this, pretty sure no H2H is still H2H skill; this was for shield on PLD
@@ -243,6 +245,9 @@ profile.HandleDefault = function() --AUTO HANDLER?
     if (outsideControl) then
         gFunc.Equip('Head', 'President. Hairpin')
     end
+    if (player.HPP <= 50) then
+        gFunc.Equip('Waist', 'Muscle Belt')
+    end
     -- if (player.SubJob == 'RDM' and player.MPP < 99) then
     --     gFunc.Equip('Body', 'Royal Cloak')
     -- end
@@ -255,6 +260,9 @@ profile.HandleDefault = function() --AUTO HANDLER?
 
     if (player.Status == 'Engaged') then
         gFunc.EquipSet(sets.Tp_Default)
+                if (gcdisplay.GetToggle('acc') == true) then
+            gFunc.EquipSet(sets.Acc_Override)    
+        end
         -- print('tp set on')
         if(player.SubJob == 'DRG') then
             gFunc.EquipSet(sets.DrgSJ)
@@ -286,18 +294,17 @@ profile.HandleDefault = function() --AUTO HANDLER?
         -- moved this inside engaged check for idle/resting sets
         if (gcdisplay.GetToggle('tank') == true) then
             gFunc.EquipSet(sets.elTank)
-            if (game.Time > 6.00 and game.Time < 18.00) then
-                gFunc.Equip('Hands', 'Garden Bangles')
-            end
-            if (player.HPP <= 50) then
-                gFunc.Equip('Waist', 'Muscle Belt')
-            end
         end
 
         -- TOOD: need this inside engaged, or outside?
         if(isCounterstanceOn == 1) then
             -- print('counterstance is on') --testing
             gFunc.EquipSet(sets.Counterstance)
+        end
+
+        -- print(currentlyEquipped.Main.Name)
+        if(currentlyEquipped.Main.Name == 'Faith Baghnakhs') then
+            gFunc.Equip('Ammo', 'Virtue Stone')
         end
 
     elseif (player.Status == 'Resting') then
@@ -432,9 +439,6 @@ profile.HandleWeaponskill = function() -- WEAPONSKILL
                 -- idkRenamePls_Snow.append(name)
             end
         end
-
-        local testing123 = HandleGabagool()
-        AshitaCore:GetChatManager():QueueCommand(1, '/p ' + testing123);
         -- print(action.Resource.Element)
         -- for i, name in ipairs(action.Resource.Element) do
         --     print("Element " .. i .. ": " .. name)
@@ -443,6 +447,10 @@ profile.HandleWeaponskill = function() -- WEAPONSKILL
         -- print(action.Resource.Name[0]) -- english name of WS ???
         -- print(action.Resource.Name[1]) -- this is the WS name in the name table
         -- print(action.Resource.Name[2]) -- this is the JP name in table
+
+        if (gcdisplay.GetToggle('eyy') == true) then
+            AshitaCore:GetChatManager():QueueCommand(1, '/p ' + HandleGabagool()); 
+        end
 
         if (gcdisplay.GetCycle('MeleeSet') ~= 'Default') then
         gFunc.EquipSet('Ws_' .. gcdisplay.GetCycle('MeleeSet')) end
