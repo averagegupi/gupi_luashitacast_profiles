@@ -56,6 +56,7 @@ local sets = {
         Waist = 'Swift Belt',
         Legs = 'Blessed trousers',
         Feet = 'Creek M Clomps',
+        -- Feet = 'Blessed Pumps',
     },
     Tp_DW = {
 
