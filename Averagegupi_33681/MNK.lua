@@ -2,7 +2,7 @@ local profile = {};
 gcinclude = gFunc.LoadFile('common\\gcinclude.lua');
 skillz = gFunc.LoadFile('common\\skillz.lua');
 conq = gFunc.LoadFile('common\\conquest.lua')
-
+-- local wsPoints = 208;
 local sets = {
     Idle = {
         Body = 'Melee Cyclas',
@@ -20,15 +20,15 @@ local sets = {
     Tp_Default = {
         Head = 'Panther Mask',
         Neck = 'Faith Torque',
-        Ear1 = 'Coral Earring', -- ear1 will be replaced by wyvern for drg SJ
-        Ear2 = 'Ethereal Earring',
+        Ear1 = 'Ethereal Earring', -- ear1 will be replaced by wyvern for drg SJ
+        Ear2 = 'Brutal Earring',
         Body = 'Scorpion Harness',
-        Hands = 'Melee Gloves',
+        Hands = 'Mel. Gloves +1',
         Ring1 = 'Toreador\'s Ring',
         Ring2 = 'Toreador\'s Ring',
         Back = 'Amemet Mantle +1',
         Waist = 'Brown Belt',
-        Legs = 'Tpl. Hose +1',
+        Legs = 'Byakko\'s Haidate',
         Feet = 'Fuma Sune-Ate',
     },
     DrgSJ = {
@@ -36,7 +36,7 @@ local sets = {
     },
     Acc_Override = { -- TODO: build this out
         Head = 'Optical Hat',
-        Neck = 'Peacock Amulet',
+        -- Neck = 'Peacock Amulet',
 
     },
     Enmity = { -- TODO: LOAD UP THAT PLATE
@@ -71,7 +71,7 @@ local sets = {
         Head = 'Genbu\'s Kabuto',
         Ear1 = 'Waetoto\'s Earring',
         Body = 'Temple Cyclas', -- 3 VIT; Enhances Chakra effect
-        Hands = 'Melee Gloves', -- Enhances Chakra effect II
+        Hands = 'Mel. Gloves +1', -- Enhances Chakra effect II
         Ring1 = 'Sattva Ring',
         Back = 'Melee Cape',
         Waist = 'Warwolf Belt',
@@ -82,7 +82,7 @@ local sets = {
         Hands = 'Temple Gloves',
     },
     Counterstance = {
-        Feet = 'Melee Gaiters'
+        Feet = 'Mel. Gaiters +1'
     },
     ChiBlast = { -- MND mod
         Head = 'Temple Crown',
@@ -101,7 +101,7 @@ local sets = {
         Ear1 = 'Coral Earring',
         Ear2 = 'Ethereal Earring',
         Body = '',
-        Hands = 'Melee Gloves',
+        Hands = 'Mel. Gloves +1',
         Ring1 = 'Toreador\'s Ring',
         Ring2 = 'Flame Ring',
         Back = 'Amemet Mantle +1',
@@ -120,14 +120,14 @@ local sets = {
         Ear1 = 'Waetoto\'s Earring',
         Ear2 = 'Ethereal Earring',
         Body = 'Arhat\'s gi',
-        Hands = 'Melee Gloves',
+        Hands = 'Mel. Gloves +1',
         Ring1 = 'Sattva Ring',
         Ring2 = 'Jelly Ring',
         -- Ring2 = 'Deflecting Band', -- tactical guard, slow +5% (use?)
         Back = 'Boxer\'s Mantle',
         Waist = 'Brown Belt',
         Legs = 'Tpl. Hose +1',
-        Feet = 'Melee Gaiters',
+        Feet = 'Mel. Gaiters +1',
     },
     None = { -- TODO: test this, pretty sure no H2H is still H2H skill; this was for shield on PLD
     --     Head = 'Koenig Schaller',
@@ -400,6 +400,9 @@ profile.HandleWeaponskill = function() -- WEAPONSKILL
     if (canWS == false) then gFunc.CancelAction() return;
     else
         gFunc.EquipSet(sets.Ws_Default)
+        if (game.Time > 6.00 and game.Time < 18.00) then --daytime 10attack
+            gFunc.Equip('Ear1', 'Fenrir\'s Earring')
+        end
 
         local action = gState.PlayerAction;
         local wepSkillName = action.Resource.Name[1]; -- this will return the name of the WS
@@ -451,6 +454,9 @@ profile.HandleWeaponskill = function() -- WEAPONSKILL
         if (gcdisplay.GetToggle('eyy') == true) then
             AshitaCore:GetChatManager():QueueCommand(1, '/p ' + HandleGabagool()); 
         end
+        -- wsPoints = wsPoints + 3
+        -- print (wsPoints)
+        -- AshitaCore:GetChatManager():QueueCommand(1, '/p You are at: ' + wsPoints + ' points.'); 
 
         if (gcdisplay.GetCycle('MeleeSet') ~= 'Default') then
         gFunc.EquipSet('Ws_' .. gcdisplay.GetCycle('MeleeSet')) end
