@@ -566,6 +566,9 @@ end
 
 profile.HandleMidshot = function()
     gFunc.EquipSet(sets.Midshot);
+    if (game.Time < 6.00 and game.Time > 18.00) then -- nighttime 10 rAttack
+        gFunc.Equip('Ear1', 'Fenrir\'s Earring')
+    end
     -- if (gcdisplay.GetToggle('TH') == true) then gFunc.EquipSet(sets.TH) end
 end
 
@@ -575,6 +578,9 @@ profile.HandleWeaponskill = function()
         gFunc.CancelAction() return;
     else
         gFunc.EquipSet(sets.Ws_Default)
+        if (game.Time > 6.00 and game.Time < 18.00) then --daytime 10attack
+            gFunc.Equip('Ear2', 'Fenrir\'s Earring')
+        end
 
         local action = gState.PlayerAction;
         local wepSkillName = action.Resource.Name[1]; -- this will return the name of the WS

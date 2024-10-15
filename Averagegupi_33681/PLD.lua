@@ -555,6 +555,9 @@ profile.HandleWeaponskill = function() -- WEAPONSKILL
     if (canWS == false) then gFunc.CancelAction() return;
     else
         gFunc.EquipSet(sets.Ws_Default)
+        if (game.Time > 6.00 and game.Time < 18.00) then --daytime 10attack
+            gFunc.Equip('Ear2', 'Fenrir\'s Earring')
+        end
 
         local action = gState.PlayerAction;
         local wepSkillName = action.Resource.Name[1]; -- this will return the name of the WS
