@@ -593,7 +593,6 @@ profile.HandleWeaponskill = function()
         local mainWep = skillz.wep_table[currentlyEquipped.Main.Resource.Skill]; -- this will return the string value in wep table
         -- Flame and Abyssal handling for GS/Scythe
         if (mainWep == 'GreatSword' or mainWep == 'Scythe') then
-            gFunc.Equip('Ring1', 'Flame Ring')
             gFunc.Equip('Ear2', 'Abyssal Earring')
         end
         -- print('Main wep')
