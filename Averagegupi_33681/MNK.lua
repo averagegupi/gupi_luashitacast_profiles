@@ -395,6 +395,7 @@ end
 
 
 profile.HandleWeaponskill = function() -- WEAPONSKILL
+    local game = gData.GetEnvironment();
     local canWS = gcinclude.CheckWsBailout();
     local wsName = gData.GetAction().Name;
     if (canWS == false) then gFunc.CancelAction() return;

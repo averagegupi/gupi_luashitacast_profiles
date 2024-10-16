@@ -379,9 +379,10 @@ profile.HandlePreshot = function()
 end
 
 profile.HandleMidshot = function()
+    local game = gData.GetEnvironment();
 
     gFunc.EquipSet(sets.Midshot);
-    if (game.Time < 6.00 and game.Time > 18.00) then -- nighttime 10 rAttack
+    if (game.Time < 6.00 or game.Time > 18.00) then -- nighttime 10 rAttack
         gFunc.Equip('Ear1', 'Fenrir\'s Earring')
     end
     if (gcdisplay.GetToggle('cap60') == true) then
@@ -390,6 +391,7 @@ profile.HandleMidshot = function()
 end
 
 profile.HandleWeaponskill = function()
+    local game = gData.GetEnvironment();
     local canWS = gcinclude.CheckWsBailout();
     local game = gData.GetEnvironment();
     if (canWS == false) then
