@@ -32,6 +32,7 @@ local sets = {
         Feet = 'Fuma Sune-Ate',
     },
     DrgSJ = {
+        Head = 'Optical Hat', -- TODO: update this when/if dune boots and panth mask+1
         Ear1 = 'Wyvern Earring',
     },
     Acc_Override = { -- TODO: build this out
