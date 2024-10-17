@@ -8,7 +8,7 @@ local sets = {
     Idle = {
         Body = 'Royal Cloak',
         Neck = 'Parade Gorget',
-        Hands = 'Homam Manopolas',
+        Hands = 'Sand Gloves',
         Legs = 'Crimson Cuisses',
         -- Feet = 'Homam Gambieras',
     },
@@ -175,7 +175,7 @@ local sets = {
         Back = 'Amemet Mantle +1',
         Waist = 'Warwolf Belt',
         Legs = 'Valor Breeches',
-        Feet = 'Valor leggings'
+        Feet = 'Hct. Leggings'
     },
     elTank = {
         Head = 'Koenig Schaller',

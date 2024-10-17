@@ -45,7 +45,7 @@ local sets = {
         Feet = 'Homam Gambieras',
     },
     DrgSJ = {
-        -- Body = 'Haubergeon',
+        Body = 'Haubergeon',
         Ear2 = 'Wyvern Earring',
     },
     Acc_Override = {
@@ -185,7 +185,7 @@ local sets = {
         Back = 'Amemet Mantle +1',
         Waist = 'Warwolf Belt',
         Legs = 'Black cuisses',
-        Feet = 'Chs. Sollerets +1',
+        Feet = 'Hct. Leggings'
     },
     BloodWeapon = {},
     WeaponBash = {

@@ -27,7 +27,7 @@ local sets = {
         Ring1 = 'Toreador\'s Ring',
         Ring2 = 'Toreador\'s Ring',
         Back = 'Amemet Mantle +1',
-        Waist = 'Brown Belt',
+        Waist = 'Black Belt',
         Legs = 'Byakko\'s Haidate',
         Feet = 'Fuma Sune-Ate',
     },
@@ -125,7 +125,7 @@ local sets = {
         Ring2 = 'Jelly Ring',
         -- Ring2 = 'Deflecting Band', -- tactical guard, slow +5% (use?)
         Back = 'Boxer\'s Mantle',
-        Waist = 'Brown Belt',
+        Waist = 'Black Belt',
         Legs = 'Tpl. Hose +1',
         Feet = 'Mel. Gaiters +1',
     },
