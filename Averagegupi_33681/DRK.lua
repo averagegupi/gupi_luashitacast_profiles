@@ -9,6 +9,7 @@ local ElementalStaffTable = {
     ['Light'] = 'Light Staff',
     ['Dark'] = 'Dark Staff'
 };
+local intDebuffTable = {'Burn','Frost','Choke','Rasp','Shock','Drown'}
 local profile = {};
 gcinclude = gFunc.LoadFile('common\\gcinclude.lua');
 skillz = gFunc.LoadFile('common\\skillz.lua');
@@ -49,7 +50,8 @@ local sets = {
         Ear2 = 'Wyvern Earring',
     },
     Acc_Override = {
-        Neck = 'Peacock Amulet',
+        Ear1 = 'Abyssal Earring',
+        -- Neck = 'Peacock Amulet',
         Body = 'Homam Corazza',
         Back = 'Abyss Cape',
     },
@@ -156,6 +158,12 @@ local sets = {
         Waist = 'Ryl.Kgt. Belt',
         Legs = 'Chaos Flanchard',
         Feet = 'Homam Gambieras',
+    },
+    INTDebuff = {
+        Neck = 'Prudence torque',
+        Ear1 = 'Cunning Earring',
+        Ear2 = 'Abyssal Earring',
+        Back = 'Fed. Army Mantle',
     },
     Preshot = {
     },
@@ -300,9 +308,6 @@ profile.HandleDefault = function() --AUTO HANDLER?
     local player = gData.GetPlayer(); --PLAYER STATUS CHECK
     if (player.Status == 'Engaged') then
         gFunc.EquipSet(sets.Tp_Default)
-        if (gcdisplay.GetToggle('acc') == true) then
-            gFunc.EquipSet(sets.Acc_Override)    
-        end
         
         if(souleater == 1) then
             gFunc.EquipSet(sets.Souleater)
@@ -354,6 +359,10 @@ profile.HandleDefault = function() --AUTO HANDLER?
         if(player.SubJob == 'DRG') then
             gFunc.EquipSet(sets.DrgSJ)
             -- gFunc.Equip('Ear2', 'Wyvern Earring');
+        end
+
+        if (gcdisplay.GetToggle('acc') == true) then
+            gFunc.EquipSet(sets.Acc_Override)    
         end
 
         if (gcdisplay.GetToggle('Solo') == true) then
@@ -538,6 +547,15 @@ profile.HandleMidcast = function()
         if (gcdisplay.GetToggle('nuke') == true) then
             gFunc.Equip('main', ElementalStaffTable[spell.Element]); 
         end
+        for i, name in ipairs(intDebuffTable) do
+            if(name == spell.Name) then
+                gFunc.EquipSet(sets.INTDebuff);
+                -- print('match found, using INT set')
+                if (gcdisplay.GetToggle('nuke') == true) then
+                    gFunc.Equip('main', 'Ice Staff'); 
+                end
+            end
+        end
     elseif (spell.Skill == 'Enfeebling Magic') then
         gFunc.EquipSet(sets.Enfeebling);
     elseif (spell.Skill == 'Dark Magic') then
@@ -549,6 +567,9 @@ profile.HandleMidcast = function()
         elseif (string.contains(spell.Name, 'Drain') or string.contains(spell.Name, 'Aspir')) then 
             obiValue = ObiCheck(spell);
             gFunc.Equip('ring2', 'Overlord\'s Ring');
+            if (spell.Name == 'Drain') then
+                gFunc.Equip('ring1', 'Bomb Queen Ring')
+            end
             -- print(obiValue);
             if obiValue >= 1 then
                 print('Obi for day/element going on - DARK MAGIC')
@@ -581,7 +602,7 @@ profile.HandleWeaponskill = function()
     else
         gFunc.EquipSet(sets.Ws_Default)
         if (game.Time > 6.00 and game.Time < 18.00) then --daytime 10attack
-            gFunc.Equip('Ear2', 'Fenrir\'s Earring')
+            gFunc.Equip('Ear1', 'Fenrir\'s Earring')
         end
 
         local action = gState.PlayerAction;
