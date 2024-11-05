@@ -46,18 +46,20 @@ local sets = {
         Feet = 'Homam Gambieras',
     },
     DrgSJ = {
-        Body = 'Haubergeon',
         Ear2 = 'Wyvern Earring',
     },
+    THFSJ = { -- stack the TA here
+        Body = 'Homam Corazza',
+    },
     Acc_Override = {
-        Ear1 = 'Abyssal Earring',
+        -- Ear1 = 'Abyssal Earring',
         -- Neck = 'Peacock Amulet',
         Body = 'Homam Corazza',
         Back = 'Abyss Cape',
     },
     Tp_Default = { -- neck and ear logic SHOULD be handled
         Head = 'Homam Zucchetto',
-        Body = 'Homam Corazza', -- will need to test, stacking triple attack % seems exponentially strong
+        Body = 'Haubergeon',
         Hands = 'Homam Manopolas',
         Ring1 = 'Toreador\'s Ring',
         Ring2 = 'Toreador\'s Ring',
@@ -70,12 +72,22 @@ local sets = {
         Ear1 = 'Loquac. Earring',
         Legs = 'Homam Cosciales',
     },
+    castInterim = { -- FC only
+        Head = 'Homam Zucchetto',
+        Neck = 'Evasion Torque',
+        Ear2 = 'Ethereal Earring',
+        Body = 'Scorpion Harness',
+        Ring2 = 'Sattva Ring',
+        Back = 'Boxer\'s Mantle',
+        Waist = 'Ryl.Kgt. Belt',
+        Legs = 'Chs. Flanchard +1',
+    },
     Midcast = { -- SIRD or evasion
         Neck = 'Willpower Torque',
     },
     Cure = {
         Waist = 'Ryl.Kgt. Belt',
-        Legs = 'Abyss Flanchard',
+        Legs = 'Abs. Flanchard +1',
         Feet = 'Chs. Sollerets +1',
     },
     Enhancing = {
@@ -90,7 +102,7 @@ local sets = {
         Ring1 = 'Sattva Ring',
         Ring2 = 'Merman\'s Ring',
         Back = 'Resentment Cape',
-        Legs = 'Abyss Flanchard',
+        Legs = 'Abs. Flanchard +1',
         Feet = 'Crimson Greaves',
     },
     Dread_Spikes = { --max out HP+ at cast to boost effect
@@ -104,7 +116,7 @@ local sets = {
         Ring1 = 'Sattva Ring', -- 30
         Ring2 = 'Bomb Queen Ring', -- 75
         Back = 'Gigant Mantle', -- 80
-        Waist = 'Sprinter\'s Belt',
+        Waist = 'Steppe Sash', -- 60
         Legs = 'Homam Cosciales', -- 26
         Feet = 'Homam Gambieras', -- 31
     },
@@ -119,7 +131,7 @@ local sets = {
         Ring2 = 'Snow Ring',
         Back = 'Abyss Cape',
         Waist = 'Ryl.Kgt. Belt',
-        Legs = 'Chaos Flanchard',
+        Legs = 'Chs. Flanchard +1',
         Feet = 'Abyss Sollerets',
     },
     Dark = {
@@ -133,7 +145,7 @@ local sets = {
         Ring2 = 'Snow Ring', -- 0 swapped for drain/aspir for overlords ring
         Back = 'Merciful Cape', -- 5
         Waist = 'Sprinter\'s Belt', -- 0
-        Legs = 'Abyss Flanchard', -- 5
+        Legs = 'Abs. Flanchard +1', -- 7
         Feet = 'Homam Gambieras', -- 0
     },
     Absorb = {
@@ -156,7 +168,7 @@ local sets = {
         Ring2 = 'Snow Ring',
         Back = 'Abyss Cape',
         Waist = 'Ryl.Kgt. Belt',
-        Legs = 'Chaos Flanchard',
+        Legs = 'Chs. Flanchard +1',
         Feet = 'Homam Gambieras',
     },
     INTDebuff = {
@@ -246,12 +258,12 @@ local sets = {
         Ammo = 'Fenrir\'s Stone',
         Head = 'Homam Zucchetto',
         Neck = 'Peacock Amulet',
-        Ear1 = 'Brutal Earring',
-        Ear2 = 'Ethereal Earring',
+        Ear1 = 'Morukaka\'s Earring',
+        Ear2 = 'Wyvern Earring',
         Body = 'Homam Corazza',
         Hands = 'Homam Manopolas',
         Ring1 = 'Toreador\'s Ring',
-        Ring2 = 'Toreador\'s Ring',
+        Ring2 = 'Bomb Queen Ring',
         Back = 'Gigant Mantle',
         Waist = 'Sprinter\'s Belt',
         Legs = 'Homam Cosciales',
@@ -360,6 +372,9 @@ profile.HandleDefault = function() --AUTO HANDLER?
             gFunc.EquipSet(sets.DrgSJ)
             -- gFunc.Equip('Ear2', 'Wyvern Earring');
         end
+        if(player.SubJob == 'THF') then
+            gFunc.EquipSet(sets.THFSJ)
+        end
 
         if (gcdisplay.GetToggle('acc') == true) then
             gFunc.EquipSet(sets.Acc_Override)    
@@ -379,6 +394,9 @@ profile.HandleDefault = function() --AUTO HANDLER?
 
         if(gcdisplay.GetToggle('zerg')) then
             gFunc.EquipSet(sets.zerg)
+            if (game.Time < 6.00 or game.Time > 18.00) then
+                gFunc.Equip('Ammo', 'Happy Egg')
+            end
         end
 
     elseif (player.Status == 'Resting') then
@@ -421,8 +439,26 @@ end
 
 profile.HandlePrecast = function()
     local spell = gData.GetAction();
+    local target = gData.GetActionTarget();
+	local player = gData.GetPlayer();
+    local me = AshitaCore:GetMemoryManager():GetParty():GetMemberName(0);
+    local fastCastValue = 0.04 -- Loq/Homam pants
+    local minimumBuffer = 0.1;
+    local packetDelay = 0.25; -- using packetflow
+
     -- gcinclude.DoShadows(spell);
     gFunc.EquipSet(sets.Precast);
+
+    if (player.SubJob == "RDM") then
+        -- RDM is .15, warlock mantle??
+        fastCastValue = fastCastValue + 0.15
+    end
+    local castDelay = ((spell.CastTime * (1 - fastCastValue)) / 1000) - minimumBuffer;
+    
+    if (castDelay >= packetDelay) then
+        gFunc.SetMidDelay(castDelay);
+    end
+
     gcinclude.CheckCancels();
 end
 
@@ -512,10 +548,15 @@ profile.HandleMidcast = function()
     local spell = gData.GetAction();
     local obiValue
     local currentlyEquipped = gData.GetEquipment();
+    local game = gData.GetEnvironment();
+    local target = gData.GetActionTarget();
+	local player = AshitaCore:GetMemoryManager():GetParty():GetMemberName(0);
 
     -- print(spell.Element)
     -- print('first check: ' + currentlyEquipped.Ammo ~= nil);
     -- print('second check: ' currentlyEquipped.Ammo.Resource.Skill);
+
+    gFunc.InterimEquipSet(sets.castInterim)  
 
     if(currentlyEquipped.Range == nil) then -- check for range to not be present (aka xbow,bow,boomerang)
         -- print('first check passed');
