@@ -64,6 +64,7 @@ local sets = {
     -- TODO: check how much MP is being lost from idle, and try to swap accordingly
     Precast = { -- baseline, max out haste/fastcast gear 
         Ammo = 'Phtm. Tathlum',
+        Head = 'Nashira Turban',
         Ear1 = 'Loquac. Earring',
         Hands = 'Blessed Mitts',
         Waist = 'Swift Belt',
