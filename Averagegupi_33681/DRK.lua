@@ -144,7 +144,7 @@ local sets = {
         Ring1 = 'Snow Ring', -- 0
         Ring2 = 'Snow Ring', -- 0 swapped for drain/aspir for overlords ring
         Back = 'Merciful Cape', -- 5
-        Waist = 'Sprinter\'s Belt', -- 0
+        Waist = 'Steppe Sash', -- 60
         Legs = 'Abs. Flanchard +1', -- 7
         Feet = 'Homam Gambieras', -- 0
     },
@@ -167,15 +167,15 @@ local sets = {
         Ring1 = 'Snow Ring',
         Ring2 = 'Snow Ring',
         Back = 'Abyss Cape',
-        Waist = 'Ryl.Kgt. Belt',
+        Waist = 'Steppe Sash',
         Legs = 'Chs. Flanchard +1',
-        Feet = 'Homam Gambieras',
+        Feet = 'Mannequin Pumps',
     },
-    INTDebuff = {
-        Neck = 'Prudence torque',
+    INTDebuff = { -- called after nuke set goes on, override mAtt pieces with pure INT
         Ear1 = 'Cunning Earring',
         Ear2 = 'Abyssal Earring',
         Back = 'Fed. Army Mantle',
+        Waist = 'Ryl.Kgt. Belt',
     },
     Preshot = {
     },
@@ -220,7 +220,8 @@ local sets = {
     },
     -- per weapon logic 
     None = { -- aka shield
-        Neck = 'Shield Torque',
+        -- Neck = 'Shield Torque', -- taking this off, only makes sense if a sj that has native shield (PLD, RDM)?
+        Neck = 'Peacock Amulet',
         Ear1 = 'Brutal Earring',
         Ear2 = 'Ethereal Earring',
     },
@@ -300,6 +301,7 @@ profile.HandleDefault = function() --AUTO HANDLER?
     local currentlyEquipped = gData.GetEquipment();
     local game = gData.GetEnvironment();
     local mainWep
+    local player = gData.GetPlayer(); --PLAYER STATUS CHECK
 
     gFunc.EquipSet(sets.Idle);
     if (game.Time > 6.00 and game.Time < 18.00) then
@@ -317,7 +319,6 @@ profile.HandleDefault = function() --AUTO HANDLER?
     -- print(lookupResult)
 
     
-    local player = gData.GetPlayer(); --PLAYER STATUS CHECK
     if (player.Status == 'Engaged') then
         gFunc.EquipSet(sets.Tp_Default)
         
@@ -353,6 +354,9 @@ profile.HandleDefault = function() --AUTO HANDLER?
         if(currentlyEquipped.Sub ~= nil) then -- something in the sub slot
             if (currentlyEquipped.Sub.Resource.Skill == 0) then
                 mainWepSet = 'None' -- special handling for shield
+                if(player.SubJob == "PLD" or player.SubJob == "RDM") then -- only use shield torque if a SJ that gives DRK skill
+                    gFunc.Equip("Neck", "Shield Torque")
+                end
             else
                 mainWepSet = skillz.wep_table[currentlyEquipped.Main.Resource.Skill];
                 -- print(skillz.wep_table[currentlyEquipped.Main.Resource.Skill]) -- debugging, this would return correct output
