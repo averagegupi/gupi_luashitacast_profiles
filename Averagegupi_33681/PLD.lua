@@ -204,7 +204,7 @@ local sets = {
         Ear2 = 'Stealth Earring',
     },
     Sword = { -- Note: swapping out brutal for stealth. Joytoy + justice + virtue stones = the juice
-        Ammo = 'Virtue Stone',
+        -- Ammo = 'Virtue Stone', -- handled in call to subname
         Neck = 'Peacock Amulet',
         Ear1 = 'Stealth Earring',
         Ear2 = 'Ethereal Earring',
@@ -377,8 +377,11 @@ profile.HandleDefault = function() --AUTO HANDLER?
                 if (currentlyEquipped.Sub.Resource.Skill == 0) then
                     mainWepSet = 'None' -- special handling for shield
                 else
-                    mainWepSet = skillz.wep_table[currentlyEquipped.Main.Resource.Skill];
-                    -- print(skillz.wep_table[currentlyEquipped.Main.Resource.Skill]) -- debugging, this would return correct output
+                    mainWepSet = skillz.wep_table[currentlyEquipped.Sub.Resource.Skill];
+                    -- print(skillz.wep_table[currentlyEquipped.Sub.Resource.Skill]) -- debugging, this would return correct output
+                    if(currentlyEquipped.Sub.Name == "Justice Sword") then
+                        gFunc.Equip('Ammo', 'Virtue Stone')
+                    end
                 end
             elseif(currentlyEquipped.Sub == nil and currentlyEquipped.Main ~= nil) then -- nothing in sub slot, main is present
                 -- local mainWep = currentlyEquipped.Main.Resource.Skill; -- verbose, but leaving in as learning
