@@ -35,13 +35,14 @@ local sets = {
     dd = {
         Head = 'Homam Zucchetto',
         -- Neck = 'Peacock Amulet',
-        Ear1 = 'Brutal Earring',
+        -- Ear1 = 'Brutal Earring',
         -- Ear2 = 'Ethereal Earring',
         Body = 'Homam Corazza',
         Hands = 'Homam Manopolas',
-        Ring1 = 'Sattva Ring',
+        -- Ring1 = 'Sattva Ring',
+        Ring1 = 'Toreador\'s Ring',
         Ring2 = 'Toreador\'s Ring',
-        Back = 'Boxer\'s Mantle',
+        Back = 'Amemet Mantle +1',
         Waist = 'Sprinter\'s Belt',
         Legs = 'Homam Cosciales',
         Feet = 'Homam Gambieras',
@@ -170,8 +171,10 @@ local sets = {
         Ear2 = 'Waetoto\'s Earring',
         Body = 'Hecatomb Harness',
         Hands = 'Alkyoneus\'s Brc.',
-        Ring1 = 'Toreador\'s Ring',
-        Ring2 = 'Aqua Ring',
+        Ring1 = 'Flame Ring',
+        Ring2 = 'Flame Ring',
+        -- Ring1 = 'Toreador\'s Ring',
+        -- Ring2 = 'Aqua Ring',
         Back = 'Amemet Mantle +1',
         Waist = 'Warwolf Belt',
         Legs = 'Valor Breeches',
@@ -560,7 +563,7 @@ profile.HandleWeaponskill = function() -- WEAPONSKILL
     else
         gFunc.EquipSet(sets.Ws_Default)
         if (game.Time > 6.00 and game.Time < 18.00) then --daytime 10attack
-            gFunc.Equip('Ear2', 'Fenrir\'s Earring')
+            gFunc.Equip('Ear1', 'Fenrir\'s Earring')
         end
 
         local action = gState.PlayerAction;
