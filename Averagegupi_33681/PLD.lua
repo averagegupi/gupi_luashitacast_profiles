@@ -131,7 +131,7 @@ local sets = {
         Feet = 'Valor Leggings',
     },
     Shield_Bash = {
-        -- Sub = 'Ice Shield', -- TODO: update to get the name of the wep on OH if not shield, and put it back on after ability?
+        -- Sub = '', -- TODO: update to get the name of the wep on OH if not shield, and put it back on after ability?
         Hands = 'Valor Gauntlets',
     },
     Chivalry = { --MND mod
@@ -268,7 +268,7 @@ local sets = {
     },
     ['sb'] = {
         Main = 'Joyeuse',
-        Sub = 'Ice Shield',
+        Sub = 'Msk.Cmd. Shield',
     },
 };
 profile.Sets = sets;
