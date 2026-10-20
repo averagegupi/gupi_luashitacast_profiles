@@ -72,12 +72,15 @@ local sets = {
 
     },
     mdt = {
-        Ear1 = 'Coral Earring',
-        Ring1 = 'Sattva Ring',
-        Ring2 = 'Merman\'s Ring',
-        Back = 'Resentment Cape',
-        Legs = 'Crimson Cuisses',
-        Feet = 'Crimson Greaves',
+        Neck = 'Prudence Torque', -- int piece
+        Ear1 = 'Merman\'s Earring', -- 2%
+        Ear2 = 'Merman\'s Earring', -- 2%
+        Ring1 = 'Sattva Ring', -- 5%
+        Ring2 = 'Merman\'s Ring', -- 4%
+        Back = 'Resentment Cape', -- 5%
+        Waist = 'Steppe Sash', -- hp piece
+        Legs = 'Crimson Cuisses', -- hp/mp piece
+        Feet = 'Crimson Greaves', -- hp/mp piece 
     },
     Precast = { -- FC only
         Ear1 = 'Loquac. Earring',
@@ -113,6 +116,22 @@ local sets = {
         Back = 'Merciful Cape',
 
     },
+    Stoneskin = { -- stack MND
+        Head = 'Gallant Coronet',
+        Body = 'Wonder Kaftan',
+        Ring2 = 'Aqua Ring',
+        Waist = 'Ryl.Kgt. Belt',
+        Feet = 'Valor Leggings',
+    },
+    BlueMagic = {
+        Head = 'Gallant Coronet',
+        Ear1 = 'Hospitaler Earring',
+        Ear2 = 'Immortal\'s Earring',
+        Body = 'Wonder Kaftan',
+        Ring2 = 'Aqua Ring',
+        Waist = 'Ryl.Kgt. Belt',
+        Feet = 'Valor Leggings',
+    },
     Enfeebling = {
 
     },
@@ -138,7 +157,7 @@ local sets = {
         Head = 'Gallant Coronet',
         Neck = 'Faith Torque',
         Body = 'Wonder Kaftan',
-        Ring1 = 'Aqua Ring',
+        Ring2 = 'Aqua Ring',
         Back = 'Ryl. Army Mantle',
         Waist = 'Ryl.Kgt. Belt',
         Legs = 'Wonder Braccae',
@@ -154,7 +173,7 @@ local sets = {
         Ear2 = 'Novio Earring',
         Neck = 'Faith Torque', -- logic in cast to conditionally swap to uggy pendant
         Body = 'Gallant Surcoat',
-        Ring1 = 'Aqua Ring',
+        Ring2 = 'Aqua Ring',
         Back = 'Ryl. Army Mantle',
         Waist = 'Ryl.Kgt. Belt',
         Legs = 'Wonder Braccae',
@@ -209,14 +228,15 @@ local sets = {
     Sword = { -- Note: swapping out brutal for stealth. Joytoy + justice + virtue stones = the juice
         -- Ammo = 'Virtue Stone', -- handled in call to subname
         Neck = 'Peacock Amulet',
-        Ear1 = 'Stealth Earring',
-        Ear2 = 'Ethereal Earring',
+        Ear1 = 'Brutal Earring',
+        Ear2 = 'Stealth Earring',
+        -- Ear2 = 'Ethereal Earring',
     },
     GreatSword = {
         Neck = 'Prudence Torque',
-        -- Ear1 = 'Brutal Earring',
-        Ear1 = 'Abyssal Earring',
-        Ear2 = 'Ethereal Earring', --testing
+        Ear1 = 'Brutal Earring',
+        Ear2 = 'Abyssal Earring',
+        -- Ear2 = 'Ethereal Earring', --testing
     },
     Polearm = {
         Neck = 'Peacock Amulet',
@@ -265,10 +285,24 @@ local sets = {
     },
     ['es'] = {
         Main = 'Earth Staff',
+        Sub = 'Bugard Strap +1'
     },
     ['sb'] = {
         Main = 'Joyeuse',
         Sub = 'Msk.Cmd. Shield',
+    },
+    ['maxAccuracy'] = { -- for BLU sub, head butt
+        Head = 'Optical Hat',
+        Neck = 'Peacock Amulet',
+        Ear2 = 'Immortal\'s Earring',
+        Body = 'Homam Corazza',
+        Hands = 'Homam Manopolas',
+        Ring1 = 'Toreador\'s Ring',
+        Ring2 = 'Toreador\'s Ring',
+        Back = 'Resentment Cape',
+        Waist = 'Swift Belt',
+        Legs = 'Homam Cosciales',
+        Feet = 'Homam Gambieras',
     },
 };
 profile.Sets = sets;
@@ -379,6 +413,10 @@ profile.HandleDefault = function() --AUTO HANDLER?
             if(currentlyEquipped.Sub ~= nil) then -- something in the sub slot
                 if (currentlyEquipped.Sub.Resource.Skill == 0) then
                     mainWepSet = 'None' -- special handling for shield
+                -- handling for grips
+                if (currentlyEquipped.Sub.Name:contains('Grip')) then
+                    mainWepSet = skillz.wep_table[currentlyEquipped.Main.Resource.Skill];
+                end
                 else
                     mainWepSet = skillz.wep_table[currentlyEquipped.Sub.Resource.Skill];
                     -- print(skillz.wep_table[currentlyEquipped.Sub.Resource.Skill]) -- debugging, this would return correct output
@@ -421,6 +459,9 @@ profile.HandleDefault = function() --AUTO HANDLER?
             -- print(refresh);
             playedthissomanytimesIknowwhatImtalkingabout(refresh)
             gFunc.EquipSet(sets.elTank)
+            if (gcdisplay.GetToggle('es') == true) then 
+                gFunc.Equip('feet', 'Crimson Greaves') 
+            end
         else
             AshitaCore:GetFontManager():Delete('_picklerick');
         end
@@ -514,6 +555,9 @@ profile.HandleMidcast = function() -- MIDCAST
 
     if (spell.Skill == 'Enhancing Magic') then
         gFunc.EquipSet(sets.Enhancing);
+        if(spell.Name == 'Stoneskin') then
+            gFunc.EquipSet(sets.Stoneskin)
+        end
     elseif (spell.Skill == 'Healing Magic') then
         if (gcdisplay.GetToggle('tank') == true and target.Name == player) then
             gFunc.EquipSet(sets.hpUp) -- cranking HP up for enmity
@@ -548,10 +592,20 @@ profile.HandleMidcast = function() -- MIDCAST
             elseif spell.MppAftercast <= 50 then
                 gFunc.Equip('Neck', 'Uggalepih Pendant');
             end
+            if (gcdisplay.GetToggle('es') == true) then --es on, so TP doesn't matter
+                gFunc.Equip('Main', 'Light Staff')
+            end
         else -- if its not a nuke, then its flash, slap enmity stuff on
             gFunc.EquipSet(sets.Enmity);
         end
+    
+    elseif (spell.Skill == 'Blue Magic') then
+        gFunc.EquipSet(sets.BlueMagic) -- default cure set; TODO: see whats really needed here
+        if(spell.Name == 'Head Butt') then -- crank acc
+            gFunc.EquipSet(sets.maxAccuracy)
+        end
     end
+
 end
 
 
