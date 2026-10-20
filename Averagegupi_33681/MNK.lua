@@ -46,7 +46,8 @@ local sets = {
         Back = 'Resentment Cape',
     },
     mdt = {
-        Ear1 = 'Coral Earring',
+        Ear1 = 'Merman\'s Earring', -- 2%
+        Ear2 = 'Merman\'s Earring', -- 2%
         Ring1 = 'Sattva Ring',
         Ring2 = 'Merman\'s Ring',
         Back = 'Resentment Cape',
@@ -68,7 +69,7 @@ local sets = {
         Feet = 'Temple Gaiters',
     },
     Chakra = { -- VIT mod;
-        Ammo = 'Happy Egg',
+        Ammo = 'Bibiki Seashell',
         Head = 'Genbu\'s Kabuto',
         Ear1 = 'Waetoto\'s Earring',
         Body = 'Temple Cyclas', -- 3 VIT; Enhances Chakra effect
