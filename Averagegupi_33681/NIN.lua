@@ -7,10 +7,10 @@ local ElementalStaffTable = {
     ['Earth'] = 'Earth Staff',
     ['Water'] = 'Water Staff',
     ['Wind'] = 'Wind Staff',
-    ['Ice'] = 'Ice Staff',
-    ['Thunder'] = 'Thunder Staff',
+    ['Ice'] = 'Aquilo\'s Staff',
+    ['Thunder'] = 'Jupiter\'s Staff',
     ['Light'] = 'Light Staff',
-    ['Dark'] = 'Dark Staff'
+    ['Dark'] = 'Pluto\'s Staff'
 };
 local sets = {
     Idle = {
@@ -141,7 +141,8 @@ local sets = {
         Back = 'Resentment Cape',
     },
     mdt = {
-        Ear1 = 'Coral Earring',
+        Ear1 = 'Merman\'s Earring', -- 2%
+        Ear2 = 'Merman\'s Earring', -- 2%
         Ring1 = 'Sattva Ring',
         Ring2 = 'Merman\'s Ring',
         Body = 'Kirin\'s Osode',
@@ -179,9 +180,9 @@ local sets = {
         Head = 'Walkure Mask',
         Neck = 'Peacock Amulet',
         Ear1 = 'Morukaka Earring',
-        Ear2 = 'Drone Earring',
+        Ear2 = 'Waetoto\'s Earring',
         Body = 'Scorpion Harness',
-        Hands = 'Ochiudo\'s Kote',
+        Hands = 'Wonder Mitts',
         Ring1 = 'Toreador\'s Ring',
         Ring2 = 'Toreador\'s Ring',
         Back = 'Resentment Cape',
@@ -204,21 +205,21 @@ local sets = {
         Feet = 'Bounding Boots',
     },
     ['cap50'] = {
-        Main = 'Zushio',
+        Main = 'Buboso',
         Sub = 'Anju',
         Ammo = 'Happy Egg',
         Head = 'Walkure Mask',
         Neck = 'Peacock Amulet',
-        Ear1 = 'Drone Earring',
-        Ear2 = 'Drone Earring',
-        Body = 'Nokizaru gi',
-        Hands = 'Ochiudo\'s Kote',
+        Ear1 = 'Novio Earring',
+        Ear2 = 'Cunning Earring',
+        Body = 'Wonder Kaftan',
+        Hands = 'Wonder Mitts',
         Ring1 = 'Sattva Ring',
-        Ring2 = 'Jaeger Ring',
+        Ring2 = 'Carect Ring',
         Back = 'Resentment Cape',
         Waist = 'Ryl.Kgt. Belt',
         Legs = 'Nokizaru Hakama',
-        Feet = 'Bounding Boots',
+        Feet = 'Mannequin Pumps',
     },
 };
 
