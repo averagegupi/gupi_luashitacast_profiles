@@ -4,10 +4,10 @@ local ElementalStaffTable = { -- important
     ['Earth'] = 'Earth Staff',
     ['Water'] = 'Water Staff',
     ['Wind'] = 'Wind Staff',
-    ['Ice'] = 'Ice Staff',
-    ['Thunder'] = 'Thunder Staff',
+    ['Ice'] = 'Aquilo\'s Staff',
+    ['Thunder'] = 'Jupiter\'s Staff',
     ['Light'] = 'Light Staff',
-    ['Dark'] = 'Dark Staff'
+    ['Dark'] = 'Pluto\'s Staff'
 };
 local profile = {};
 gcinclude = gFunc.LoadFile('common\\gcinclude.lua');
@@ -16,8 +16,8 @@ conq = gFunc.LoadFile('common\\conquest.lua')
 
 local sets = {
     Idle = {
-        Main = 'Kirin\'s Pole',
-        Ammo = 'Fenrir\'s Stone',
+        -- Main = 'Kirin\'s Pole',
+        -- Sub = 'Raptor Strap +1',
         Head = 'Hlr. Cap +1',
         Neck = 'Uggalepih Pendant',
         Ear1 = 'Loquac. Earring',
@@ -31,14 +31,21 @@ local sets = {
         Feet = 'Rostrum pumps',
         Back = 'Gigant Mantle',
     },
+    Caster_wep = {
+        Main = 'Kirin\'s Pole',
+        Sub = 'Bugard Strap +1',
+    },
+    Dd_wep = {
+        Main = 'Darksteel Maul',
+        Sub = 'Prudence Rod',
+        Ammo = 'Virtue Stone',
+    },
     Resting = {
-        Ammo = 'Phtm. Tathlum',
-        Main = 'Dark Staff',
+        Main = 'Pluto\'s Staff',
         Head = 'Hlr. Cap +1',
+        Neck ='Checkered Scarf',
         Body = 'Hlr. Bliaut +1',
-        Neck = 'Checkered Scarf',
         Waist = 'Cleric\'s Belt',
-        
     },
     Town = {
         Body = 'Ducal aketon',
@@ -63,7 +70,6 @@ local sets = {
     },
     -- TODO: check how much MP is being lost from idle, and try to swap accordingly
     Precast = { -- baseline, max out haste/fastcast gear 
-        Ammo = 'Phtm. Tathlum',
         Head = 'Nashira Turban',
         Ear1 = 'Loquac. Earring',
         Hands = 'Blessed Mitts',
@@ -124,6 +130,12 @@ local sets = {
         Back = 'Merciful Cape',
 
     },
+    mdt = {
+        Ear1 = 'Merman\'s Earring', -- 2%
+        Ear2 = 'Merman\'s Earring', -- 2%
+        Ring1 = 'Sattva Ring',
+        Ring2 = 'Merman\'s Ring',
+},
     -- ABILITIES --
 
     Divine_Nuke = { -- HOLY / BANISH M.ATT+ MND
@@ -182,7 +194,6 @@ end
 profile.HandleDefault = function() --AUTO HANDLER?
     local game = gData.GetEnvironment();
     local outsideControl = conq:GetOutsideControl()
-    local shadows = gData.GetBuffCount('Copy Image') + gData.GetBuffCount('Copy Image (2)') + gData.GetBuffCount('Copy Image (3)') + gData.GetBuffCount('Copy Image (4+)')
     local currentlyEquipped = gData.GetEquipment();
     local player_entity = GetPlayerEntity(); -- Verbose, but leaving this in as an example
     local player = gData.GetPlayer(); --PLAYER STATUS CHECK
@@ -207,6 +218,18 @@ profile.HandleDefault = function() --AUTO HANDLER?
         gFunc.Equip('Ring1', 'Aqua Ring')
     end
 
+    if (gcdisplay.GetToggle('dd') == true) then
+        gFunc.EquipSet(sets.Dd_wep)
+        -- AshitaCore:GetChatManager():QueueCommand(-1, '/lac disable Main');
+        -- AshitaCore:GetChatManager():QueueCommand(-1, '/lac disable Sub');
+        -- AshitaCore:GetChatManager():QueueCommand(-1, '/lac disable Ammo');
+    else
+        -- AshitaCore:GetChatManager():QueueCommand(-1, '/lac enable Main');
+        -- AshitaCore:GetChatManager():QueueCommand(-1, '/lac enable Sub');
+        -- AshitaCore:GetChatManager():QueueCommand(-1, '/lac enable Ammo');
+        gFunc.EquipSet(sets.Caster_wep)  
+    end
+
     if (player.Status == 'Engaged') then
         gFunc.EquipSet(sets.Tp_Default)
 
@@ -214,6 +237,10 @@ profile.HandleDefault = function() --AUTO HANDLER?
         gFunc.EquipSet(sets.Resting);
 
     end
+    -- slapped this in for t2 tonberry
+    if(gcdisplay.GetToggle('mdt')) then 
+        gFunc.EquipSet(sets.mdt)
+    end  
 
     gcinclude.CheckDefault();
 end
@@ -261,26 +288,13 @@ profile.HandleMidcast = function() -- MIDCAST
         gFunc.EquipSet(sets.Dark);
 
     elseif (spell.Skill == 'Divine Magic') then
-        local damagingDivine = false -- set a flag for damage or just enmity divine spell (like flash)
-        for _, s in ipairs(Divine_Nuke_Table) do -- loop through table
-            if s == spell.Name then
-                damagingDivine = true
-                break
-            end
+        gFunc.EquipSet(sets.Divine_Nuke);
+        if spell.MppAftercast <= 50 then
+            gFunc.Equip('Neck', 'Uggalepih Pendant');
         end
-        if(damagingDivine == true) then
-            gFunc.EquipSet(sets.Divine_Nuke);
-            -- if(spell.Name == 'Enlight') then
-                -- print('casting enlight, should not swap to uggy pendant');
-            if spell.MppAftercast <= 50 then
-                gFunc.Equip('Neck', 'Uggalepih Pendant');
-            end
-            if (conq:GetInsideControl()) then
-                -- print('Testing; Nuking while inside region controlled by current nation - Circlet ON')
-                gFunc.Equip('Head', 'Republic Circlet')
-            end
-        -- else -- if its not a nuke, then its flash, slap enmity stuff on
-            -- gFunc.EquipSet(sets.Enmity);
+        if (conq:GetInsideControl()) then
+            -- print('Testing; Nuking while inside region controlled by current nation - Circlet ON')
+            gFunc.Equip('Head', 'Republic Circlet')
         end
     end
 end
