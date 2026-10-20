@@ -4,10 +4,10 @@ local ElementalStaffTable = {
     ['Earth'] = 'Earth Staff',
     ['Water'] = 'Water Staff',
     ['Wind'] = 'Wind Staff',
-    ['Ice'] = 'Ice Staff',
-    ['Thunder'] = 'Thunder Staff',
+    ['Ice'] = 'Aquilo\'s Staff',
+    ['Thunder'] = 'Jupiter\'s Staff',
     ['Light'] = 'Light Staff',
-    ['Dark'] = 'Dark Staff'
+    ['Dark'] = 'Pluto\'s Staff'
 };
 local intDebuffTable = {'Burn','Frost','Choke','Rasp','Shock','Drown'}
 local profile = {};
@@ -59,7 +59,7 @@ local sets = {
     },
     Tp_Default = { -- neck and ear logic SHOULD be handled
         Head = 'Homam Zucchetto',
-        Body = 'Haubergeon',
+        Body = 'Hauberk',
         Hands = 'Homam Manopolas',
         Ring1 = 'Toreador\'s Ring',
         Ring2 = 'Toreador\'s Ring',
@@ -72,20 +72,25 @@ local sets = {
         Ear1 = 'Loquac. Earring',
         Legs = 'Homam Cosciales',
     },
-    castInterim = { -- FC only
+    castInterim = { -- basline mAcc/eva
         Head = 'Homam Zucchetto',
-        Neck = 'Evasion Torque',
+        Neck = 'Willpower Torque',
         Ear2 = 'Ethereal Earring',
         Body = 'Scorpion Harness',
-        Ring2 = 'Sattva Ring',
+        Ring1 = 'Sattva Ring',
         Back = 'Boxer\'s Mantle',
         Waist = 'Ryl.Kgt. Belt',
         Legs = 'Chs. Flanchard +1',
     },
-    Midcast = { -- SIRD or evasion
-        Neck = 'Willpower Torque',
-    },
     Cure = {
+        Head = 'Republic Circlet',
+        Neck = 'Faith Torque',
+        Ear1 = 'Waetoto\'s earring',
+        Body = 'Abyss Cuirass',
+        Hands = 'Garden Bangles',
+        Ring1 = 'Sattva ring',
+        Ring2 = 'Aqua Ring',
+        Back = 'Ryl. Army Mantle',
         Waist = 'Ryl.Kgt. Belt',
         Legs = 'Abs. Flanchard +1',
         Feet = 'Chs. Sollerets +1',
@@ -97,8 +102,18 @@ local sets = {
         Body = 'Abyss Cuirass',
         Back = 'Merciful Cape',
     },
+    Stoneskin = {
+        Head = 'Republic Circlet',
+        Hands = 'Alkyoneus\'s Brc.',
+        Ring1 = 'Carect Ring',
+        Ring2 = 'Aqua Ring',
+        Waist = 'Ryl.Kgt. Belt',
+        Legs = 'Abs. Flanchard +1',
+        Feet = 'Chs. Sollerets +1',
+    },
     mdt = {
-        Ear1 = 'Coral Earring',
+        Ear1 = 'Merman\'s Earring', -- 2%
+        Ear2 = 'Merman\'s Earring', -- 2%
         Ring1 = 'Sattva Ring',
         Ring2 = 'Merman\'s Ring',
         Back = 'Resentment Cape',
@@ -120,10 +135,10 @@ local sets = {
         Legs = 'Homam Cosciales', -- 26
         Feet = 'Homam Gambieras', -- 31
     },
-    Enfeebling = {
+    Enfeebling_D = {
         Head = 'Homam Zucchetto',
         Neck = 'Enfeebling Torque',
-        Ear1 = 'Cunning Earring',
+        Ear1 = 'Morukaka\'s earring',
         Ear2 = 'Abyssal Earring',
         Body = 'Chaos Cuirass',
         Hands = 'Abyss Gauntlets',
@@ -133,6 +148,10 @@ local sets = {
         Waist = 'Ryl.Kgt. Belt',
         Legs = 'Chs. Flanchard +1',
         Feet = 'Abyss Sollerets',
+    },
+    Enfeebling_W = { -- stack MND; will already have enfeeb set above on
+        Ring1 = 'Aqua Ring',
+        Legs = 'Abs. Flanchard +1',
     },
     Dark = {
         Head = 'Chs. Burgeonet +1', -- 5
@@ -174,8 +193,23 @@ local sets = {
     INTDebuff = { -- called after nuke set goes on, override mAtt pieces with pure INT
         Ear1 = 'Cunning Earring',
         Ear2 = 'Abyssal Earring',
-        Back = 'Fed. Army Mantle',
+        -- over 110 INT without replacing belt/waist. Keeping belt so hP doesnt dip, back for magAcc
+        -- Back = 'Fed. Army Mantle',
+        -- Waist = 'Ryl.Kgt. Belt',
+    },
+    BlueMagic = { -- baseline TODO: sets for physical/magical
+        Head = 'Homam Zucchetto',
+        Neck = 'Faith Torque',
+        Ear1 = 'Morukaka Earring',
+        Ear2 = 'Immortal\'s Earring',
+        Body = 'Abyss Cuirass',
+        Hands = 'Garden Bangles',
+        Ring1 = 'Toreador\'s Ring',
+        Ring2 = 'Aqua Ring',
+        Back = 'Abyss Cape',
         Waist = 'Ryl.Kgt. Belt',
+        Legs = 'Abs. Flanchard +1',
+        Feet = 'Chs. Sollerets +1',
     },
     Preshot = {
     },
@@ -195,7 +229,7 @@ local sets = {
     },
     Ws_Default = { -- blanket WS
         Head = 'Chs. Burgeonet +1',
-        Neck = 'Prudence Torque',
+        Neck = 'Peacock Amulet',
         Ear1 = 'Brutal Earring',
         Ear2 = 'Waetoto\'s Earring',
         Body = 'Hecatomb Harness',
@@ -357,7 +391,12 @@ profile.HandleDefault = function() --AUTO HANDLER?
                 if(player.SubJob == "PLD" or player.SubJob == "RDM") then -- only use shield torque if a SJ that gives DRK skill
                     gFunc.Equip("Neck", "Shield Torque")
                 end
+                -- handling for grips
+                if (currentlyEquipped.Sub.Name:contains('Grip')) then
+                    mainWepSet = skillz.wep_table[currentlyEquipped.Main.Resource.Skill];
+                end
             else
+                -- no grip/sub found -> handle dynamic equip
                 mainWepSet = skillz.wep_table[currentlyEquipped.Main.Resource.Skill];
                 -- print(skillz.wep_table[currentlyEquipped.Main.Resource.Skill]) -- debugging, this would return correct output
             end
@@ -571,6 +610,9 @@ profile.HandleMidcast = function()
 
     if (spell.Skill == 'Enhancing Magic') then
         gFunc.EquipSet(sets.Enhancing);
+        if(spell.Name == 'Stoneskin') then
+            gFunc.EquipSet(sets.Stoneskin)
+        end
     elseif (spell.Skill == 'Healing Magic') then
         gFunc.EquipSet(sets.Cure);
     elseif (spell.Skill == 'Elemental Magic') then
@@ -597,12 +639,22 @@ profile.HandleMidcast = function()
                 gFunc.EquipSet(sets.INTDebuff);
                 -- print('match found, using INT set')
                 if (gcdisplay.GetToggle('nuke') == true) then
-                    gFunc.Equip('main', 'Ice Staff'); 
+                    gFunc.Equip('main', ElementalStaffTable[spell.Element]);
                 end
             end
         end
     elseif (spell.Skill == 'Enfeebling Magic') then
-        gFunc.EquipSet(sets.Enfeebling);
+        gFunc.EquipSet(sets.Enfeebling_D);
+        if (spell.Type == 'White Magic') then
+            gFunc.EquipSet(sets.Enfeebling_W)
+        end
+        obiValue = ObiCheck(spell);
+        if obiValue >= 1 then
+            print('Obi for day/element going on - ENFEEBLING MAGIC')
+            gFunc.Equip('Waist', ElementalWaistTable[spell.Element]);
+        else
+            print('Obi check not met - ENFEEBLING')
+        end
     elseif (spell.Skill == 'Dark Magic') then
         gFunc.EquipSet(sets.Dark);
         if (string.match(spell.Name, 'Dread Spikes')) then
@@ -623,6 +675,8 @@ profile.HandleMidcast = function()
                 print('Obi check not met - DARK')
             end
         end
+    elseif (spell.Skill == 'Blue Magic') then
+        gFunc.EquipSet('BlueMagic')
     end
 end
 
