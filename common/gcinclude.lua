@@ -136,6 +136,10 @@ function gcinclude.SetVariables()
 		gcdisplay.CreateToggle('es', false);
 		gcdisplay.CreateToggle('sb', false);
 	end
+	if (player.MainJob == 'WHM') then
+		gcdisplay.CreateToggle('dd', false);
+		gcdisplay.CreateToggle('mdt', false);
+	end
 	if (player.MainJob == 'MNK') then
 		gcdisplay.CreateToggle('tank', false);
 		gcdisplay.CreateToggle('mdt', false);
@@ -379,6 +383,30 @@ function gcinclude.HandleCommands(args)
 			gcdisplay.AdvanceToggle('sb');
 			toggle = 'sb';
 			status = gcdisplay.GetToggle('sb');
+		end
+	end
+	if (player.MainJob == 'WHM') then
+		if (args[1] == 'dd') then
+			if (gcdisplay.GetToggle('dd') == false) then
+				AshitaCore:GetChatManager():QueueCommand(-1, '/lac disable Main');
+				AshitaCore:GetChatManager():QueueCommand(-1, '/lac disable Sub');
+				AshitaCore:GetChatManager():QueueCommand(-1, '/lac disable Ammo')
+				gcdisplay.AdvanceToggle('dd');
+				toggle = 'dd';
+				status = gcdisplay.GetToggle('dd');
+			else
+				AshitaCore:GetChatManager():QueueCommand(-1, '/lac enable Main');
+				AshitaCore:GetChatManager():QueueCommand(-1, '/lac enable Sub');
+				AshitaCore:GetChatManager():QueueCommand(-1, '/lac enable Ammo')
+				gcdisplay.AdvanceToggle('dd');
+				toggle = 'dd';
+				status = gcdisplay.GetToggle('dd');
+			end
+		end
+		if (args[1] == 'mdt') then
+			gcdisplay.AdvanceToggle('mdt');
+			toggle = 'mdt';
+			status = gcdisplay.GetToggle('mdt');
 		end
 	end
 	if (player.MainJob == 'MNK') then
