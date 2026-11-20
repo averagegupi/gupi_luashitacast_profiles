@@ -118,7 +118,8 @@ conq = gFunc.LoadFile('common\\conquest.lua')
 local sets = {
     Idle = { -- idle
         Main = 'Earth Staff',
-        Body = 'Royal Cloak',
+        -- Body = 'Royal Cloak',
+        Body = 'Black Cloak',
 
     },
     Resting = { -- rest gear
@@ -139,12 +140,13 @@ local sets = {
     Precast = { -- TODO: fix this when 75. For now this will be patching for constant gear updates
         Ammo = 'Phtm. Tathlum',
         -- Head = 'Nashira Turban',
-        Head = 'Wizard\'s Petasos', -- seers/justa here to swap out from vermy
-        Body = 'Justaucorps',
+        -- Head = 'Wizard\'s Petasos', -- seers/justa here to swap out from vermy
+        -- Body = 'Justaucorps',
+        Body = 'Black Cloak',
         Neck = 'Checkered Scarf',
         Ear1 = 'Cunning Earring',
         -- Hands = 'Blessed Mitts',
-        -- Waist = 'Swift Belt',
+        Waist = 'Swift Belt',
         -- Legs = 'Blessed trousers',
         Feet = 'Wizard\'s Sabots',
         -- Feet = 'Rostrum Pumps',
@@ -154,6 +156,7 @@ local sets = {
         Head = 'Nashira Turban',
         Neck = 'Willpower Torque',
         Feet = 'Wizard\'s Sabots',
+        Waist = 'Reverend sash',
     },
     Cure = {
         Main = 'Light Staff',
@@ -164,32 +167,39 @@ local sets = {
     Enhancing = {
         Neck = 'Enhancing Torque',
         Back = 'Merciful Cape',
+        Feet = 'Sorcerer\'s Sabots',
     },
     Stoneskin = {
     },
     Phalanx = {
     },
     Enfeebling = {
+        Head = 'Wizard\'s Petasos',
         Body = 'Wizard\'s Coat',
         Neck = 'Enfeebling Torque',
+        -- Waist = 'Reverend sash',
         Feet = 'Mannequin Pumps',
     },
     Dark = { -- Dark magic set
         Neck = 'Dark Torque', -- 7
-        Ear1 = 'Morukaka Earring', -- crank the hp up so I'm getting the most value out of amount drained
+        Ear1 = 'Cunning Earring', -- crank the hp up so I'm getting the most value out of amount drained
         Ear2 = 'Abyssal Earring', -- 5
         Ring1 = 'Snow Ring', -- 0
         Ring2 = 'Snow Ring', -- 0 swapped for drain/aspir for overlords ring
         Back = 'Merciful Cape', -- 5
+        -- Waist = 'Reverend sash',
         -- Waist = 'Steppe Sash', -- 60 (hp)
         Legs = 'Wizard\'s Tonban', -- 15
+        Feet = 'Sorcerer\'s Sabots',
     },
     Nuke = { --set for general nuking
-        Head = 'Wizard\'s Petasos',
+        -- Head = 'Wizard\'s Petasos',
         Neck = 'Checkered Scarf',
-        Body = 'Justaucorps',
+        -- Body = 'Justaucorps',
         Hands = 'Wizard\'s Gloves',
+        -- Waist = 'Reverend sash',
         Legs = 'Seer\'s Slacks',
+        Feet = 'Sorcerer\'s Sabots',
     },
     Ws_Default = {},
     Movement = {},
@@ -259,6 +269,8 @@ profile.HandleMidcast = function()
     local spell = gData.GetAction();
     local obiValue
 
+    gFunc.EquipSet(sets.Midcast)
+
         if (spell.Skill == 'Enhancing Magic') then --general enhancing
             gFunc.EquipSet(sets.Enhancing);
                 if string.match(spell.Name, 'Phalanx') then
@@ -297,6 +309,7 @@ profile.HandleMidcast = function()
             if (conq:GetInsideControl()) then
                 -- print('Testing; Nuking while inside region controlled by current nation - Circlet ON')
                 gFunc.Equip('Head', 'Republic Circlet')
+                gFunc.Equip('Body', 'Justaucorps') -- temp
             end
         elseif (spell.Skill == 'Enfeebling Magic') then
             gFunc.EquipSet(sets.Enfeebling);

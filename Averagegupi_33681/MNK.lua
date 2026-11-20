@@ -71,6 +71,7 @@ local sets = {
     Chakra = { -- VIT mod;
         Ammo = 'Bibiki Seashell',
         Head = 'Genbu\'s Kabuto',
+        Neck = 'Fortitude Torque',
         Ear1 = 'Waetoto\'s Earring',
         Body = 'Temple Cyclas', -- 3 VIT; Enhances Chakra effect
         Hands = 'Mel. Gloves +1', -- Enhances Chakra effect II

@@ -112,13 +112,17 @@ local sets = {
         Feet = 'Chs. Sollerets +1',
     },
     mdt = {
+        Neck = 'Prudence Torque', -- int piece
         Ear1 = 'Merman\'s Earring', -- 2%
         Ear2 = 'Merman\'s Earring', -- 2%
-        Ring1 = 'Sattva Ring',
-        Ring2 = 'Merman\'s Ring',
-        Back = 'Resentment Cape',
-        Legs = 'Abs. Flanchard +1',
-        Feet = 'Crimson Greaves',
+        Body = 'Cor. Scale Mail +1', -- 4%
+        Hands = 'Coral Fng. Gnt. +1', -- 2%
+        Ring1 = 'Sattva Ring', -- 5%
+        Ring2 = 'Merman\'s Ring', -- 4%
+        Back = 'Resentment Cape', -- 5%
+        Waist = 'Steppe Sash', -- hp piece
+        Legs = 'Crimson Cuisses', -- hp/mp piece
+        Feet = 'Coral Greaves +1', -- 2%
     },
     Dread_Spikes = { --max out HP+ at cast to boost effect
         Ammo = 'Fenrir\'s Stone', --30 (daytime)
@@ -173,7 +177,7 @@ local sets = {
         Hands = 'Black Gadlings',
         Back = 'Abyss Cape', -- 2 more mAcc than merciful, need spell to land
         Waist = 'Ryl.Kgt. Belt', -- not worried about recast, want spell to land
-        Legs = 'Black Cuisses',
+        Legs = 'Onyx Cuisses',
         Feet = 'Black Sollerets',
     },
     Nuke = {
@@ -201,7 +205,6 @@ local sets = {
         Head = 'Homam Zucchetto',
         Neck = 'Faith Torque',
         Ear1 = 'Morukaka Earring',
-        Ear2 = 'Immortal\'s Earring',
         Body = 'Abyss Cuirass',
         Hands = 'Garden Bangles',
         Ring1 = 'Toreador\'s Ring',
@@ -238,7 +241,7 @@ local sets = {
         Ring2 = 'Flame Ring',
         Back = 'Amemet Mantle +1',
         Waist = 'Warwolf Belt',
-        Legs = 'Black cuisses',
+        Legs = 'Onyx Cuisses',
         Feet = 'Hct. Leggings'
     },
     BloodWeapon = {},
@@ -265,7 +268,7 @@ local sets = {
         Ear2 = 'Abyssal Earring',
     },
     GreatAxe = {
-        Neck = 'Peacock Amulet',
+        Neck = 'Fortitude Torque',
         Ear1 = 'Brutal Earring',
         Ear2 = 'Ethereal Earring',
     },
@@ -275,7 +278,7 @@ local sets = {
         Ear2 = 'Abyssal Earring',
     },
     Sword = {
-        Neck = 'Peacock Amulet',
+        Neck = 'Fortitude Torque',
         Ear1 = 'Brutal Earring',
         Ear2 = 'Stealth Earring',
     },
